@@ -14,6 +14,17 @@
 	<div class="row">
 		<div class="col-lg-6">
 			<?=form_open(base_url() . 'cemployee/addEmployee'); ?>
+
+			<div class="form-group">
+				<label for="selectOfficeLocation">Office Location :</label>
+				<select name="selectOfficeLocation" id="selectOfficeLocation" class="form-control">
+				<option value="">Office Location</option>
+				<?php foreach ( $listOfficeLocations as $listOfficeLocation ): ?>
+				<option value="<?=$listOfficeLocation->office_location_id; ?>"><?=$listOfficeLocation->office_location_desc; ?></option>
+				<?php endforeach; ?>
+			</select>
+			</div>
+
 			<div class="form-group">
 				<label for="txtEmployeeNo">Employee No  :</label>
 				<input type="text" name="txtEmployeeNo" class="form-control" placeholder="Employee No">
@@ -57,7 +68,7 @@
 				</select>
 			</div>
 
-			<div class="form-group">
+			<div class="form-group selExtension">
 				<label for="selExtension">Extension No :</label>
 				<select name="selExtension" class="form-control">
 					<option value="">Extension No</option>
@@ -67,10 +78,39 @@
 					<?php endforeach; ?>	
 				</select>
 			</div>
+
+			<div class="form-group textExtensionNo">
+				<label for="textExtension">Extension No :</label>
+				<input type="text" name="textExtension" class="form-control" placeholder="Extension No" required>
+			</div>
+
 			<div class="form-group">
 				<button type="submit" class="btn btn-primary" name="btnAdd"><li class="glyphicon glyphicon-floppy-disk"></li> Save</button>
 			</div>					
 			<?=form_close(); ?>
 		</div>
 	</div>	
-</div>	
+</div>
+<script>
+	function toggleExtension(){
+		const selectOfficeLocation = document.getElementById('selectOfficeLocation');
+		const selExtension = document.getElementsByClassName('selExtension')[0];
+		const textExtensionNo = document.getElementsByClassName('textExtensionNo')[0];
+
+		selExtension.style.display = 'block';
+		textExtensionNo.style.display = 'none';
+	
+		selectOfficeLocation.addEventListener('change', function (e){
+			const value = selectOfficeLocation.options[selectOfficeLocation.selectedIndex].value;
+			if (value !== '3') {
+				selExtension.style.display = 'block';
+				textExtensionNo.style.display = 'none';
+			}else{
+				selExtension.style.display = 'none';
+				textExtensionNo.style.display = 'block';
+			}
+		});
+	}	
+
+	toggleExtension();
+</script>	

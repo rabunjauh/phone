@@ -51,12 +51,17 @@ class Cemployee extends CI_Controller {
 	public function addEmployee(){
 		if ( $this->input->post() ){
 			$formInfo = [];
+			$formInfo['employee_status'] = $this->input->post('selectEmployeeStatus', TRUE);
 			$formInfo['employeeno'] = $this->input->post('txtEmployeeNo', TRUE);
 			$formInfo['employeename'] = strtoupper($this->input->post('txtEmployee', TRUE));
 			$formInfo['iddept'] = $this->input->post('selDepartment', TRUE);
 			$formInfo['idposition'] = $this->input->post('selPosition');
 			$formInfo['code'] = $this->input->post('selCode');
-			$formInfo['extId'] = $this->input->post('selExtension', TRUE);					
+			if ($this->input->post('selExtension', TRUE)){
+				$formInfo['extId'] = $this->input->post('selExtension', TRUE);
+			} else {
+				$formInfo['ext'] = $this->input->post('textExtension', TRUE);
+			}					
 			if ( $this->memployee->saveEmployee($formInfo) !== 0){
 				$this->mpabx11->updateExtensionStatusAdd($formInfo['extId']);
 				$message = '<div class="alert alert-success">Success!</div>';
@@ -73,6 +78,7 @@ class Cemployee extends CI_Controller {
 		$data['extensions'] = $this->mpabx11->index();
 		$data['departments'] = $this->memployee->department();
 		$data['positions'] = $this->memployee->position();
+		$data['listOfficeLocations'] = $this->memployee->getOfficeLocations();
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);		
 		$data['content'] = $this->load->view('forms/formAddEmployee', $data, TRUE);
@@ -109,6 +115,7 @@ class Cemployee extends CI_Controller {
 		$data['getEmployeeByIds'] = $this->memployee->getEmployeeByIds($employeeId);
 		$data['departments'] = $this->memployee->department();
 		$data['positions'] = $this->memployee->position();
+		$data['getEmpoyeeStatus'] = $this->memployee->getEmployeeStatus();
 		$data['header'] = $this->load->view('headers/head', '', TRUE);		
 		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);					
 		$data['content'] = $this->load->view('forms/formEditEmployee', $data, TRUE);		

@@ -44,7 +44,7 @@ class memployee extends CI_Model {
 	}
 
 	public function employeeList($limit, $offset){
-	    $sql = "SELECT tblmas_employee.idemployee, tblmas_employee.employeeno, tblmas_employee.employeename, tblmas_employee.code, tblfile_department.deptdesc, tblfile_position.positiondesc, tblfile_position.level, ext.extension 
+	    $sql = "SELECT tblmas_employee.idemployee, tblmas_employee.employeeno, tblmas_employee.employeename, tblmas_employee.code, tblmas_employee.ext, tblfile_department.deptdesc, tblfile_position.positiondesc, tblfile_position.level, ext.extension 
 	   			FROM tblmas_employee 
 	    		LEFT JOIN tblfile_department 
 	    		ON tblmas_employee.iddept = tblfile_department.iddept 
@@ -83,6 +83,7 @@ class memployee extends CI_Model {
 		$info['idposition'] = $input['idposition'];
 		$info['code'] = $input['code'];
 		$info['extId'] = $input['extId'];
+		$info['ext'] = $input['ext'];
 		$this->db->insert('tblmas_employee', $info);
 		if ( $this->db->affected_rows() == 1 ){
 			return $this->db->insert_id();
@@ -517,4 +518,9 @@ class memployee extends CI_Model {
 		$count = $query->num_rows();
 		return $count;
   	}
+
+	public function getOfficeLocations(){
+		$result = $this->db->get('office_location')->result();
+		return $result;
+	}
 }	
