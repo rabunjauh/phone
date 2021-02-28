@@ -24,12 +24,45 @@
 	
 	<div class="row" >
 		<?php 
-			var_dump($phoneBook[4]);die;
+			foreach ($departments as $department) : 
+				if ( $department->deptdesc === 'TOP MANAGEMENT'){
+					$ext = $topManagements;
+				}elseif ( $department->deptdesc === 'STRUCTURAL ENGINEERING'){
+					$ext = $strEngExtensions;
+				}elseif ( $department->deptdesc === 'FINANCE'){
+					$ext = $financeDepartments;
+				}elseif ( $department->deptdesc === 'HR'){
+					$ext = $hrDepartments;
+				}elseif ( $department->deptdesc === 'HSE'){
+					$ext = $hseDepartments;
+				}elseif ( $department->deptdesc === 'MIS'){
+					$ext = $misDepartments;
+				}elseif ( $department->deptdesc === 'PROJECT & OPERATION'){
+					$ext = $poDepartments;
+				}elseif ( $department->deptdesc === 'STRUCTURAL QAQC'){
+					$ext = $structuralQaqcDepartments;
+				}elseif ( $department->deptdesc === 'SUPPLY CHAIN'){
+					$ext = $scmDepartments;
+				}elseif ( $department->deptdesc === 'TENDERING & ESTIMATION'){
+					$ext = $teDepartments;
+				}elseif ( $department->deptdesc === 'E & I ENGINEERING'){
+					$ext = $eiEngExtensions;
+				}elseif ( $department->deptdesc === 'E & I QAQC'){
+					$ext = $eiQaqcDepartments;
+				}elseif ( $department->deptdesc === 'MEETING ROOM'){
+					$ext = $meetingRooms;
+				}elseif ( $department->deptdesc === 'FIRST AID'){
+					$ext = $firstAids;
+				}elseif ( $department->deptdesc === 'SECURITY POST'){
+					$ext = $securities;
+				}
+
+				if ($ext){
 		?>
 			<div class="col-lg-6 col-md-6 col-sm-6 col-sx-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">			
 				<table class="table table-bordered table-striped">
 					<tr>
-						<td><strong></strong></td>
+						<td><strong><?php echo $department->deptdesc; ?></strong></td>
 						<td colspan="2" class="text-right"><a href="<?= base_url('cextension/pdf_security'); ?>" class="btn btn-primary" target="_blank">PDF</a></td>
 					</tr>
 					<tr>
@@ -54,5 +87,7 @@
 					<?php endforeach ?>	
 				</table>			
 			</div>
+			<?php } ?>
+		<?php endforeach ?>
 	</div>
 </div>	

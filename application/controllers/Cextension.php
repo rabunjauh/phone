@@ -25,43 +25,42 @@ class Cextension extends CI_Controller {
 				
 	}
 
-	public function index(){
-		$officeLocation = 'YARD 1';
+	public function phoneBook($argumentOfficeLocation){
+		if ($argumentOfficeLocation === 'yard1') {
+			$officeLocation = 'YARD 1';
+		} elseif ($argumentOfficeLocation === 'yard2') {
+			$officeLocation = 'YARD 2';
+		} else {
+			$officeLocation = 'SUKAJADI';
+		}
 		$data = [];
+		$data['departments'] = $this->memployee->department();
 		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
-		$data['topManagements'] = $this->mextensions->index('TOP MANAGEMENT', $officeLocation);
-		$data['strEngExtensions'] = $this->mextensions->index('STRUCTURAL ENGINEERING', $officeLocation);
-		$data['financeDepartments'] = $this->mextensions->index('FINANCE', $officeLocation);
-		$data['hrDepartments'] = $this->mextensions->index('HR', $officeLocation);
-		$data['hseDepartments'] = $this->mextensions->index('HSE', $officeLocation);
-		$data['misDepartments'] = $this->mextensions->index('MIS', $officeLocation);
-		$data['poDepartments'] = $this->mextensions->index('PROJECT & OPERATION', $officeLocation);
-		$data['yardDepartments'] = $this->mextensions->index('YARD', $officeLocation);
-		$data['structuralQaqcDepartments'] = $this->mextensions->index('STRUCTURAL QAQC', $officeLocation);
-		$data['scmDepartments'] = $this->mextensions->index('SUPPLY CHAIN', $officeLocation);
-		$data['teDepartments'] = $this->mextensions->index('TENDERING & ESTIMATION', $officeLocation);
-		$data['eiEngExtensions'] = $this->mextensions->index('E & I ENGINEERING', $officeLocation);
-		$data['eiQaqcDepartments'] = $this->mextensions->index('E & I QAQC', $officeLocation);
-		$data['meetingRooms'] = $this->mextensions->index('MEETING ROOM', $officeLocation);
-		$data['firstAids'] = $this->mextensions->index('FIRST AID', $officeLocation);
-		$data['securities'] = $this->mextensions->index('SECURITY POST', $officeLocation);
-		$data['topManagements_desc'] = $this->mextensions->index('TOP MANAGEMENT', $officeLocation, TRUE);
-		$data['strEngExtensions_desc'] = $this->mextensions->index('STRUCTURAL ENGINEERING', $officeLocation, TRUE);
-		$data['financeDepartments_desc'] = $this->mextensions->index('FINANCE', $officeLocation, TRUE);
-		$data['hrDepartments_desc'] = $this->mextensions->index('HR', $officeLocation, TRUE);
-		$data['hseDepartments_desc'] = $this->mextensions->index('HSE', $officeLocation, TRUE);
-		$data['misDepartments_desc'] = $this->mextensions->index('MIS', $officeLocation, TRUE);
-		$data['poDepartments_desc'] = $this->mextensions->index('PROJECT & OPERATION', $officeLocation, TRUE);
-		$data['structuralQaqcDepartments_desc'] = $this->mextensions->index('STRUCTURAL QAQC', $officeLocation, TRUE);
-		$data['scmDepartments_desc'] = $this->mextensions->index('SUPPLY CHAIN', $officeLocation, TRUE);
-		$data['teDepartments_desc'] = $this->mextensions->index('TENDERING & ESTIMATION', $officeLocation, TRUE);
-		$data['eiEngExtensions_desc'] = $this->mextensions->index('E & I ENGINEERING', $officeLocation, TRUE);
-		$data['eiQaqcDepartments_desc'] = $this->mextensions->index('E & I QAQC', $officeLocation, TRUE);
-		$data['meetingRooms_desc'] = $this->mextensions->index('MEETING ROOM', $officeLocation, TRUE);
-		$data['firstAids_desc'] = $this->mextensions->index('FIRST AID', $officeLocation, TRUE);
-		$data['securities_desc'] = $this->mextensions->index('SECURITY POST', $officeLocation, TRUE);
+		foreach ($data['departments'] as $department) {
+			// $departmentDesc['deptdesc'] = $department->deptdesc; 
+			$data['phoneBook'] = $this->mextensions->index($department->deptdesc, $officeLocation);
+
+			echo $data['phoneBook'][0][1];
+		}
+
+		// $department = ['deptdesc' => 'TOP MANAGEMENT'];
+		// $data['topManagements'] = $this->mextensions->index('TOP MANAGEMENT', $officeLocation);
+		// $data['strEngExtensions'] = $this->mextensions->index('STRUCTURAL ENGINEERING', $officeLocation);
+		// $data['financeDepartments'] = $this->mextensions->index('FINANCE', $officeLocation);
+		// $data['hrDepartments'] = $this->mextensions->index('HR', $officeLocation);
+		// $data['hseDepartments'] = $this->mextensions->index('HSE', $officeLocation);
+		// $data['misDepartments'] = $this->mextensions->index('MIS', $officeLocation);
+		// $data['poDepartments'] = $this->mextensions->index('PROJECT & OPERATION', $officeLocation);
+		// $data['yardDepartments'] = $this->mextensions->index('YARD', $officeLocation);
+		// $data['structuralQaqcDepartments'] = $this->mextensions->index('STRUCTURAL QAQC', $officeLocation);
+		// $data['scmDepartments'] = $this->mextensions->index('SUPPLY CHAIN', $officeLocation);
+		// $data['teDepartments'] = $this->mextensions->index('TENDERING & ESTIMATION', $officeLocation);
+		// $data['eiEngExtensions'] = $this->mextensions->index('E & I ENGINEERING', $officeLocation);
+		// $data['eiQaqcDepartments'] = $this->mextensions->index('E & I QAQC', $officeLocation);
+		// $data['meetingRooms'] = $this->mextensions->index('MEETING ROOM', $officeLocation);
+		// $data['firstAids'] = $this->mextensions->index('FIRST AID', $officeLocation);
 		$data['content'] = $this->load->view('contents/vExtension', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
@@ -89,9 +88,10 @@ class Cextension extends CI_Controller {
 		$this->load->view('main', $data);
 	}
 
-	public function yard2(){
+	public function yard2($officeLocation){
 		$officeLocation = 'YARD 2';
 		$data = [];
+		$data['departments'] = $this->memployee->department();
 		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
@@ -102,7 +102,6 @@ class Cextension extends CI_Controller {
 		$data['hseDepartments'] = $this->mextensions->index('HSE', $officeLocation);
 		$data['misDepartments'] = $this->mextensions->index('MIS', $officeLocation);
 		$data['poDepartments'] = $this->mextensions->index('PROJECT & OPERATION', $officeLocation);
-		$data['yardDepartments'] = $this->mextensions->index('YARD', $officeLocation);
 		$data['structuralQaqcDepartments'] = $this->mextensions->index('STRUCTURAL QAQC', $officeLocation);
 		$data['scmDepartments'] = $this->mextensions->index('SUPPLY CHAIN', $officeLocation);
 		$data['teDepartments'] = $this->mextensions->index('TENDERING & ESTIMATION', $officeLocation);
@@ -140,7 +139,7 @@ class Cextension extends CI_Controller {
 		$data['meetingRooms_yard2_desc'] = $this->mextensions->index('MEETING ROOM', $officeLocation, TRUE);
 		$data['firstAids_yard2_desc'] = $this->mextensions->index('FIRST AID', $officeLocation, TRUE);
 		$data['securities_yard2_desc'] = $this->mextensions->index('SECURITY POST', $officeLocation, TRUE);	
-		$data['content'] = $this->load->view('contents/v_extension_yard2', $data, TRUE);
+		$data['content'] = $this->load->view('contents/vExtension', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
 	}
@@ -170,6 +169,7 @@ class Cextension extends CI_Controller {
 	public function sukajadi(){
 		$officeLocation = 'SUKAJADI';
 		$data = [];
+		$data['departments'] = $this->memployee->department();
 		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['cover'] = $this->load->view('headers/cover', '', TRUE);

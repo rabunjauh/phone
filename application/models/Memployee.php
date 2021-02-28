@@ -237,7 +237,9 @@ class memployee extends CI_Model {
   	// }
 
   	public function department(){
-		$sql = "SELECT iddept, deptdesc FROM tblfile_department";
+		$sql = "SELECT 
+					iddept, deptdesc 
+					FROM tblfile_department WHERE stsactive = 1 ORDER BY ordering ASC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
