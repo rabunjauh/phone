@@ -24,14 +24,16 @@ extends CI_Model {
 	}
 
 	public function index($department, $officeLocation){
-		// var_dump($department);die;
-		$fromControllerDepartment['deptdesc'] = $department; 
-		$departmentDesc = $this->memployee->department();
-		foreach ($departmentDesc as $value) {
+		var_dump($department);die;
+		foreach ($department as $value) {
 			if ($value->deptdesc === $department) {
 				$iddept = $value->iddept;
 			}
 		}
+
+		// for ($i = 0; $i < sizeof($department); $i++){
+
+		// }
 
 		$sql = "SELECT 
 				te.employeename,
@@ -50,11 +52,11 @@ extends CI_Model {
 				AND ol.office_location_desc = '$officeLocation'
 			ORDER BY tp.level ASC";
 		$query = $this->db->query($sql);
-		if ($query) {
-			return $query->result();
-		} else {
-			return FALSE;
-		}
+		// if ($query) {
+		// 	return $query->result();
+		// } else {
+		// 	return FALSE;
+		// }
 	}
 	// end of Yard 1 Wasco
 

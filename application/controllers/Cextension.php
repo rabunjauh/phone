@@ -38,13 +38,9 @@ class Cextension extends CI_Controller {
 		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
-		foreach ($data['departments'] as $department) {
-			// $departmentDesc['deptdesc'] = $department->deptdesc; 
-			$data['phoneBook'] = $this->mextensions->index($department->deptdesc, $officeLocation);
-
-			echo $data['phoneBook'][0][1];
-		}
-
+		// var_dump($data['departments']);die;
+		$data['phoneBook'] = $this->mextensions->index($data['departments'], $officeLocation);
+		var_dump($data['phoneBook']);
 		// $department = ['deptdesc' => 'TOP MANAGEMENT'];
 		// $data['topManagements'] = $this->mextensions->index('TOP MANAGEMENT', $officeLocation);
 		// $data['strEngExtensions'] = $this->mextensions->index('STRUCTURAL ENGINEERING', $officeLocation);
