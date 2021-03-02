@@ -24,36 +24,32 @@ extends CI_Model {
 	}
 
 	public function index($department, $officeLocation){
-		var_dump($department);die;
+		// var_dump($department);die;
 		foreach ($department as $value) {
-			if ($value->deptdesc === $department) {
 				$iddept = $value->iddept;
+				$sql = "SELECT 
+						te.employeename,
+						te.ext,
+						te.extId,
+						te.code,
+						ext.extension,
+						td.deptdesc,
+						tp.positiondesc 
+					FROM tblmas_employee te 
+					LEFT JOIN ext ON te.extId = ext.id 
+					LEFT JOIN tblfile_department td ON te.iddept = td.iddept 
+					LEFT JOIN tblfile_position tp ON te.idposition = tp.idposition
+					LEFT JOIN office_location ol ON te.office_location_id = ol.office_location_id 
+					WHERE te.iddept = $iddept 
+						AND te.stsactive = '1' 
+						AND ol.office_location_desc = '$officeLocation'
+					ORDER BY tp.level ASC";
+				$query = $this->db->query($sql);
+				$results[] = $query->result();
 			}
-		}
-
-		// for ($i = 0; $i < sizeof($department); $i++){
-
-		// }
-
-		$sql = "SELECT 
-				te.employeename,
-				te.ext,
-				te.extId,
-				ext.extension,
-				td.deptdesc,
-				tp.positiondesc 
-			FROM tblmas_employee te 
-			LEFT JOIN ext ON te.extId = ext.id 
-			LEFT JOIN tblfile_department td ON te.iddept = td.iddept 
-			LEFT JOIN tblfile_position tp ON te.idposition = tp.idposition
-			LEFT JOIN office_location ol ON te.office_location_id = ol.office_location_id 
-			WHERE te.iddept = $iddept 
-				AND te.stsactive = '1' 
-				AND ol.office_location_desc = '$officeLocation'
-			ORDER BY tp.level ASC";
-		$query = $this->db->query($sql);
+			return $results;
+			// return $query->result();
 		// if ($query) {
-		// 	return $query->result();
 		// } else {
 		// 	return FALSE;
 		// }

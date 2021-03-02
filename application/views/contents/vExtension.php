@@ -23,10 +23,13 @@
 	</div>
 	
 	<div class="row" >
-		<?php 
-			var_dump($phoneBook[4]);die;
-		?>
 			<div class="col-lg-6 col-md-6 col-sm-6 col-sx-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">			
+		<?php 
+		var_dump($phoneBooks);
+		   for ($i = 0; $i < sizeof($phoneBooks); $i++){ 
+				if ($phoneBooks[$i]){
+				$phoneBook = $phoneBooks[$i];
+		?>
 				<table class="table table-bordered table-striped">
 					<tr>
 						<td><strong></strong></td>
@@ -38,20 +41,20 @@
 						<td>Ext</td>
 					</tr>
 
-					<?php
-					foreach ($ext as $value): 
-						if ($value->extId == 0) {
-							$extensionNo = $value->ext;
-						} else {
-							$extensionNo = $value->extension;
-						}
+					<?php						
+						for ($j = 0; $j < sizeof($phoneBook); $j++){
 					?>
 					<tr>
-						<td class="col-md-2"><?php echo $value->employeename; ?></td>
-						<td class="col-md-3"><?php echo $value->positiondesc; ?></td>
-						<td class="col-md-1"><?php echo $extensionNo; ?></td>	
+						<td class="col-md-2"><?php echo $phoneBooks[$i][$j]->employeename; ?></td>
+						<td class="col-md-3"><?php echo $phoneBooks[$i][$j]->positiondesc; ?></td>
+						<td class="col-md-1"><?php echo $phoneBooks[$i][$j]->extension; ?></td>	
 					</tr>
-					<?php endforeach ?>	
+			<?php
+			 			}
+					}
+					 
+				} 
+			?>	
 				</table>			
 			</div>
 	</div>
