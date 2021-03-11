@@ -38,15 +38,15 @@
 						<td>Position</td>
 						<td>Ext</td>
 					</tr>
-			<?php	
+		<?php	
 				foreach ($departmentGroups as $assocIndex => $departmentGroup) :
-			?>
+		?>
 					<tr>
 						<td class="col-md-2"><?php echo $departmentGroup['employeename']; ?></td>
 						<td class="col-md-3"><?php echo $departmentGroup['positiondesc']; ?></td>
 						<td class="col-md-1"><?php echo $departmentGroup['extension']; ?></td>	
 					</tr>
-			<?php		
+		<?php		
 				endforeach;
 			endforeach;
 		?>	
