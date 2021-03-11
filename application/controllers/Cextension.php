@@ -41,7 +41,9 @@ class Cextension extends CI_Controller {
 		// var_dump($data['departments']);die;
 		// $data['phoneBooks'] = $this->mextensions->index($data['departments'], $officeLocation);
 		$data['phoneBooks'] = $this->mextensions->index($data['departments'], $officeLocation);
-		
+		// var_dump($data['phoneBooks']);
+
+		// die;
 		// for ($i = 0; $i < sizeof($phoneBooks);$i++){
 		// 	echo $phoneBooks[1][0]->employeename;
 		// }

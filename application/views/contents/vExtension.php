@@ -23,16 +23,14 @@
 	</div>
 	
 	<div class="row" >
-			<div class="col-lg-6 col-md-6 col-sm-6 col-sx-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">			
+		<div class="col-lg-6 col-md-6 col-sm-6 col-sx-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">			
 		<?php 
-		var_dump($phoneBooks);
-		   for ($i = 0; $i < sizeof($phoneBooks); $i++){ 
-				if ($phoneBooks[$i]){
-				$phoneBook = $phoneBooks[$i];
+			var_dump($phoneBooks);
+			foreach ($phoneBooks as $key => $departmentGroups) :
 		?>
-				<table class="table table-bordered table-striped">
+			<table class="table table-bordered table-striped">
 					<tr>
-						<td><strong></strong></td>
+						<td><strong><?php echo $key; ?></strong></td>
 						<td colspan="2" class="text-right"><a href="<?= base_url('cextension/pdf_security'); ?>" class="btn btn-primary" target="_blank">PDF</a></td>
 					</tr>
 					<tr>
@@ -40,22 +38,19 @@
 						<td>Position</td>
 						<td>Ext</td>
 					</tr>
-
-					<?php						
-						for ($j = 0; $j < sizeof($phoneBook); $j++){
-					?>
+			<?php	
+				foreach ($departmentGroups as $assocIndex => $departmentGroup) :
+			?>
 					<tr>
-						<td class="col-md-2"><?php echo $phoneBooks[$i][$j]->employeename; ?></td>
-						<td class="col-md-3"><?php echo $phoneBooks[$i][$j]->positiondesc; ?></td>
-						<td class="col-md-1"><?php echo $phoneBooks[$i][$j]->extension; ?></td>	
+						<td class="col-md-2"><?php echo $departmentGroup['employeename']; ?></td>
+						<td class="col-md-3"><?php echo $departmentGroup['positiondesc']; ?></td>
+						<td class="col-md-1"><?php echo $departmentGroup['extension']; ?></td>	
 					</tr>
-			<?php
-			 			}
-					}
-					 
-				} 
-			?>	
-				</table>			
-			</div>
+			<?php		
+				endforeach;
+			endforeach;
+		?>	
+			</table>			
+		</div>
 	</div>
 </div>	
