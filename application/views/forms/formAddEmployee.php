@@ -6,7 +6,7 @@
 	</div>
 
 	<div class="row text-right">
-		<div class="col-lg-6">			
+		<div class="col-lg-12">			
 			<a href="<?php echo base_url() . 'cemployee' ?>" class="btn btn-primary"><li class="glyphicon glyphicon-arrow-left"></li> Back</a>
 		</div>
 	</div>		
@@ -45,7 +45,10 @@
 			</select>
 			</div>
 			 
-			<div class="form-group">
+			
+		</div>
+        <div class="col-lg-6">
+        <div class="form-group">
 				<label for="selPosition">Position :</label>
 				<select name="selPosition" class="form-control">
 				<option value="">Position</option>
@@ -68,6 +71,14 @@
 				</select>
 			</div>
 
+			<div class="form-group">
+				<label for="radioExtensionInputType">Input Type</label>
+				<select name="radioExtensionInputType" id="radioExtensionInputType" class="form-control">
+					<option value="manual">Manual Input</option>
+					<option value="fromList">Select From List</option>
+				</select>
+			</div>
+
 			<div class="form-group selExtension">
 				<label for="selExtension">Extension No :</label>
 				<select name="selExtension" class="form-control">
@@ -83,26 +94,32 @@
 				<label for="textExtension">Extension No :</label>
 				<input type="text" name="textExtension" class="form-control" placeholder="Extension No" required>
 			</div>
+        </div>
+	</div>
 
+
+	<div class="row">
+		<div class="col-lg-12">
 			<div class="form-group">
 				<button type="submit" class="btn btn-primary" name="btnAdd"><li class="glyphicon glyphicon-floppy-disk"></li> Save</button>
 			</div>					
+		
 			<?=form_close(); ?>
 		</div>
 	</div>	
 </div>
 <script>
 	function toggleExtension(){
-		const selectOfficeLocation = document.getElementById('selectOfficeLocation');
+		const radioExtensionInputType = document.getElementById('radioExtensionInputType');
 		const selExtension = document.getElementsByClassName('selExtension')[0];
 		const textExtensionNo = document.getElementsByClassName('textExtensionNo')[0];
 
-		selExtension.style.display = 'block';
-		textExtensionNo.style.display = 'none';
+		selExtension.style.display = 'none';
+        textExtensionNo.style.display = 'block';
 	
-		selectOfficeLocation.addEventListener('change', function (e){
-			const value = selectOfficeLocation.options[selectOfficeLocation.selectedIndex].value;
-			if (value !== '3') {
+		radioExtensionInputType.addEventListener('change', function (e){
+			const value = radioExtensionInputType.options[radioExtensionInputType.selectedIndex].value;
+			if (value == 'fromList') {
 				selExtension.style.display = 'block';
 				textExtensionNo.style.display = 'none';
 			}else{

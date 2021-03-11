@@ -245,8 +245,8 @@ class memployee extends CI_Model {
 	}
 
   	public function saveDepartment($input){
-  		$info['deptdesc'] = htmlspecialchars($input['txtDepartment']);
-  		$this->db->insert('tblfile_department', $info);
+  		// $info['deptdesc'] = htmlspecialchars($input['txtDepartment']);
+  		$this->db->insert('tblfile_department', $input);
   		if ( $this->db->affected_rows() == 1 ){
   			$this->db->insert_id();
   		} else {
@@ -261,7 +261,13 @@ class memployee extends CI_Model {
 	}
 
 	public function departmentList($limit, $offset){
-	    $sql = "SELECT * FROM tblfile_department";
+	    $sql = "SELECT 
+					d.iddept, 
+					d.deptdesc, 
+					d.stsactive, 
+					g.group_desc 
+				FROM tblfile_department d
+				JOIN tbl_group g on d.group_id = g.group_id";
 
 	    if ($limit) {
 	      if(!$offset){
@@ -284,17 +290,25 @@ class memployee extends CI_Model {
 	}
 
 	public function departmentIds($iddept = NULL){
-		$sql = "SELECT * FROM tblfile_department WHERE iddept = $iddept";
+		$sql = "SELECT 
+					d.iddept, 
+					d.deptdesc, 
+					d.stsactive,
+					g.group_id, 
+					g.group_desc 
+				FROM tblfile_department d
+				JOIN tbl_group g on d.group_id = g.group_id 
+				WHERE iddept = $iddept";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function modifyDepartment($input, $iddept){
-		$info = [];
-		$info['deptdesc'] = htmlspecialchars($input['deptdesc']);
+		// $info = [];
+		// $info['deptdesc'] = htmlspecialchars($input['deptdesc']);
 		$this->db->where('iddept', $iddept);
-		$this->db->update('tblfile_department', $info);
-		return $info;
+		$this->db->update('tblfile_department', $input);
+		return TRUE;
 	}
 
 	public function deleteDepartment($iddept){
@@ -524,5 +538,10 @@ class memployee extends CI_Model {
 	public function getOfficeLocations(){
 		$result = $this->db->get('office_location')->result();
 		return $result;
+	}
+
+	public function groupList(){
+		$query = $this->db->get('tbl_group');
+		return $query->result_array();
 	}
 }	

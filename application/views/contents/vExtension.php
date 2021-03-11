@@ -25,7 +25,7 @@
 	<div class="row" >
 		<div class="col-lg-6 col-md-6 col-sm-6 col-sx-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">			
 		<?php 
-			var_dump($phoneBooks);
+			// var_dump($phoneBooks);
 			foreach ($phoneBooks as $key => $departmentGroups) :
 		?>
 			<table class="table table-bordered table-striped">
@@ -40,13 +40,20 @@
 					</tr>
 		<?php	
 				foreach ($departmentGroups as $assocIndex => $departmentGroup) :
+					if ($departmentGroup['extension'] != 0 OR $departmentGroup['ext'] != NULL) {
+						if ($departmentGroup['extension']){
+							$extensionNo = $departmentGroup['extension'];
+						} else {
+							$extensionNo = $departmentGroup['ext'];
+						}
 		?>
-					<tr>
-						<td class="col-md-2"><?php echo $departmentGroup['employeename']; ?></td>
-						<td class="col-md-3"><?php echo $departmentGroup['positiondesc']; ?></td>
-						<td class="col-md-1"><?php echo $departmentGroup['extension']; ?></td>	
-					</tr>
-		<?php		
+						<tr>
+							<td class="col-md-2"><?php echo $departmentGroup['employeename']; ?></td>
+							<td class="col-md-3"><?php echo $departmentGroup['positiondesc']; ?></td>
+							<td class="col-md-1"><?php echo $extensionNo; ?></td>	
+						</tr>
+		<?php	
+					}	
 				endforeach;
 			endforeach;
 		?>	

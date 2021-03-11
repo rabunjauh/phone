@@ -39,15 +39,15 @@ extends CI_Model {
 					LEFT JOIN tblfile_department td ON te.iddept = td.iddept 
 					LEFT JOIN tblfile_position tp ON te.idposition = tp.idposition
 					LEFT JOIN office_location ol ON te.office_location_id = ol.office_location_id 
-					JOIN ext ON te.extId = ext.id 
+					LEFT JOIN ext ON te.extId = ext.id 
 					WHERE te.iddept = $iddept 
 						AND te.stsactive = '1' 
 						AND ol.office_location_desc = '$officeLocation'
 					ORDER BY tp.level ASC";
 				$query = $this->db->query($sql);
-				if ($query->result_array()){
-						$results[$value->deptdesc] = $query->result_array();
-					}
+				if ($query->result_array()) {
+					$results[$value->deptdesc] = $query->result_array();
+				}
 			}
 				return $results;
 		// 	var_dump($query->result());die;

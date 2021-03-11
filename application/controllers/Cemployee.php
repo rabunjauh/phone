@@ -48,6 +48,7 @@ class Cemployee extends CI_Controller {
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
 	}
+	
 	public function addEmployee(){
 		if ( $this->input->post() ){
 			$formInfo = [];
@@ -115,7 +116,7 @@ class Cemployee extends CI_Controller {
 		$data['getEmployeeByIds'] = $this->memployee->getEmployeeByIds($employeeId);
 		$data['departments'] = $this->memployee->department();
 		$data['positions'] = $this->memployee->position();
-		$data['getEmpoyeeStatus'] = $this->memployee->getEmployeeStatus();
+		// $data['getEmpoyeeStatus'] = $this->memployee->getEmployeeStatus();
 		$data['header'] = $this->load->view('headers/head', '', TRUE);		
 		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);					
 		$data['content'] = $this->load->view('forms/formEditEmployee', $data, TRUE);		
@@ -212,7 +213,9 @@ class Cemployee extends CI_Controller {
 	public function addDepartment(){
 		if ( $this->input->post() ){
 			$formInfo = [];
-			$formInfo['txtDepartment'] = strtoupper($this->input->post('txtDepartment'));
+			$formInfo['deptdesc'] = htmlspecialchars(strtoupper($this->input->post('txtDepartment')));
+			$formInfo['group_id'] = htmlspecialchars(strtoupper($this->input->post('selectGroup')));
+			$formInfo['stsactive'] = htmlspecialchars(strtoupper($this->input->post('selectStatus')));
 			if ( $this->memployee->saveDepartment($formInfo) ){
 				redirect(base_url() . 'cemployee/addDepartment');
 			} else {
@@ -223,6 +226,7 @@ class Cemployee extends CI_Controller {
 		$data['departments'] = $this->memployee->department();
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['groups'] = $this->memployee->groupList();
 		$data['content'] = $this->load->view('forms/formAddDepartment', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
@@ -231,7 +235,9 @@ class Cemployee extends CI_Controller {
 	public function modifyDepartment($iddept = NULL){
 		if ( isset($_POST['btnModifyDepartment']) ){
 			$formInfo = [];
-			$formInfo['deptdesc'] = strtoupper($this->input->post('txtDepartmentName'));
+			$formInfo['deptdesc'] = htmlspecialchars(strtoupper($this->input->post('txtDepartmentName')));
+			$formInfo['group_id'] = htmlspecialchars(strtoupper($this->input->post('selectGroup')));
+			$formInfo['stsactive'] = htmlspecialchars(strtoupper($this->input->post('selectStatus')));
 			if ( !$this->memployee->modifyDepartment($formInfo, $iddept) ){
 				redirect(base_url() . 'cemployee/modifyDepartment/' . $iddept);
 			} else {
@@ -243,7 +249,8 @@ class Cemployee extends CI_Controller {
 		$data['getDepartmentByIds'] = $this->memployee->getDepartmentByIds($iddept);
 		$data['departmentIds'] = $this->memployee->departmentIds($iddept);
 		$data['header'] = $this->load->view('headers/head', '', TRUE);		
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);					
+		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['groups'] = $this->memployee->groupList();					
 		$data['content'] = $this->load->view('forms/formEditDepartment', $data, TRUE);		
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);		
 		$this->load->view('main', $data);	

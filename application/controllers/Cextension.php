@@ -25,7 +25,7 @@ class Cextension extends CI_Controller {
 				
 	}
 
-	public function phoneBook($argumentOfficeLocation){
+	public function index($argumentOfficeLocation){
 		if ($argumentOfficeLocation === 'yard1') {
 			$officeLocation = 'YARD 1';
 		} elseif ($argumentOfficeLocation === 'yard2') {
