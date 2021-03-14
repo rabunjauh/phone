@@ -23,10 +23,22 @@ extends CI_Model {
 		parent::__construct();
 	}
 
-	public function index($department, $officeLocation){
-		// var_dump($department);die;
+	public function index($department, $officeLocationId = NULL, $groupId = NULL){
+		if ($officeLocationId == NULL){
+			$officeLocationId = 1;
+		}
+
+		
+
+		// var_dump($officeLocationId);
 		foreach ($department as $value) {
 				$iddept = $value->iddept;
+				$where = " WHERE te.iddept = $iddept 
+								AND te.stsactive = '1' 
+								AND ol.office_location_id = '$officeLocationId'";
+				if ($groupId){
+					$where .=  " AND td.group_id = '$groupId'";
+				}
 				$sql = "SELECT 
 						te.employeename,
 						te.ext,
@@ -40,9 +52,7 @@ extends CI_Model {
 					LEFT JOIN tblfile_position tp ON te.idposition = tp.idposition
 					LEFT JOIN office_location ol ON te.office_location_id = ol.office_location_id 
 					LEFT JOIN ext ON te.extId = ext.id 
-					WHERE te.iddept = $iddept 
-						AND te.stsactive = '1' 
-						AND ol.office_location_desc = '$officeLocation'
+					$where
 					ORDER BY tp.level ASC";
 				$query = $this->db->query($sql);
 				if ($query->result_array()) {

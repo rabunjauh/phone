@@ -95,19 +95,33 @@ class memployee extends CI_Model {
 	public function getEmployeeByIds($idEmployee){
 		$this->db->select('*')
 		->from('tblmas_employee')
+		->join('office_location', 'tblmas_employee.office_location_id = office_location.office_location_id')
 		->where('idemployee', $idEmployee);
 		$result = $this->db->get()->row();
 		return $result;
 	}
 
 	public function employeeIds($idEmployee = NULL){
-		$sql = "SELECT tblmas_employee.idemployee, tblmas_employee.employeeno, tblmas_employee.employeename, tblmas_employee.iddept, tblmas_employee.idposition, tblmas_employee.extId, tblmas_employee.code, tblfile_department.deptdesc, tblfile_position.positiondesc, tblfile_position.level, ext.extension 
+		$sql = "SELECT tblmas_employee.idemployee, 
+					tblmas_employee.employeeno, 
+					tblmas_employee.employeename, 
+					tblmas_employee.iddept, 
+					tblmas_employee.idposition, 
+					tblmas_employee.extId, 
+					tblmas_employee.code,
+					tblmas_employee.office_location_id,
+					office_location.office_location_desc, 
+					tblfile_department.deptdesc, 
+					tblfile_position.positiondesc, 
+					tblfile_position.level, 
+					ext.extension 
 				FROM tblmas_employee 
 				LEFT JOIN tblfile_department 
 				ON tblmas_employee.iddept = tblfile_department.iddept 
 				LEFT JOIN tblfile_position 
 				ON tblmas_employee.idposition = tblfile_position.idposition  
 				LEFT JOIN ext ON tblmas_employee.extId = ext.id 
+				LEFT JOIN office_location ON tblmas_employee.office_location_id = office_location.office_location_id
 				WHERE tblmas_employee.idemployee = '$idEmployee' 
 				ORDER BY tblmas_employee.idemployee DESC";
 		$query = $this->db->query($sql);
@@ -116,6 +130,7 @@ class memployee extends CI_Model {
 
 	public function modifyEmployee($input, $employeeId){
 		$info = [];
+		$info['office_location_id'] = htmlspecialchars($input['office_location_id']);
 		$info['employeeno'] = htmlspecialchars($input['employeeno']);
 		$info['employeename'] = htmlspecialchars($input['employeename']);
 		$info['iddept'] = $input['iddept'];
@@ -543,5 +558,32 @@ class memployee extends CI_Model {
 	public function groupList(){
 		$query = $this->db->get('tbl_group');
 		return $query->result_array();
+	}
+
+	public function getPositionDependent($departmentId){
+		// $query = $this->db->select('*')
+		// ->where('idposition', $positionId)
+		// ->from('tblfile_position');
+		$query = $this->db->get_where('tblfile_position', array('iddept' => $departmentId));
+		// var_dump($query->result_array());die;
+		return $query->result();
+	}
+
+	public function getAllPosition(){
+		$query = $this->db->get('tblfile_position');
+		return $query->result();
+	}
+
+	public function getOfficeDescription($officeLocationId = NULL){
+		if ($officeLocationId == NULL){
+			$officeLocationId = 1;
+		}
+		$result = $this->db->get_where('office_location', array('office_location_id' => $officeLocationId));
+		return $result->row();
+	}
+
+	public function getGroup(){
+		$query = $this->db->get('tbl_group');
+		return $query->result();
 	}
 }	

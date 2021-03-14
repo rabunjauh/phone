@@ -22,25 +22,20 @@ class Cextension extends CI_Controller {
 		parent::__construct();
 		$this->load->model('mextensions');
 		$this->load->model('memployee');
-				
 	}
 
-	public function index($argumentOfficeLocation){
-		if ($argumentOfficeLocation === 'yard1') {
-			$officeLocation = 'YARD 1';
-		} elseif ($argumentOfficeLocation === 'yard2') {
-			$officeLocation = 'YARD 2';
-		} else {
-			$officeLocation = 'SUKAJADI';
-		}
+	public function index($officeLocationId = '', $groupId = ''){
 		$data = [];
+		$data['menu'] = '';
 		$data['departments'] = $this->memployee->department();
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['officeLocationDesc'] = $this->memployee->getOfficeDescription($officeLocationId);
+		$data['groups'] = $this->memployee->getGroup();
+		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
 		// var_dump($data['departments']);die;
 		// $data['phoneBooks'] = $this->mextensions->index($data['departments'], $officeLocation);
-		$data['phoneBooks'] = $this->mextensions->index($data['departments'], $officeLocation);
+		$data['phoneBooks'] = $this->mextensions->index($data['departments'], $officeLocationId, $groupId);
 		// var_dump($data['phoneBooks']);
 
 		// die;

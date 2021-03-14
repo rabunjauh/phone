@@ -1,8 +1,9 @@
 <div class="container box">
 	<div class="row" style="margin-top: 10px">				
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-			<a href="<?php echo base_url() . 'cextension' ?>" class="btn btn-default btn-flat">Wasco</a>
-			<a href="<?php echo base_url() . 'cextension/client' ?>" class="btn btn-default btn-flat">Client</a>
+			<?php foreach ($groups as $group) { ?>
+				<a href="<?= base_url('cextension/index/') . $officeLocationDesc->office_location_id ."/" . $group->group_id ?>" class="btn btn-default btn-flat"><?= $group->group_desc ?></a>
+			<?php }	?>
 		</div>	
 
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right">
@@ -12,7 +13,7 @@
 
 	<div class="row text-center">
 		<div class="col-lg-6 col-md-6 col-sm-6 col-sx-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">
-			<h3>Yard 1 Wasco</h3>
+			<h3><?= $officeLocationDesc->office_location_desc ?></h3>
 		</div>
 	</div>
 
@@ -25,7 +26,7 @@
 	<div class="row" >
 		<div class="col-lg-6 col-md-6 col-sm-6 col-sx-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">			
 		<?php 
-			// var_dump($phoneBooks);
+			if (isset($phoneBooks)){
 			foreach ($phoneBooks as $key => $departmentGroups) :
 		?>
 			<table class="table table-bordered table-striped">
@@ -56,6 +57,7 @@
 					}	
 				endforeach;
 			endforeach;
+			}	
 		?>	
 			</table>			
 		</div>

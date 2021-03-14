@@ -35,6 +35,14 @@
 			<div class="form-group">
 				<label for="selectStatus">Status</label>
 				<select name="selectStatus" class="form-control">
+					<?php 
+						if ($departmentId->stsactive == 0) {
+							$status = "NOT ACTIVE";
+						} else {
+							$status = "ACTIVE";
+						}
+					?>	
+					<option value="<?= $departmentId->stsactive; ?>"><?= $status ?></option>
 					<option value="0">NOT ACTIVE</option>
 					<option value="1">ACTIVE</option>
 				</select>

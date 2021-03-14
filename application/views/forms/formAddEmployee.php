@@ -13,16 +13,18 @@
 	<br>			
 	<div class="row">
 		<div class="col-lg-6">
+
+			<p id = "tes"></p>
 			<?=form_open(base_url() . 'cemployee/addEmployee'); ?>
 
 			<div class="form-group">
 				<label for="selectOfficeLocation">Office Location :</label>
 				<select name="selectOfficeLocation" id="selectOfficeLocation" class="form-control">
-				<option value="">Office Location</option>
-				<?php foreach ( $listOfficeLocations as $listOfficeLocation ): ?>
-				<option value="<?=$listOfficeLocation->office_location_id; ?>"><?=$listOfficeLocation->office_location_desc; ?></option>
-				<?php endforeach; ?>
-			</select>
+					<option value="">Office Location</option>
+					<?php foreach ( $listOfficeLocations as $listOfficeLocation ): ?>
+					<option value="<?=$listOfficeLocation->office_location_id; ?>"><?=$listOfficeLocation->office_location_desc; ?></option>
+					<?php endforeach; ?>
+				</select>
 			</div>
 
 			<div class="form-group">
@@ -37,7 +39,7 @@
 
 			<div class="form-group">
 				<label for="selDepartment">Department :</label>
-				<select name="selDepartment" class="form-control">
+				<select name="selDepartment" id="selDepartment" class="form-control">
 				<option value="">Department</option>
 				<?php foreach ( $departments as $department ): ?>
 				<option value="<?=$department->iddept; ?>"><?=$department->deptdesc; ?></option>
@@ -50,7 +52,7 @@
         <div class="col-lg-6">
         <div class="form-group">
 				<label for="selPosition">Position :</label>
-				<select name="selPosition" class="form-control">
+				<select name="selPosition" id="selPosition" class="form-control">
 				<option value="">Position</option>
 				<?php foreach ($positions as $position): ?>
 				<option value="<?=$position->idposition; ?>"><?=$position->deptdesc . " - " . $position->positiondesc; ?></option>
@@ -72,10 +74,10 @@
 			</div>
 
 			<div class="form-group">
-				<label for="radioExtensionInputType">Input Type</label>
-				<select name="radioExtensionInputType" id="radioExtensionInputType" class="form-control">
-					<option value="manual">Manual Input</option>
+				<label for="selectExtensionInputType">Input Type</label>
+				<select name="selectExtensionInputType" id="selectExtensionInputType" class="form-control">
 					<option value="fromList">Select From List</option>
+					<option value="manual">Manual Input</option>
 				</select>
 			</div>
 
@@ -110,24 +112,46 @@
 </div>
 <script>
 	function toggleExtension(){
-		const radioExtensionInputType = document.getElementById('radioExtensionInputType');
+		const selectExtensionInputType = document.getElementById('selectExtensionInputType');
 		const selExtension = document.getElementsByClassName('selExtension')[0];
 		const textExtensionNo = document.getElementsByClassName('textExtensionNo')[0];
 
-		selExtension.style.display = 'none';
-        textExtensionNo.style.display = 'block';
+		selExtension.style.display = 'block';
+		textExtensionNo.style.display = 'none';
 	
-		radioExtensionInputType.addEventListener('change', function (e){
-			const value = radioExtensionInputType.options[radioExtensionInputType.selectedIndex].value;
-			if (value == 'fromList') {
-				selExtension.style.display = 'block';
-				textExtensionNo.style.display = 'none';
-			}else{
+		selectExtensionInputType.addEventListener('change', function (e){
+			const value = selectExtensionInputType.options[selectExtensionInputType.selectedIndex].value;
+			if (value == 'manual') {
 				selExtension.style.display = 'none';
 				textExtensionNo.style.display = 'block';
+			}else{
+				selExtension.style.display = 'block';
+				textExtensionNo.style.display = 'none';
 			}
 		});
 	}	
 
 	toggleExtension();
+
+	const selectDepartment = document.getElementById('selDepartment');
+	selectDepartment.addEventListener('change', function (e){
+		const selectDepartmentValue = selectDepartment.options[selectDepartment.selectedIndex].value;
+		let data = {
+			id : "tes"
+		};
+		console.log(data);
+		const url = '<?= base_url('cemployee/getPositionDependent/'); ?>';
+		let xhttp = new XMLHttpRequest();
+		xhttp.open('POST', url, true);
+		xhttp.onreadystatechange = function(){
+			if (this.readyState == 4 && this.status == 200){
+				const tes = document.getElementById('tes');
+				tes.innerHTML = this.responseText;
+			}
+		};
+		xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+		xhttp.send(data);
+
+		
+	})
 </script>	

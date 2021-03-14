@@ -28,7 +28,7 @@
 						<td><?php echo $department->group_desc; ?></td>
 						<td>
 							<?php 
-								if ($department->stsactive = 1) {
+								if ($department->stsactive == 1) {
 									echo "ACTIVE";
 								} else {
 									echo "NOT ACTIVE";

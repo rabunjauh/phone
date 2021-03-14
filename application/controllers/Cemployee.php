@@ -6,10 +6,7 @@ class Cemployee extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('memployee');
-		$this->load->model('mpabx11');	
-		if ( !$this->session->userdata('username') ){
-			redirect(base_url(). 'login');
-		}	
+		$this->load->model('mpabx11');		
 	}
 
 	public function index(){
@@ -90,6 +87,7 @@ class Cemployee extends CI_Controller {
 	public function modifyEmployee($employeeId = NULL){
 		if ( isset($_POST['btnUpdateEmployee']) ){
 			$formInfo = [];
+			$formInfo['office_location_id'] = $this->input->post('selectOfficeLocation');
 			$formInfo['employeeno'] = $this->input->post('txtEmployeeNo');
 			$formInfo['employeename'] = strtoupper($this->input->post('txtEmployeeName'));
 			$formInfo['iddept'] = $this->input->post('selDepartment');
@@ -118,7 +116,8 @@ class Cemployee extends CI_Controller {
 		$data['positions'] = $this->memployee->position();
 		// $data['getEmpoyeeStatus'] = $this->memployee->getEmployeeStatus();
 		$data['header'] = $this->load->view('headers/head', '', TRUE);		
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);					
+		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['listOfficeLocations'] = $this->memployee->getOfficeLocations();					
 		$data['content'] = $this->load->view('forms/formEditEmployee', $data, TRUE);		
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);		
 		$this->load->view('main', $data);	
@@ -528,6 +527,21 @@ class Cemployee extends CI_Controller {
 		$data['content'] = $this->load->view('contents/view_client_position', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
+	}
+
+	public function getPositionDependent(){
+		// $positionId  = $_POST['id'];
+		$departmentId = $this->input->post('id', true);
+		// if ($positionId) {
+		// 	$data = $positionId;
+			// $data = $this->memployee->getPositionDependent($positionId);
+			// $data = $this->memployee->getPositionDependent($departmentId);
+		// } else {
+		// 	$data = "gagal";
+		// 	// $data = $this->memployee->getAllPosition();
+		// }
+		$data = $departmentId;
+		echo json_encode($data);
 	}
 }
 
