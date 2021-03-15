@@ -16,6 +16,8 @@
 				<tr>
 					<th>No</th>
 					<th>Department Name</th>
+					<th>Code</th>
+					<th>Status</th>
 					<th>Action</th>
 				</tr>
 				<?php $no = 1; ?>
@@ -23,6 +25,16 @@
 					<tr>
 						<td><?php echo $no; ?></td>
 						<td><?php echo $department->deptdesc; ?></td>
+						<td><?php echo $department->group_desc; ?></td>
+						<td>
+							<?php 
+								if ($department->stsactive == 1) {
+									echo "ACTIVE";
+								} else {
+									echo "NOT ACTIVE";
+								}
+							?>
+						</td>
 						<td><a href="<?php echo base_url() . 'cemployee/modifyDepartment/' . $department->iddept; ?>" class="btn btn-primary"><li class="glyphicon glyphicon-edit"></li> Edit</a> | <a href="<?php echo base_url() . 'cemployee/deleteDepartment/' . $department->iddept; ?>" class="btn btn-primary"><li class="glyphicon glyphicon-trash"></li> Delete</a></td>
 					</tr>
 					<?php $no++; ?>

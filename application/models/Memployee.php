@@ -44,7 +44,7 @@ class memployee extends CI_Model {
 	}
 
 	public function employeeList($limit, $offset){
-	    $sql = "SELECT tblmas_employee.idemployee, tblmas_employee.employeeno, tblmas_employee.employeename, tblmas_employee.code, tblfile_department.deptdesc, tblfile_position.positiondesc, tblfile_position.level, ext.extension 
+	    $sql = "SELECT tblmas_employee.idemployee, tblmas_employee.employeeno, tblmas_employee.employeename, tblmas_employee.code, tblmas_employee.ext, tblfile_department.deptdesc, tblfile_position.positiondesc, tblfile_position.level, ext.extension 
 	   			FROM tblmas_employee 
 	    		LEFT JOIN tblfile_department 
 	    		ON tblmas_employee.iddept = tblfile_department.iddept 
@@ -83,6 +83,7 @@ class memployee extends CI_Model {
 		$info['idposition'] = $input['idposition'];
 		$info['code'] = $input['code'];
 		$info['extId'] = $input['extId'];
+		$info['ext'] = $input['ext'];
 		$this->db->insert('tblmas_employee', $info);
 		if ( $this->db->affected_rows() == 1 ){
 			return $this->db->insert_id();
@@ -94,19 +95,33 @@ class memployee extends CI_Model {
 	public function getEmployeeByIds($idEmployee){
 		$this->db->select('*')
 		->from('tblmas_employee')
+		->join('office_location', 'tblmas_employee.office_location_id = office_location.office_location_id')
 		->where('idemployee', $idEmployee);
 		$result = $this->db->get()->row();
 		return $result;
 	}
 
 	public function employeeIds($idEmployee = NULL){
-		$sql = "SELECT tblmas_employee.idemployee, tblmas_employee.employeeno, tblmas_employee.employeename, tblmas_employee.iddept, tblmas_employee.idposition, tblmas_employee.extId, tblmas_employee.code, tblfile_department.deptdesc, tblfile_position.positiondesc, tblfile_position.level, ext.extension 
+		$sql = "SELECT tblmas_employee.idemployee, 
+					tblmas_employee.employeeno, 
+					tblmas_employee.employeename, 
+					tblmas_employee.iddept, 
+					tblmas_employee.idposition, 
+					tblmas_employee.extId, 
+					tblmas_employee.code,
+					tblmas_employee.office_location_id,
+					office_location.office_location_desc, 
+					tblfile_department.deptdesc, 
+					tblfile_position.positiondesc, 
+					tblfile_position.level, 
+					ext.extension 
 				FROM tblmas_employee 
 				LEFT JOIN tblfile_department 
 				ON tblmas_employee.iddept = tblfile_department.iddept 
 				LEFT JOIN tblfile_position 
 				ON tblmas_employee.idposition = tblfile_position.idposition  
 				LEFT JOIN ext ON tblmas_employee.extId = ext.id 
+				LEFT JOIN office_location ON tblmas_employee.office_location_id = office_location.office_location_id
 				WHERE tblmas_employee.idemployee = '$idEmployee' 
 				ORDER BY tblmas_employee.idemployee DESC";
 		$query = $this->db->query($sql);
@@ -115,6 +130,7 @@ class memployee extends CI_Model {
 
 	public function modifyEmployee($input, $employeeId){
 		$info = [];
+		$info['office_location_id'] = htmlspecialchars($input['office_location_id']);
 		$info['employeeno'] = htmlspecialchars($input['employeeno']);
 		$info['employeename'] = htmlspecialchars($input['employeename']);
 		$info['iddept'] = $input['iddept'];
@@ -236,14 +252,16 @@ class memployee extends CI_Model {
   	// }
 
   	public function department(){
-		$sql = "SELECT iddept, deptdesc FROM tblfile_department";
+		$sql = "SELECT 
+					iddept, deptdesc 
+					FROM tblfile_department WHERE stsactive = 1 ORDER BY ordering ASC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
   	public function saveDepartment($input){
-  		$info['deptdesc'] = htmlspecialchars($input['txtDepartment']);
-  		$this->db->insert('tblfile_department', $info);
+  		// $info['deptdesc'] = htmlspecialchars($input['txtDepartment']);
+  		$this->db->insert('tblfile_department', $input);
   		if ( $this->db->affected_rows() == 1 ){
   			$this->db->insert_id();
   		} else {
@@ -258,7 +276,13 @@ class memployee extends CI_Model {
 	}
 
 	public function departmentList($limit, $offset){
-	    $sql = "SELECT * FROM tblfile_department";
+	    $sql = "SELECT 
+					d.iddept, 
+					d.deptdesc, 
+					d.stsactive, 
+					g.group_desc 
+				FROM tblfile_department d
+				JOIN tbl_group g on d.group_id = g.group_id";
 
 	    if ($limit) {
 	      if(!$offset){
@@ -281,17 +305,25 @@ class memployee extends CI_Model {
 	}
 
 	public function departmentIds($iddept = NULL){
-		$sql = "SELECT * FROM tblfile_department WHERE iddept = $iddept";
+		$sql = "SELECT 
+					d.iddept, 
+					d.deptdesc, 
+					d.stsactive,
+					g.group_id, 
+					g.group_desc 
+				FROM tblfile_department d
+				JOIN tbl_group g on d.group_id = g.group_id 
+				WHERE iddept = $iddept";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function modifyDepartment($input, $iddept){
-		$info = [];
-		$info['deptdesc'] = htmlspecialchars($input['deptdesc']);
+		// $info = [];
+		// $info['deptdesc'] = htmlspecialchars($input['deptdesc']);
 		$this->db->where('iddept', $iddept);
-		$this->db->update('tblfile_department', $info);
-		return $info;
+		$this->db->update('tblfile_department', $input);
+		return TRUE;
 	}
 
 	public function deleteDepartment($iddept){
@@ -517,4 +549,41 @@ class memployee extends CI_Model {
 		$count = $query->num_rows();
 		return $count;
   	}
+
+	public function getOfficeLocations(){
+		$result = $this->db->get('office_location')->result();
+		return $result;
+	}
+
+	public function groupList(){
+		$query = $this->db->get('tbl_group');
+		return $query->result_array();
+	}
+
+	public function getPositionDependent($departmentId){
+		// $query = $this->db->select('*')
+		// ->where('idposition', $positionId)
+		// ->from('tblfile_position');
+		$query = $this->db->get_where('tblfile_position', array('iddept' => $departmentId));
+		// var_dump($query->result_array());die;
+		return $query->result();
+	}
+
+	public function getAllPosition(){
+		$query = $this->db->get('tblfile_position');
+		return $query->result();
+	}
+
+	public function getOfficeDescription($officeLocationId = NULL){
+		if ($officeLocationId == NULL){
+			$officeLocationId = 1;
+		}
+		$result = $this->db->get_where('office_location', array('office_location_id' => $officeLocationId));
+		return $result->row();
+	}
+
+	public function getGroup(){
+		$query = $this->db->get('tbl_group');
+		return $query->result();
+	}
 }	

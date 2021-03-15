@@ -57,7 +57,15 @@
 			<td><?php echo $employee->deptdesc; ?></td>
 			<td><?php echo $employee->positiondesc; ?></td>
 			<td><?php echo $employee->code; ?></td>
-			<td><?php echo $employee->extension; ?></td>
+			<td>
+				<?php
+					if ($employee->extension) {
+						echo $employee->extension;
+					}else{
+			 			echo $employee->ext;
+					} 
+				?>
+			</td>
 			<td><a href="<?=base_url() . "cemployee/modifyEmployee/" . $employee->idemployee; ?>"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>	
 		</tr>
 		<?php $no++; ?>

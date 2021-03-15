@@ -6,10 +6,7 @@ class Cemployee extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('memployee');
-		$this->load->model('mpabx11');	
-		if ( !$this->session->userdata('username') ){
-			redirect(base_url(). 'login');
-		}	
+		$this->load->model('mpabx11');		
 	}
 
 	public function index(){
@@ -48,15 +45,21 @@ class Cemployee extends CI_Controller {
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
 	}
+	
 	public function addEmployee(){
 		if ( $this->input->post() ){
 			$formInfo = [];
+			$formInfo['employee_status'] = $this->input->post('selectEmployeeStatus', TRUE);
 			$formInfo['employeeno'] = $this->input->post('txtEmployeeNo', TRUE);
 			$formInfo['employeename'] = strtoupper($this->input->post('txtEmployee', TRUE));
 			$formInfo['iddept'] = $this->input->post('selDepartment', TRUE);
 			$formInfo['idposition'] = $this->input->post('selPosition');
 			$formInfo['code'] = $this->input->post('selCode');
-			$formInfo['extId'] = $this->input->post('selExtension', TRUE);					
+			if ($this->input->post('selExtension', TRUE)){
+				$formInfo['extId'] = $this->input->post('selExtension', TRUE);
+			} else {
+				$formInfo['ext'] = $this->input->post('textExtension', TRUE);
+			}					
 			if ( $this->memployee->saveEmployee($formInfo) !== 0){
 				$this->mpabx11->updateExtensionStatusAdd($formInfo['extId']);
 				$message = '<div class="alert alert-success">Success!</div>';
@@ -73,6 +76,7 @@ class Cemployee extends CI_Controller {
 		$data['extensions'] = $this->mpabx11->index();
 		$data['departments'] = $this->memployee->department();
 		$data['positions'] = $this->memployee->position();
+		$data['listOfficeLocations'] = $this->memployee->getOfficeLocations();
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);		
 		$data['content'] = $this->load->view('forms/formAddEmployee', $data, TRUE);
@@ -83,6 +87,7 @@ class Cemployee extends CI_Controller {
 	public function modifyEmployee($employeeId = NULL){
 		if ( isset($_POST['btnUpdateEmployee']) ){
 			$formInfo = [];
+			$formInfo['office_location_id'] = $this->input->post('selectOfficeLocation');
 			$formInfo['employeeno'] = $this->input->post('txtEmployeeNo');
 			$formInfo['employeename'] = strtoupper($this->input->post('txtEmployeeName'));
 			$formInfo['iddept'] = $this->input->post('selDepartment');
@@ -109,8 +114,10 @@ class Cemployee extends CI_Controller {
 		$data['getEmployeeByIds'] = $this->memployee->getEmployeeByIds($employeeId);
 		$data['departments'] = $this->memployee->department();
 		$data['positions'] = $this->memployee->position();
+		// $data['getEmpoyeeStatus'] = $this->memployee->getEmployeeStatus();
 		$data['header'] = $this->load->view('headers/head', '', TRUE);		
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);					
+		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['listOfficeLocations'] = $this->memployee->getOfficeLocations();					
 		$data['content'] = $this->load->view('forms/formEditEmployee', $data, TRUE);		
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);		
 		$this->load->view('main', $data);	
@@ -205,7 +212,9 @@ class Cemployee extends CI_Controller {
 	public function addDepartment(){
 		if ( $this->input->post() ){
 			$formInfo = [];
-			$formInfo['txtDepartment'] = strtoupper($this->input->post('txtDepartment'));
+			$formInfo['deptdesc'] = htmlspecialchars(strtoupper($this->input->post('txtDepartment')));
+			$formInfo['group_id'] = htmlspecialchars(strtoupper($this->input->post('selectGroup')));
+			$formInfo['stsactive'] = htmlspecialchars(strtoupper($this->input->post('selectStatus')));
 			if ( $this->memployee->saveDepartment($formInfo) ){
 				redirect(base_url() . 'cemployee/addDepartment');
 			} else {
@@ -216,6 +225,7 @@ class Cemployee extends CI_Controller {
 		$data['departments'] = $this->memployee->department();
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['groups'] = $this->memployee->groupList();
 		$data['content'] = $this->load->view('forms/formAddDepartment', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
@@ -224,7 +234,9 @@ class Cemployee extends CI_Controller {
 	public function modifyDepartment($iddept = NULL){
 		if ( isset($_POST['btnModifyDepartment']) ){
 			$formInfo = [];
-			$formInfo['deptdesc'] = strtoupper($this->input->post('txtDepartmentName'));
+			$formInfo['deptdesc'] = htmlspecialchars(strtoupper($this->input->post('txtDepartmentName')));
+			$formInfo['group_id'] = htmlspecialchars(strtoupper($this->input->post('selectGroup')));
+			$formInfo['stsactive'] = htmlspecialchars(strtoupper($this->input->post('selectStatus')));
 			if ( !$this->memployee->modifyDepartment($formInfo, $iddept) ){
 				redirect(base_url() . 'cemployee/modifyDepartment/' . $iddept);
 			} else {
@@ -236,7 +248,8 @@ class Cemployee extends CI_Controller {
 		$data['getDepartmentByIds'] = $this->memployee->getDepartmentByIds($iddept);
 		$data['departmentIds'] = $this->memployee->departmentIds($iddept);
 		$data['header'] = $this->load->view('headers/head', '', TRUE);		
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);					
+		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['groups'] = $this->memployee->groupList();					
 		$data['content'] = $this->load->view('forms/formEditDepartment', $data, TRUE);		
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);		
 		$this->load->view('main', $data);	
@@ -514,6 +527,21 @@ class Cemployee extends CI_Controller {
 		$data['content'] = $this->load->view('contents/view_client_position', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
+	}
+
+	public function getPositionDependent(){
+		// $positionId  = $_POST['id'];
+		$departmentId = $this->input->post('id', true);
+		// if ($positionId) {
+		// 	$data = $positionId;
+			// $data = $this->memployee->getPositionDependent($positionId);
+			// $data = $this->memployee->getPositionDependent($departmentId);
+		// } else {
+		// 	$data = "gagal";
+		// 	// $data = $this->memployee->getAllPosition();
+		// }
+		$data = $departmentId;
+		echo json_encode($data);
 	}
 }
 
