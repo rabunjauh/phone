@@ -44,6 +44,7 @@
 			<th>Position</th>
 			<th>Company Code</th>
 			<th>Extension</th>
+			<th>Status</th>
 			<th colspan="2">Action</th>
 		</tr>
 
@@ -66,7 +67,18 @@
 					} 
 				?>
 			</td>
-			<td><a href="<?=base_url() . "cemployee/modifyEmployee/" . $employee->idemployee; ?>"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>	
+			<td>
+				<?php echo $employee->employee_status; ?></td>
+			<td><a href="<?=base_url() . "cemployee/modifyEmployee/" . $employee->idemployee; ?>"><span class="glyphicon glyphicon-edit"></span></a></td>	
+			<td>
+				<?php 
+					if ($employee->stsactive) { ?>
+						<a href="<?=base_url() . "cemployee/toggleEmployeeStatus/" . $employee->idemployee . "/" . 0; ?>"><span class="glyphicon glyphicon-remove-circle"></span></a>
+					<?php } else { ?>	
+						<a href="<?=base_url() . "cemployee/toggleEmployeeStatus/" . $employee->idemployee . "/" . 1; ?>"><span class="glyphicon glyphicon-ok-circle"></span></a>
+					<?php } ?>			
+			</td>	
+		
 		</tr>
 		<?php $no++; ?>
 		<?php endforeach ?>

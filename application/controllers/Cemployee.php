@@ -56,7 +56,7 @@ class Cemployee extends CI_Controller {
 			$formInfo['employeename'] = strtoupper($this->input->post('txtEmployee', TRUE));
 			$formInfo['iddept'] = $this->input->post('selDepartment', TRUE);
 			$formInfo['idposition'] = $this->input->post('selPosition');
-			$formInfo['code'] = $this->input->post('selCode');
+			// $formInfo['code'] = $this->input->post('selCode');
 			if ($this->input->post('selExtension', TRUE)){
 				$formInfo['extId'] = $this->input->post('selExtension', TRUE);
 			} else {
@@ -115,6 +115,7 @@ class Cemployee extends CI_Controller {
 		$data = [];
 		$data['extensions'] = $this->mpabx11->index();
 		$data['employees'] = $this->memployee->employeeIds($employeeId);
+		$data['employeeStatuses'] = $this->memployee->getEmployeeStatus();
 		$data['getEmployeeByIds'] = $this->memployee->getEmployeeByIds($employeeId);
 		$data['departments'] = $this->memployee->department();
 		$data['positions'] = $this->memployee->position();
@@ -127,6 +128,14 @@ class Cemployee extends CI_Controller {
 		$data['content'] = $this->load->view('forms/formEditEmployee', $data, TRUE);		
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);		
 		$this->load->view('main', $data);	
+	}
+
+	public function toggleEmployeeStatus($idEmployee, $status) {
+		if ($this->memployee->toggleEmployeeStatus($idEmployee, $status)){
+			$message = '<div class="alert alert-success">Employee status changed!</div>';
+			$this->session->set_flashdata('message', $message);
+			redirect(base_url() . 'cemployee');
+		}
 	}
 
 	public function search($searchCategory=false, $txtSearch=false){

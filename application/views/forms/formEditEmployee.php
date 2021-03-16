@@ -1,5 +1,3 @@
-<!-- 1. Fix extension input error -->
-<!-- 2. replace company code with stsactive -->
 <div class="container box">	
 	<div class = "row">
 		<div class="col-lg-12">
@@ -63,20 +61,6 @@
 					</div>
 			
 					<div class="form-group">
-						<label for="selCode">Company Code :</label>
-						<select name="selCode" class="form-control">
-						<option value="<?php echo $employee->code; ?>"><?php echo $employee->code; ?></option>
-						<option value="">Company Code</option>
-						<option value="c1">Client 1</option>
-						<option value="c2">Client 2</option>
-						<option value="c3">Client 3</option>
-						<option value="c4">Client 4</option>
-						<option value="c5">Client 5</option>
-						<option value="c6">Client 6</option>
-						</select>
-					</div>
-
-					<div class="form-group">
 						<label for="selectExtensionInputType">Input Type</label>
 						<select name="selectExtensionInputType" id="selectExtensionInputType" class="form-control">
 							<option value="fromList">Select From List</option>
@@ -87,7 +71,7 @@
 			
 					<div class="form-group selExtension">
 						<label for="selExtension">Extension No :</label>
-						<select name="selExtension" class="form-control">
+						<select name="selExtension" class="form-control" required>
 							<option value="<?php echo $employee->extId; ?>"><?php echo $employee->extension; ?></option>
 							<option value="">Extension No</option>
 							<?php foreach ( $extensions as $extension ): ?>
@@ -129,9 +113,11 @@
 			if (value == 'manual') {
 				selExtension.style.display = 'none';
 				textExtensionNo.style.display = 'block';
+				selExtension.required = FALSE;
 			}else{
 				selExtension.style.display = 'block';
 				textExtensionNo.style.display = 'none';
+				textExtensionNo.required = FALSE;
 			}
 		});
 	}	

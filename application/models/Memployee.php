@@ -44,7 +44,7 @@ class memployee extends CI_Model {
 	}
 
 	public function employeeList($limit, $offset){
-	    $sql = "SELECT tblmas_employee.idemployee, tblmas_employee.employeeno, tblmas_employee.employeename, tblmas_employee.code, tblmas_employee.ext, tblfile_department.deptdesc, tblfile_position.positiondesc, tblfile_position.level, ext.extension 
+	    $sql = "SELECT tblmas_employee.idemployee, tblmas_employee.stsactive, tblmas_employee.employeeno, tblmas_employee.employeename, tblmas_employee.code, tblmas_employee.ext, tblfile_department.deptdesc, tblfile_position.positiondesc, tblfile_position.level, ext.extension, employee_status.employee_status 
 	   			FROM tblmas_employee 
 	    		LEFT JOIN tblfile_department 
 	    		ON tblmas_employee.iddept = tblfile_department.iddept 
@@ -52,6 +52,7 @@ class memployee extends CI_Model {
 	    		ON tblmas_employee.idposition = tblfile_position.idposition 
 	    		LEFT JOIN ext
 	    		ON tblmas_employee.extId = ext.id
+				LEFT JOIN employee_status ON tblmas_employee.stsactive = employee_status.employee_status_id
 	    		ORDER BY tblmas_employee.idemployee DESC";
 
 	    // $sql = "SELECT tblmas_employee.idemployee, tblmas_employee.employeeno, tblmas_employee.employeename, tblfile_department.deptdesc, tblfile_position.positiondesc, tblfile_position.level 
@@ -94,7 +95,7 @@ class memployee extends CI_Model {
 	public function getEmployeeByIds($idEmployee){
 		$this->db->select('*')
 		->from('tblmas_employee')
-		->join('office_location', 'tblmas_employee.office_location_id = office_location.office_location_id')
+		// ->join('office_location', 'tblmas_employee.office_location_id = office_location.office_location_id')
 		->where('idemployee', $idEmployee);
 		$result = $this->db->get()->row();
 		return $result;
@@ -109,11 +110,14 @@ class memployee extends CI_Model {
 					tblmas_employee.extId, 
 					tblmas_employee.code,
 					tblmas_employee.office_location_id,
+					tblmas_employee.ext,
 					office_location.office_location_desc, 
 					tblfile_department.deptdesc, 
 					tblfile_position.positiondesc, 
 					tblfile_position.level, 
-					ext.extension 
+					ext.extension,
+					employee_status.employee_status_id,
+					employee_status.employee_status 
 				FROM tblmas_employee 
 				LEFT JOIN tblfile_department 
 				ON tblmas_employee.iddept = tblfile_department.iddept 
@@ -121,6 +125,7 @@ class memployee extends CI_Model {
 				ON tblmas_employee.idposition = tblfile_position.idposition  
 				LEFT JOIN ext ON tblmas_employee.extId = ext.id 
 				LEFT JOIN office_location ON tblmas_employee.office_location_id = office_location.office_location_id
+				LEFT JOIN employee_status ON tblmas_employee.stsactive = employee_status.employee_status_id
 				WHERE tblmas_employee.idemployee = '$idEmployee' 
 				ORDER BY tblmas_employee.idemployee DESC";
 		$query = $this->db->query($sql);
@@ -139,6 +144,14 @@ class memployee extends CI_Model {
 		$this->db->where('idemployee', $employeeId);
 		$this->db->update('tblmas_employee', $info);
 		return $info;
+	}
+
+	public function toggleEmployeeStatus($idEmployee, $status){
+		$this->db->where('idemployee', $idEmployee);
+		$this->db->update('tblmas_employee', array('stsactive' => $status));
+		if ($this->db->affected_rows() > 0){
+			return TRUE;
+		}
 	}
 
 	public function countEmployeeSearch($searchCategory = false, $txtSearch = false){
@@ -583,6 +596,11 @@ class memployee extends CI_Model {
 
 	public function getGroup(){
 		$query = $this->db->get('tbl_group');
+		return $query->result();
+	}
+
+	public function getEmployeeStatus(){
+		$query = $this->db->get('employee_status');
 		return $query->result();
 	}
 }	

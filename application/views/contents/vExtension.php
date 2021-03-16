@@ -43,10 +43,12 @@
 		<?php	
 					}	
 				endforeach;
+		?>		
+				</table>			
+		<?php
 			endforeach;
 			}	
 		?>	
-			</table>			
 		</div>
 	</div>
 </div>	
