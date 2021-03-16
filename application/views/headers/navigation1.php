@@ -1,9 +1,3 @@
-<style type="text/css">
-	.nav{
-		margin-top: 30px;
-	}
-</style>
-
 <nav class="nav">
 	<ul>
 		<?php 

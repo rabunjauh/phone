@@ -21,6 +21,7 @@ class Cpabx1 extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('mpabx11');
+		$this->load->model('memployee');
 		if ( !$this->session->userdata('username') ){
 			redirect(base_url(). 'login');
 		}
@@ -30,8 +31,9 @@ class Cpabx1 extends CI_Controller {
 	public function index()
 	{
 		$data = [];
+		$data['menu'] = '';
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['yard1_pabx1_row01'] = $this->mpabx11->yard1_pabx1_row01();
 		$data['yard1_pabx1_row02'] = $this->mpabx11->yard1_pabx1_row02();
 		$data['yard1_pabx1_row03'] = $this->mpabx11->yard1_pabx1_row03();
@@ -63,6 +65,7 @@ class Cpabx1 extends CI_Controller {
 		$data['yard1_pabx5_desc'] = $this->mpabx11->yard1_pabx5_desc();
 		$data['yard1_pabx6_desc'] = $this->mpabx11->yard1_pabx6_desc();
 
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
 		$data['content'] = $this->load->view('contents/vExt11', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
@@ -70,8 +73,10 @@ class Cpabx1 extends CI_Controller {
 
 	public function addExtension(){
 		$data = [];
+		$data['menu'] = '';
 		$data['header'] = $this->load->view('headers/header', '', TRUE);
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
 		$data['content'] = $this->load->view('forms/formAddExtension', '', TRUE);
 		// $data['pabx_location'] = $this->mpabx1->
 		$data['pabx_no'] = $this->mpabx11->pabx_no();
@@ -104,9 +109,10 @@ class Cpabx1 extends CI_Controller {
 		}
 		// $data[$id] = $id;
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['pabxs'] = $this->mpabx11->getAllPabxById($id);
 		$data['getExtensionByIds'] = $this->mpabx11->getExtensionByIds($id);
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
 		$data['content'] = $this->load->view('forms/formEditExtension', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
@@ -126,6 +132,7 @@ class Cpabx1 extends CI_Controller {
 	// public function getPabx2Y1()
 	// {
 	// 	$data = [];
+	// $data['menu'] = '';
 	// 	$data['header'] = $this->load->view('header', '', TRUE);
 	// 	$data['pabx01'] = $this->mpabx->index();
 	// 	// $data['pabx02'] = $this->mpabx->queryPabx2Y1();
@@ -137,8 +144,9 @@ class Cpabx1 extends CI_Controller {
 	public function yard2()
 	{
 		$data = [];
+		$data['menu'] = '';
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['yard2_pabx1_row01'] = $this->mpabx11->yard2_pabx1_row01();
 		$data['yard2_pabx1_row02'] = $this->mpabx11->yard2_pabx1_row02();
 		$data['yard2_pabx1_row03'] = $this->mpabx11->yard2_pabx1_row03();
@@ -170,6 +178,7 @@ class Cpabx1 extends CI_Controller {
 		$data['yard2_pabx5_desc'] = $this->mpabx11->yard2_pabx5_desc();
 		$data['yard2_pabx6_desc'] = $this->mpabx11->yard2_pabx6_desc();
 
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
 		$data['content'] = $this->load->view('contents/v_pabx_yard2', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);

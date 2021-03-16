@@ -1,3 +1,5 @@
+<!-- 1. Fix extension input error -->
+<!-- 2. replace company code with stsactive -->
 <div class="container box">	
 	<div class = "row">
 		<div class="col-lg-12">

@@ -24,7 +24,7 @@ class Cextension extends CI_Controller {
 		$this->load->model('memployee');
 	}
 
-	public function index($officeLocationId = '', $groupId = ''){
+	public function index($officeLocationId = ''){
 		$data = [];
 		$data['menu'] = '';
 		$data['departments'] = $this->memployee->department();
@@ -35,7 +35,7 @@ class Cextension extends CI_Controller {
 		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
 		// var_dump($data['departments']);die;
 		// $data['phoneBooks'] = $this->mextensions->index($data['departments'], $officeLocation);
-		$data['phoneBooks'] = $this->mextensions->index($data['departments'], $officeLocationId, $groupId);
+		$data['phoneBooks'] = $this->mextensions->index($data['departments'], $officeLocationId);
 		// var_dump($data['phoneBooks']);
 
 		// die;

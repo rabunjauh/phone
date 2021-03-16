@@ -52,7 +52,6 @@ class memployee extends CI_Model {
 	    		ON tblmas_employee.idposition = tblfile_position.idposition 
 	    		LEFT JOIN ext
 	    		ON tblmas_employee.extId = ext.id
-	    		WHERE tblmas_employee.stsactive = '1'
 	    		ORDER BY tblmas_employee.idemployee DESC";
 
 	    // $sql = "SELECT tblmas_employee.idemployee, tblmas_employee.employeeno, tblmas_employee.employeename, tblfile_department.deptdesc, tblfile_position.positiondesc, tblfile_position.level 

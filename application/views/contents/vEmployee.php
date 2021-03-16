@@ -59,10 +59,10 @@
 			<td><?php echo $employee->code; ?></td>
 			<td>
 				<?php
-					if ($employee->extension) {
-						echo $employee->extension;
+					if (isset($employee->ext)) {
+						echo $employee->ext;
 					}else{
-			 			echo $employee->ext;
+			 			echo $employee->extension;
 					} 
 				?>
 			</td>

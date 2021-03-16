@@ -1,30 +1,17 @@
 <div class="container box">
-	<div class="row" style="margin-top: 10px">				
-		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-			<?php foreach ($groups as $group) { ?>
-				<a href="<?= base_url('cextension/index/') . $officeLocationDesc->office_location_id ."/" . $group->group_id ?>" class="btn btn-default btn-flat"><?= $group->group_desc ?></a>
-			<?php }	?>
-		</div>	
-
-		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right">
-			<a href="<?= base_url('cextension/pdf_extension_wasco_y1'); ?>" class="btn btn-primary" target="_blank">Generate PDF</a>
-		</div>		
-	</div>
-
 	<div class="row text-center">
 		<div class="col-lg-6 col-md-6 col-sm-6 col-sx-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">
 			<h3><?= $officeLocationDesc->office_location_desc ?></h3>
 		</div>
 	</div>
-
-	<div class="row">
-		<div class="col-lg-6 col-md-6 col-sm-6 col-sx-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 text-center">
-			<?php echo $cover; ?>
-		</div>
-	</div>
 	
 	<div class="row" >
-		<div class="col-lg-6 col-md-6 col-sm-6 col-sx-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">			
+		<div class="col-lg-6 col-md-6 col-sm-6 col-sx-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">	
+				<div class="row">				
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left" style="margin: 10px 0px 10px 0px">
+						<a href="<?= base_url('cextension/pdf_extension_wasco_y1'); ?>" class="btn btn-primary" target="_blank">Generate PDF All</a>
+					</div>		
+				</div>
 		<?php 
 			if (isset($phoneBooks)){
 			foreach ($phoneBooks as $key => $departmentGroups) :

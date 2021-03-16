@@ -5,16 +5,14 @@
 		</div>
 	</div>
 
-	<div class="row text-right">
+	<div class="row text-right" style="margin-bottom: 10px;">
 		<div class="col-lg-12">			
 			<a href="<?php echo base_url() . 'cemployee' ?>" class="btn btn-primary"><li class="glyphicon glyphicon-arrow-left"></li> Back</a>
 		</div>
-	</div>		
-	<br>			
+	</div>	
+
 	<div class="row">
 		<div class="col-lg-6">
-
-			<p id = "tes"></p>
 			<?=form_open(base_url() . 'cemployee/addEmployee'); ?>
 
 			<div class="form-group">
@@ -133,25 +131,25 @@
 
 	toggleExtension();
 
-	const selectDepartment = document.getElementById('selDepartment');
-	selectDepartment.addEventListener('change', function (e){
-		const selectDepartmentValue = selectDepartment.options[selectDepartment.selectedIndex].value;
-		let data = {
-			id : "tes"
-		};
-		console.log(data);
-		const url = '<?= base_url('cemployee/getPositionDependent/'); ?>';
-		let xhttp = new XMLHttpRequest();
-		xhttp.open('POST', url, true);
-		xhttp.onreadystatechange = function(){
-			if (this.readyState == 4 && this.status == 200){
-				const tes = document.getElementById('tes');
-				tes.innerHTML = this.responseText;
-			}
-		};
-		xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-		xhttp.send(data);
+	// const selectDepartment = document.getElementById('selDepartment');
+	// selectDepartment.addEventListener('change', function (e){
+	// 	const selectDepartmentValue = selectDepartment.options[selectDepartment.selectedIndex].value;
+	// 	let data = {
+	// 		id : "tes"
+	// 	};
+	// 	console.log(data);
+		//const url = '';
+	// 	let xhttp = new XMLHttpRequest();
+	// 	xhttp.open('POST', url, true);
+	// 	xhttp.onreadystatechange = function(){
+	// 		if (this.readyState == 4 && this.status == 200){
+	// 			const tes = document.getElementById('tes');
+	// 			tes.innerHTML = this.responseText;
+	// 		}
+	// 	};
+	// 	xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+	// 	xhttp.send(data);
 
 		
-	})
+	// })
 </script>	

@@ -38,7 +38,9 @@ class Cemployee extends CI_Controller {
 	    $this->pagination->initialize($config);
 
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['menu'] = '';
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['no'] = $this->uri->segment(3);
 		$data['employees'] = $this->memployee->employeeList($config['per_page'], $this->uri->segment(3));
 		$data['content'] = $this->load->view('contents/vEmployee', $data, TRUE);
@@ -77,8 +79,10 @@ class Cemployee extends CI_Controller {
 		$data['departments'] = $this->memployee->department();
 		$data['positions'] = $this->memployee->position();
 		$data['listOfficeLocations'] = $this->memployee->getOfficeLocations();
+		$data['menu'] = '';
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);		
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();		
 		$data['content'] = $this->load->view('forms/formAddEmployee', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
@@ -116,7 +120,9 @@ class Cemployee extends CI_Controller {
 		$data['positions'] = $this->memployee->position();
 		// $data['getEmpoyeeStatus'] = $this->memployee->getEmployeeStatus();
 		$data['header'] = $this->load->view('headers/head', '', TRUE);		
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['menu'] = '';
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['listOfficeLocations'] = $this->memployee->getOfficeLocations();					
 		$data['content'] = $this->load->view('forms/formEditEmployee', $data, TRUE);		
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);		
@@ -158,7 +164,9 @@ class Cemployee extends CI_Controller {
 
 
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['menu'] = '';
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['no'] = $this->uri->segment(5);
 		$data['employees'] = $this->memployee->employeeListSearch($config['per_page'], $this->uri->segment(5),  $searchCategory, urldecode($txtSearch));
 		$data['content'] = $this->load->view('contents/vEmployee', $data, TRUE);
@@ -202,7 +210,9 @@ class Cemployee extends CI_Controller {
 	    $this->pagination->initialize($config);
 
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['menu'] = '';
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['departments'] = $this->memployee->departmentList($config['per_page'], $this->uri->segment(3));
 		$data['content'] = $this->load->view('contents/vDepartment', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
@@ -224,7 +234,9 @@ class Cemployee extends CI_Controller {
 		$data = [];
 		$data['departments'] = $this->memployee->department();
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['menu'] = '';
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['groups'] = $this->memployee->groupList();
 		$data['content'] = $this->load->view('forms/formAddDepartment', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
@@ -248,7 +260,9 @@ class Cemployee extends CI_Controller {
 		$data['getDepartmentByIds'] = $this->memployee->getDepartmentByIds($iddept);
 		$data['departmentIds'] = $this->memployee->departmentIds($iddept);
 		$data['header'] = $this->load->view('headers/head', '', TRUE);		
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['menu'] = '';
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['groups'] = $this->memployee->groupList();					
 		$data['content'] = $this->load->view('forms/formEditDepartment', $data, TRUE);		
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);		
@@ -290,7 +304,9 @@ class Cemployee extends CI_Controller {
 
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['no'] = $this->uri->segment(3);
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['menu'] = '';
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['departments'] = $this->memployee->department();
 		$data['get_positions'] = $this->memployee->position();
 		$data['positions'] = $this->memployee->positionList($config['per_page'], $this->uri->segment(3));
@@ -315,7 +331,9 @@ class Cemployee extends CI_Controller {
 		$data['positions'] = $this->memployee->position();
 		$data['departments'] = $this->memployee->department();		
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['menu'] = '';
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['content'] = $this->load->view('forms/formAddPosition', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
@@ -339,7 +357,9 @@ class Cemployee extends CI_Controller {
 		$data['getPositionByIds'] = $this->memployee->getPositionByIds($idposition);
 		$data['positionIds'] = $this->memployee->positionIds($idposition);
 		$data['header'] = $this->load->view('headers/head', '', TRUE);		
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);					
+		$data['menu'] = '';
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();					
 		$data['content'] = $this->load->view('forms/formEditPosition', $data, TRUE);		
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);		
 		$this->load->view('main', $data);	
@@ -385,7 +405,9 @@ class Cemployee extends CI_Controller {
 
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['no'] = $this->uri->segment(5);
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['menu'] = '';
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['departments'] = $this->memployee->department();
 		$data['get_positions'] = $this->memployee->position();
 		$data['positions'] = $this->memployee->positionListSearch($config['per_page'], $this->uri->segment(5), $department, $position);
@@ -424,7 +446,9 @@ class Cemployee extends CI_Controller {
 	    $this->pagination->initialize($config);
 
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['menu'] = '';
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['employees'] = $this->memployee->client_list($config['per_page'], $this->uri->segment(3));
 		$data['content'] = $this->load->view('contents/vClient', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
@@ -467,7 +491,9 @@ class Cemployee extends CI_Controller {
 	    $this->pagination->initialize($config);
 
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['menu'] = '';
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['companies'] = $this->memployee->company_list($config['per_page'], $this->uri->segment(3));
 		$data['content'] = $this->load->view('contents/view_company', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
@@ -487,7 +513,9 @@ class Cemployee extends CI_Controller {
 		$data = [];
 		$data['positions'] = $this->memployee->position();
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['menu'] = '';
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['content'] = $this->load->view('forms/form_add_company', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
@@ -522,7 +550,9 @@ class Cemployee extends CI_Controller {
 	    $this->pagination->initialize($config);
 
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['menu'] = '';
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['positions'] = $this->memployee->client_position_list($config['per_page'], $this->uri->segment(3));
 		$data['content'] = $this->load->view('contents/view_client_position', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);

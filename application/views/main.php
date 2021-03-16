@@ -8,7 +8,7 @@
 		}
 
 		.nav{
-		margin-top: 30px;
+		margin-top: 10px;
 	}
 	</style>
 	<link rel="stylesheet" type="text/css" href="style_print.css">
@@ -27,6 +27,12 @@
 				echo '';
 			} else {
 		?>
+
+<div class="row">
+		<div class="col-lg-6 col-md-6 col-sm-6 col-sx-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 text-center">
+			<?php echo $cover; ?>
+		</div>
+	</div>
 			<!-- Navigation -->
 		<div class="row">
 			<nav class="nav">
