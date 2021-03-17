@@ -16,7 +16,7 @@
 <body>
 <div class="container box">
 	<div class="row text-center">
-		<div class="col-lg-6 col-md-6 col-sm-6 col-sx-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">
+		<div>
 			<h3><?= $officeLocationDesc->office_location_desc ?></h3>
 		</div>
 	</div>
