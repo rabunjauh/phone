@@ -28,12 +28,12 @@
 			} else {
 		?>
 
-<div class="row">
-		<div class="col-lg-6 col-md-6 col-sm-6 col-sx-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 text-center">
-			<?php echo $cover; ?>
+		<div class="row">
+			<div class="col-lg-6 col-md-6 col-sm-6 col-sx-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 text-center">
+				<?php echo $cover; ?>
+			</div>
 		</div>
-	</div>
-			<!-- Navigation -->
+		<!-- Navigation -->
 		<div class="row">
 			<nav class="nav">
 				<ul>
@@ -62,8 +62,17 @@
 			}
 		?>
 		<div id="note">
-                <?=($this->session->flashdata('message')) ? $this->session->flashdata('message') : '';?>   
-            </div>
+			<?=($this->session->flashdata('message')) ? $this->session->flashdata('message') : '';?>   
+		</div>
+
+		<?php if (isset($officeLocationId)){ ?>
+			<div class="row">				
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left" style="margin: 0px 0px 0px 10px">
+					<a href="<?= base_url('cextension/index/') . $officeLocationId . "/pdf";?>" class="btn btn-primary" target="_blank">Generate PDF</a>
+				</div>		
+			</div>
+		<?php } ?>
+
 		<!-- Content -->
 		<div class="content">
 			<?php echo $content; ?>

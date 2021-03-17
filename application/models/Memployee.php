@@ -206,12 +206,7 @@ class memployee extends CI_Model {
   			$limit = "LIMIT $offset, $num";
   		}
 
-  // 		echo "num =" . $num;
-		// echo "</br>offset =" . $offset;
-		// echo "</br>searchCategory =" . $searchCategory;
-		// echo "</br>txtSearch =" . $txtSearch;
-		// die;	
-		if ( $searchCategory == "0" ){
+		  if ( $searchCategory == "0" ){
 		 	$filter = "tblmas_employee.idemployee LIKE '%$txtSearch%'
     		OR tblmas_employee.employeeno LIKE '%$txtSearch%'
     		OR tblmas_employee.employeename LIKE '%$txtSearch%'
@@ -234,9 +229,7 @@ class memployee extends CI_Model {
 		}else if ( $searchCategory == "extension" ){
 			$filter = "ext.extension = '$txtSearch'";	
 		}
-		// else{
-		//     $filter = "tblmas_employee.$searchCategory = '$txtSearch'";
-  // 		}
+
   		$sql = "SELECT tblmas_employee.idemployee, tblmas_employee.employeeno, tblmas_employee.employeename, tblmas_employee.code, tblfile_department.deptdesc, tblfile_position.positiondesc, tblfile_position.level, ext.extension 
 		   	 		FROM tblmas_employee 
 		     		LEFT JOIN tblfile_department 
@@ -249,19 +242,8 @@ class memployee extends CI_Model {
 		     		ORDER BY tblmas_employee.idemployee DESC $limit";	
 		
 		$query = $this->db->query($sql);
-		// echo $this->db->last_query()."</br>";die;
 		return $query->result();     		
   	}
-
-  	// public function deleteEmployee($idEmployee){
-  	// 	$this->db->where('idemployee', $idEmployee);
-   //      $this->db->delete('tblmas_employee');
-   //      if ($this->db->affected_rows() == 1) {
-   //          return TRUE;
-   //      } else {
-   //          return FALSE;
-   //      }
-  	// }
 
   	public function department(){
 		$sql = "SELECT 
@@ -471,36 +453,6 @@ class memployee extends CI_Model {
         } else {
             return FALSE;
         }
-  	}
-
-  	public function positionDepartment(){
-  		$sql = "SELECT tblfile_position.positiondesc, iddept, deptdesc 
-  				FROM ";
-  	}
-
-  	public function count_client(){
-		$query = $this->db->query("SELECT * FROM table_client");
-		$count = $query->num_rows();
-		return $count;
-	}
-
-	public function client_list($limit, $offset){
-	    $sql = "SELECT table_client.id, table_client.name, table_client.extId, company.company, client_position.position, client_position.level 
-	   			FROM table_client
-	    		LEFT JOIN company 
-	    		ON table_client.id_company = company.id 
-	    		LEFT JOIN client_position
-	    		ON table_client.id_position = client_position.id 
-	    		ORDER BY table_client.id DESC";
-	    if ($limit) {
-	      if(!$offset){
-	        $sql .= " LIMIT $limit";
-	      }else{
-	        $sql .= " LIMIT $limit OFFSET $offset";
-	      }
-	    }
-	    $query = $this->db->query($sql);
-	    return $query->result();
   	}
 
 

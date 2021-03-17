@@ -464,13 +464,6 @@ class Cemployee extends CI_Controller {
 		$this->load->view('main', $data);
 	}
 
-
-
-
-
-
-
-
 	public function company(){		
 		$data = [];
 		$config = [];
@@ -509,68 +502,9 @@ class Cemployee extends CI_Controller {
 		$this->load->view('main', $data);
 	}
 
-	public function add_company(){
-		if ( $this->input->post() ){
-			$formInfo = [];
-			$formInfo['txt_company'] = strtoupper($this->input->post('txt_company'));
-			if ( $this->memployee->save_company($formInfo) ){
-				redirect(base_url() . 'cemployee/add_company');
-			} else {
-				redirect(base_url() . 'cemployee/company');
-			}
-		}
-		$data = [];
-		$data['positions'] = $this->memployee->position();
-		$data['header'] = $this->load->view('headers/head', '', TRUE);
-		$data['menu'] = '';
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
-		$data['navigation'] = $this->memployee->getOfficeLocations();
-		$data['content'] = $this->load->view('forms/form_add_company', $data, TRUE);
-		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
-		$this->load->view('main', $data);
-	}
-
-	public function client_position(){		
-		$data = [];
-		$config = [];
-		$config['full_tag_open'] = '<ul class="pagination">';
-	    $config['full_tag_close'] = '</ul>';
-	    $config['num_tag_open'] = '<li>';
-	    $config['num_tag_close'] = '</li>';
-	    $config['cur_tag_open'] = '<li class="active"><span>';
-	    $config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
-	    $config['prev_tag_open'] = '<li>';
-	    $config['prev_tag_close'] = '</li>';
-	    $config['next_tag_open'] = '<li>';
-	    $config['next_tag_close'] = '</li>';
-	    $config['first_link'] = '&laquo;';
-	    $config['prev_link'] = '&lsaquo;';
-	    $config['last_link'] = '&raquo;';
-	    $config['next_link'] = '&rsaquo;';
-	    $config['first_tag_open'] = '<li>';
-	    $config['first_tag_close'] = '</li>';
-	    $config['last_tag_open'] = '<li>';
-	    $config['last_tag_close'] = '</li>';
-	    $data['total_client_position'] =  $this->memployee->count_client_position();
-	    $config["base_url"] = base_url() . "cemployee/client_position";
-	    $config['total_rows'] = $data['total_client_position'];
-	    $config['per_page'] = '10';
-	    $config['uri_segment'] = '3';
-	    $this->pagination->initialize($config);
-
-		$data['header'] = $this->load->view('headers/head', '', TRUE);
-		$data['menu'] = '';
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
-		$data['navigation'] = $this->memployee->getOfficeLocations();
-		$data['positions'] = $this->memployee->client_position_list($config['per_page'], $this->uri->segment(3));
-		$data['content'] = $this->load->view('contents/view_client_position', $data, TRUE);
-		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
-		$this->load->view('main', $data);
-	}
-
-	public function getPositionDependent(){
+	// public function getPositionDependent(){
 		// $positionId  = $_POST['id'];
-		$departmentId = $this->input->post('id', true);
+		// $departmentId = $this->input->post('id', true);
 		// if ($positionId) {
 		// 	$data = $positionId;
 			// $data = $this->memployee->getPositionDependent($positionId);
@@ -579,9 +513,9 @@ class Cemployee extends CI_Controller {
 		// 	$data = "gagal";
 		// 	// $data = $this->memployee->getAllPosition();
 		// }
-		$data = $departmentId;
-		echo json_encode($data);
-	}
+		// $data = $departmentId;
+		// echo json_encode($data);
+	// }
 }
 
 	

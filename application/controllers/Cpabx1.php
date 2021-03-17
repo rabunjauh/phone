@@ -118,29 +118,6 @@ class Cpabx1 extends CI_Controller {
 		$this->load->view('main', $data);
 	}
 
-	// public function modifyExtension(){
-		
-	// 	return $this->mpabx11->modifyExtension();
-	// 	if ( !$this->mpabx11->modifyExtension() ){
-	// 		$id = $this->input->post('extId');
-	// 		redirect(base_url().'cpabx1/updateExtension/' . $id);
-	// 	} else {
-	// 		redirect(base_url());
-	// 	}
-	// }
-
-	// public function getPabx2Y1()
-	// {
-	// 	$data = [];
-	// $data['menu'] = '';
-	// 	$data['header'] = $this->load->view('header', '', TRUE);
-	// 	$data['pabx01'] = $this->mpabx->index();
-	// 	// $data['pabx02'] = $this->mpabx->queryPabx2Y1();
-	// 	$data['content2'] = $this->load->view('vExt2', $data, TRUE);
-	// 	$data['footer'] = $this->load->view('footer', '', TRUE);
-	// 	$this->load->view('main', $data);
-	// }
-
 	public function yard2()
 	{
 		$data = [];

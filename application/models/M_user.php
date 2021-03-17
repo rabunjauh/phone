@@ -82,6 +82,4 @@ class m_user extends CI_Model {
 		}
 		return true;
 	}
-
-	
 }	
