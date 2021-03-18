@@ -83,7 +83,7 @@
 
 					<div class="form-group textExtensionNo">
 						<label for="textExtension">Extension No :</label>
-						<input type="text" name="textExtension" class="form-control" value="<?= $employee->ext ?>" placeholder="Extension No" required>
+						<input type="text" name="textExtension" class="form-control" value="<?= $employee->ext ?>" placeholder="Extension No">
 					</div>
 		</div>
 	</div>
@@ -117,7 +117,6 @@
 			}else{
 				selExtension.style.display = 'block';
 				textExtensionNo.style.display = 'none';
-				textExtensionNo.required = FALSE;
 			}
 		});
 	}	

@@ -50,6 +50,8 @@ class mextensions extends CI_Model {
 				$results[$value->deptdesc] = $query->result_array();
 			}
 		}
-		return $results;
+		if (isset($results)){
+			return $results;
+		}
 	}
 }

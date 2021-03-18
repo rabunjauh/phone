@@ -92,7 +92,7 @@
 
 			<div class="form-group textExtensionNo">
 				<label for="textExtension">Extension No :</label>
-				<input type="text" name="textExtension" class="form-control" placeholder="Extension No" required>
+				<input type="text" name="textExtension" class="form-control" placeholder="Extension No">
 			</div>
         </div>
 	</div>

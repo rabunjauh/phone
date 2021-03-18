@@ -50,6 +50,7 @@
 					<li><a href="<?=base_url() . "cemployee/department";?>" title="">Departments</a></li>
 					<li><a href="<?=base_url() . "cemployee/position";?>" title="">Positions</a></li>
 					<li><a href="<?=base_url() . "c_user";?>" title="">Users</a></li>
+					<li><a href="<?=base_url() . "cemployee/officeLocation";?>" title="">Office Location</a></li>
 					<li><a href="<?=base_url() . "login/logout";?>" title="">Logout</a></li>
 					<?php 
 						} 

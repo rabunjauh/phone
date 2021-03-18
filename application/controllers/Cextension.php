@@ -42,7 +42,7 @@ class Cextension extends CI_Controller {
 		} else {
 			$html = $this->load->view('contents/vExtensionPDF', $data, TRUE);
 			// mpdf library
-			ob_clean();
+			error_reporting(0); 
 			include("library/MPDF54/mpdf.php");
 			$mpdf = new mPDF('',    // mode - default ''
 			'',    // format - A4, for example, default ''

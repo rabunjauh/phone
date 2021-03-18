@@ -77,11 +77,11 @@ class memployee extends CI_Model {
   	}
 
 	public function saveEmployee($input){
+		$info['office_location_id'] = $input['office_location_id'];
 		$info['employeeno'] = strtolower(htmlspecialchars($input['employeeno']));
 		$info['employeename'] = htmlspecialchars($input['employeename']);
 		$info['iddept'] = $input['iddept'];
 		$info['idposition'] = $input['idposition'];
-		$info['code'] = $input['code'];
 		$info['extId'] = $input['extId'];
 		$info['ext'] = $input['ext'];
 		$this->db->insert('tblmas_employee', $info);
@@ -141,6 +141,7 @@ class memployee extends CI_Model {
 		$info['idposition'] = $input['idposition'];
 		$info['code'] = $input['code'];
 		$info['extId'] = $input['extId'];
+		$info['ext'] = $input['ext'];
 		$this->db->where('idemployee', $employeeId);
 		$this->db->update('tblmas_employee', $info);
 		return $info;
@@ -230,7 +231,7 @@ class memployee extends CI_Model {
 			$filter = "ext.extension = '$txtSearch'";	
 		}
 
-  		$sql = "SELECT tblmas_employee.idemployee, tblmas_employee.employeeno, tblmas_employee.employeename, tblmas_employee.code, tblfile_department.deptdesc, tblfile_position.positiondesc, tblfile_position.level, ext.extension 
+  		$sql = "SELECT tblmas_employee.idemployee, tblmas_employee.stsactive, employee_status.employee_status, tblmas_employee.ext, tblmas_employee.employeeno, tblmas_employee.employeename, tblmas_employee.code, tblfile_department.deptdesc, tblfile_position.positiondesc, tblfile_position.level, ext.extension 
 		   	 		FROM tblmas_employee 
 		     		LEFT JOIN tblfile_department 
 		     		ON tblmas_employee.iddept = tblfile_department.iddept 
@@ -238,6 +239,7 @@ class memployee extends CI_Model {
 		     		ON tblmas_employee.idposition = tblfile_position.idposition
 		     		LEFT JOIN ext
 		     		ON tblmas_employee.extId = ext.id 
+					LEFT JOIN employee_status ON tblmas_employee.stsactive = employee_status.employee_status_id
 		     		WHERE $filter AND tblmas_employee.stsactive = '1'
 		     		ORDER BY tblmas_employee.idemployee DESC $limit";	
 		
@@ -339,8 +341,6 @@ class memployee extends CI_Model {
 
 	public function savePosition($input){
   		$info['positiondesc'] = htmlspecialchars($input['txtPosition']);
-  		$info['iddept'] = $input['selDepartment'];
-  		$info['level'] = $input['selLevel'];
   		$this->db->insert('tblfile_position', $info);
   		if ( $this->db->affected_rows() == 1 ){
   			$this->db->insert_id();
@@ -554,5 +554,15 @@ class memployee extends CI_Model {
 	public function getEmployeeStatus(){
 		$query = $this->db->get('employee_status');
 		return $query->result();
+	}
+
+	public function saveOfficeLocation($input){
+		$info['office_location_desc'] = htmlspecialchars($input['txtOfficeLocation']);
+		$this->db->insert('office_location', $info);
+		if ( $this->db->affected_rows() == 1 ){
+			$this->db->insert_id();
+		} else {
+			return FALSE;
+		}
 	}
 }	

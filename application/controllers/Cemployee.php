@@ -52,11 +52,11 @@ class Cemployee extends CI_Controller {
 		if ( $this->input->post() ){
 			$formInfo = [];
 			$formInfo['employee_status'] = $this->input->post('selectEmployeeStatus', TRUE);
+			$formInfo['office_location_id'] = $this->input->post('selectOfficeLocation', TRUE);
 			$formInfo['employeeno'] = $this->input->post('txtEmployeeNo', TRUE);
 			$formInfo['employeename'] = strtoupper($this->input->post('txtEmployee', TRUE));
 			$formInfo['iddept'] = $this->input->post('selDepartment', TRUE);
 			$formInfo['idposition'] = $this->input->post('selPosition');
-			// $formInfo['code'] = $this->input->post('selCode');
 			if ($this->input->post('selExtension', TRUE)){
 				$formInfo['extId'] = $this->input->post('selExtension', TRUE);
 			} else {
@@ -96,8 +96,8 @@ class Cemployee extends CI_Controller {
 			$formInfo['employeename'] = strtoupper($this->input->post('txtEmployeeName'));
 			$formInfo['iddept'] = $this->input->post('selDepartment');
 			$formInfo['idposition'] = $this->input->post('selPosition');
-			$formInfo['code'] = $this->input->post('selCode');
 			$formInfo['extId'] = $this->input->post('selExtension');
+			$formInfo['ext'] = $this->input->post('textExtension');
 			$formInfo['txtprevid'] = $this->input->post('txtprevid');
 			if ( !$this->memployee->modifyEmployee($formInfo, $employeeId) ){				
 				redirect(base_url() . 'cemployee/modifyEmployee/' . $employeeId);
@@ -516,6 +516,64 @@ class Cemployee extends CI_Controller {
 		// $data = $departmentId;
 		// echo json_encode($data);
 	// }
+
+	public function officeLocation(){		
+		$data = [];
+		$data['header'] = $this->load->view('headers/head', '', TRUE);
+		$data['no'] = $this->uri->segment(3);
+		$data['menu'] = '';
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();
+		$data['content'] = $this->load->view('contents/vOfficeLocation', $data, TRUE);
+		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
+		$this->load->view('main', $data);
+	}
+
+	public function addOfficeLocation(){
+		if ( $this->input->post() ){
+			$formInfo = [];
+			$formInfo['txtOfficeLocation'] = strtoupper($this->input->post('txtOfficeLocation'));
+			if ( $this->memployee->saveOfficeLocation($formInfo) ){
+				redirect(base_url() . 'cemployee/addOfficeLocation');
+			} else {
+				redirect(base_url() . 'cemployee/officeLocation');
+			}
+		}
+		$data = [];
+		$data['header'] = $this->load->view('headers/head', '', TRUE);
+		$data['menu'] = '';
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();
+		$data['content'] = $this->load->view('forms/formAddOfficeLocation', $data, TRUE);
+		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
+		$this->load->view('main', $data);
+	}
+
+	public function modifyOfficeLocation($officeLocationId = NULL){
+		if ( isset($_POST['btnModifyOfficeLocation']) ){
+			$formInfo = [];
+			$formInfo['office_location_desc'] = strtoupper($this->input->post('txtOfficeLocation'));
+			if ( !$this->memployee->modifyOfficeLocation($formInfo, $officeLocationId) ){
+				redirect(base_url() . 'cemployee/modifyOfficeLocation/' . $officeLocationId);
+			} else {
+				redirect(base_url() . 'cemployee/officeLocation');
+			}
+		}
+
+		$data = [];
+		$data['header'] = $this->load->view('headers/head', '', TRUE);		
+		$data['menu'] = '';
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();					
+		$data['content'] = $this->load->view('forms/formEditOfficeLocation', $data, TRUE);		
+		$data['footer'] = $this->load->view('footers/footer', '', TRUE);		
+		$this->load->view('main', $data);	
+	}
+
+	public function deletePosition($idposition = ''){
+		$this->memployee->deletePosition($idposition);
+		redirect(base_url() . 'cemployee/position');
+	}
 }
 
 	

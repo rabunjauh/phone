@@ -42,7 +42,6 @@
 			<th>Employee Name</th>
 			<th>Department</th>
 			<th>Position</th>
-			<th>Company Code</th>
 			<th>Extension</th>
 			<th>Status</th>
 			<th colspan="2">Action</th>
@@ -57,10 +56,9 @@
 			<td><?php echo $employee->employeename; ?></td>
 			<td><?php echo $employee->deptdesc; ?></td>
 			<td><?php echo $employee->positiondesc; ?></td>
-			<td><?php echo $employee->code; ?></td>
 			<td>
 				<?php
-					if (isset($employee->ext)) {
+					if ($employee->ext) {
 						echo $employee->ext;
 					}else{
 			 			echo $employee->extension;
