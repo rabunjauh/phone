@@ -1,7 +1,7 @@
 <div class="box">
 	<div class="box-header">
 		<div class="col-lg-6">
-			<h2>Modify Office Location</h2>
+			<h2>Modify Position</h2>
 		</div>
 	</div>
 

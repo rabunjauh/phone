@@ -564,13 +564,14 @@ class Cemployee extends CI_Controller {
 		$data['header'] = $this->load->view('headers/head', '', TRUE);		
 		$data['menu'] = '';
 		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
-		$data['navigation'] = $this->memployee->getOfficeLocations();					
+		$data['navigation'] = $this->memployee->getOfficeLocations();
+		$data['officeLocationById'] = $this->memployee->getOfficeDescription($officeLocationId);
 		$data['content'] = $this->load->view('forms/formEditOfficeLocation', $data, TRUE);		
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);		
 		$this->load->view('main', $data);	
 	}
 
-	public function deletePosition($idposition = ''){
+	public function deleteOfficeLocation($idposition = ''){
 		$this->memployee->deletePosition($idposition);
 		redirect(base_url() . 'cemployee/position');
 	}
