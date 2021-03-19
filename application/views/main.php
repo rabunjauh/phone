@@ -8,7 +8,7 @@
 		}
 
 		.nav{
-		margin-top: 10px;
+		margin-top: 10px 10px 10px 10px;
 	}
 	</style>
 	<link rel="stylesheet" type="text/css" href="style_print.css">
@@ -62,8 +62,10 @@
 		<?php		
 			}
 		?>
-		<div id="note">
-			<?=($this->session->flashdata('message')) ? $this->session->flashdata('message') : '';?>   
+		<div class="row">
+			<div id="note">
+				<?=($this->session->flashdata('message')) ? $this->session->flashdata('message') : '';?>   
+			</div>
 		</div>
 
 		<?php if (isset($officeLocationId)){ ?>

@@ -23,7 +23,7 @@
 					<tr>
 						<td><?php echo $no + 1; ?></td>
 						<td><?php echo $nav->office_location_desc; ?></td>
-						<td><a href="<?php echo base_url() . 'cemployee/modifyOfficeLocation/' . $nav->office_location_id; ?>" class="btn btn-primary"><li class="glyphicon glyphicon-edit"></li> Edit</a> | <a href="<?php echo base_url() . 'cemployee/deleteLocation/' . $nav->office_location_id; ?>" class="btn btn-primary"><li class="glyphicon glyphicon-trash"></li> Delete</a></td>
+						<td><a href="<?php echo base_url() . 'cemployee/modifyOfficeLocation/' . $nav->office_location_id; ?>" class="btn btn-primary"><li class="glyphicon glyphicon-edit"></li> Edit</a> | <a href="<?php echo base_url() . 'cemployee/deleteOfficeLocation/' . $nav->office_location_id; ?>" class="btn btn-primary"><li class="glyphicon glyphicon-trash"></li> Delete</a></td>
 					</tr>
 					<?php $no++; ?>
 				<?php endforeach; ?>	

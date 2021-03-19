@@ -565,4 +565,30 @@ class memployee extends CI_Model {
 			return FALSE;
 		}
 	}
+
+	public function modifyOfficeLocation($input, $officeLocationId){
+		$info['office_location_desc'] = htmlspecialchars($input['office_location_desc']);
+		$this->db->where('office_location_id', $officeLocationId);
+		$this->db->update('office_location', $info);
+		if ($this->db->affected_rows() > 0){
+			return TRUE;
+		}
+	}
+
+	public function getEmployeeByOfficeId($officeLocationId){
+		$query = $this->db->get_where('tblmas_employee', array('office_location_id' => $officeLocationId));
+		if ($query->result()){
+			return TRUE;
+		}
+	}
+
+	public function deleteOfficeLocation($officeLocationId){
+		$this->db->where('office_location_id', $officeLocationId);
+        $this->db->delete('office_location');
+        if ($this->db->affected_rows() == 1) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+	}
 }	

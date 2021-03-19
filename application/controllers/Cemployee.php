@@ -1,4 +1,3 @@
-
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -6,7 +5,10 @@ class Cemployee extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('memployee');
-		$this->load->model('mpabx11');		
+		$this->load->model('mpabx11');
+		if ( !$this->session->userdata('username') ){
+			redirect(base_url(). 'login');
+		}			
 	}
 
 	public function index(){
@@ -426,82 +428,6 @@ class Cemployee extends CI_Controller {
 		$this->load->view('main', $data);
 	}
 
-	public function client(){
-		$data = [];
-		$config = [];
-		$config['full_tag_open'] = '<ul class="pagination">';
-	    $config['full_tag_close'] = '</ul>';
-	    $config['num_tag_open'] = '<li>';
-	    $config['num_tag_close'] = '</li>';
-	    $config['cur_tag_open'] = '<li class="active"><span>';
-	    $config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
-	    $config['prev_tag_open'] = '<li>';
-	    $config['prev_tag_close'] = '</li>';
-	    $config['next_tag_open'] = '<li>';
-	    $config['next_tag_close'] = '</li>';
-	    $config['first_link'] = '&laquo;';
-	    $config['prev_link'] = '&lsaquo;';
-	    $config['last_link'] = '&raquo;';
-	    $config['next_link'] = '&rsaquo;';
-	    $config['first_tag_open'] = '<li>';
-	    $config['first_tag_close'] = '</li>';
-	    $config['last_tag_open'] = '<li>';
-	    $config['last_tag_close'] = '</li>';
-	    $data['totalEmployee'] =  $this->memployee->count_client();
-	    $config["base_url"] = base_url() . "cemployee/client";
-	    $config['total_rows'] = $data['totalEmployee'];
-	    $config['per_page'] = '10';
-	    $config['uri_segment'] = '3';
-	    $this->pagination->initialize($config);
-
-		$data['header'] = $this->load->view('headers/head', '', TRUE);
-		$data['menu'] = '';
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
-		$data['navigation'] = $this->memployee->getOfficeLocations();
-		$data['employees'] = $this->memployee->client_list($config['per_page'], $this->uri->segment(3));
-		$data['content'] = $this->load->view('contents/vClient', $data, TRUE);
-		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
-		$this->load->view('main', $data);
-	}
-
-	public function company(){		
-		$data = [];
-		$config = [];
-		$config['full_tag_open'] = '<ul class="pagination">';
-	    $config['full_tag_close'] = '</ul>';
-	    $config['num_tag_open'] = '<li>';
-	    $config['num_tag_close'] = '</li>';
-	    $config['cur_tag_open'] = '<li class="active"><span>';
-	    $config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
-	    $config['prev_tag_open'] = '<li>';
-	    $config['prev_tag_close'] = '</li>';
-	    $config['next_tag_open'] = '<li>';
-	    $config['next_tag_close'] = '</li>';
-	    $config['first_link'] = '&laquo;';
-	    $config['prev_link'] = '&lsaquo;';
-	    $config['last_link'] = '&raquo;';
-	    $config['next_link'] = '&rsaquo;';
-	    $config['first_tag_open'] = '<li>';
-	    $config['first_tag_close'] = '</li>';
-	    $config['last_tag_open'] = '<li>';
-	    $config['last_tag_close'] = '</li>';
-	    $data['total_company'] =  $this->memployee->count_company();
-	    $config["base_url"] = base_url() . "cemployee/company";
-	    $config['total_rows'] = $data['total_company'];
-	    $config['per_page'] = '10';
-	    $config['uri_segment'] = '5';
-	    $this->pagination->initialize($config);
-
-		$data['header'] = $this->load->view('headers/head', '', TRUE);
-		$data['menu'] = '';
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
-		$data['navigation'] = $this->memployee->getOfficeLocations();
-		$data['companies'] = $this->memployee->company_list($config['per_page'], $this->uri->segment(3));
-		$data['content'] = $this->load->view('contents/view_company', $data, TRUE);
-		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
-		$this->load->view('main', $data);
-	}
-
 	// public function getPositionDependent(){
 		// $positionId  = $_POST['id'];
 		// $departmentId = $this->input->post('id', true);
@@ -552,7 +478,8 @@ class Cemployee extends CI_Controller {
 	public function modifyOfficeLocation($officeLocationId = NULL){
 		if ( isset($_POST['btnModifyOfficeLocation']) ){
 			$formInfo = [];
-			$formInfo['office_location_desc'] = strtoupper($this->input->post('txtOfficeLocation'));
+			// $formInfo['office_location_id'] = strtoupper($this->input->post('txtOfficeLocation'));
+			$formInfo['office_location_desc'] = strtoupper($this->input->post('txtOfficeLocationDesc'));
 			if ( !$this->memployee->modifyOfficeLocation($formInfo, $officeLocationId) ){
 				redirect(base_url() . 'cemployee/modifyOfficeLocation/' . $officeLocationId);
 			} else {
@@ -571,9 +498,18 @@ class Cemployee extends CI_Controller {
 		$this->load->view('main', $data);	
 	}
 
-	public function deleteOfficeLocation($idposition = ''){
-		$this->memployee->deletePosition($idposition);
-		redirect(base_url() . 'cemployee/position');
+	public function deleteOfficeLocation($officeLocationId = ''){
+		$getEmployeeByOfficeId = $this->memployee->getEmployeeByOfficeId($officeLocationId);
+		if (!$getEmployeeByOfficeId){
+			$this->memployee->deleteOfficeLocation($officeLocationId);
+			$message = '<div class="alert alert-success">Office location deleted!</div>';
+			$this->session->set_flashdata('message', $message);
+			redirect(base_url() . 'cemployee/officeLocation');
+		} else {
+			$message = '<div class="alert alert-danger">Office location can not be deleted while still there people in it!</div>';
+			$this->session->set_flashdata('message', $message);
+			redirect(base_url() . 'cemployee/officeLocation');	
+		}
 	}
 }
 
