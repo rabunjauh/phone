@@ -34,60 +34,55 @@
 							<input type="text" name="txtEmployeeName"  class="form-control" value="<?php  echo $employee->employeename; ?>" placeholder="EmployeeId" required>
 					</div>
 
-					<div class="form-group">
-						<label for="selDepartment">Department :</label>
-						<select name="selDepartment" class="form-control" required>
-							<option value="<?php echo $employee->iddept; ?>"><?php echo $employee->deptdesc; ?></option>
-							<?php foreach ( $departments as $department ): ?>
-							<option value="<?=$department->iddept; ?>"><?=$department->deptdesc; ?></option>
-							<?php endforeach; ?>
-						</select>
-					</div>
-			
-					
-
-					
-		</div>
-
+				</div>
+				
 		<div class="col-lg-6">
-		<div class="form-group">
-						<label for="selPosition">Position :</label>
-						<select name="selPosition" class="form-control" required>
-							<option value="<?php echo $employee->idposition; ?>"><?php echo $employee->positiondesc; ?></option>
-							<?php foreach ($positions as $position): ?>
-							<option value="<?=$position->idposition; ?>"><?=$position->deptdesc . " - " . $position->positiondesc; ?></option>
-							<?php endforeach; ?>	
-						</select>
-					</div>
-			
-					<div class="form-group">
-						<label for="selectExtensionInputType">Input Type</label>
-						<select name="selectExtensionInputType" id="selectExtensionInputType" class="form-control">
-							<option value="fromList">Select From List</option>
-							<option value="manual">Manual Input</option>
-						</select>
-					</div>
+			<div class="form-group">
+				<label for="selDepartment">Department :</label>
+				<select name="selDepartment" class="form-control" required>
+					<option value="<?php echo $employee->iddept; ?>"><?php echo $employee->deptdesc; ?></option>
+					<?php foreach ( $departments as $department ): ?>
+					<option value="<?=$department->iddept; ?>"><?=$department->deptdesc; ?></option>
+					<?php endforeach; ?>
+				</select>
+			</div>
 
+			<div class="form-group">
+				<label for="selPosition">Position :</label>
+				<select name="selPosition" class="form-control" required>
+					<option value="<?php echo $employee->idposition; ?>"><?php echo $employee->positiondesc; ?></option>
+					<?php foreach ($positions as $position): ?>
+					<option value="<?=$position->idposition; ?>"><?=$position->deptdesc . " - " . $position->positiondesc; ?></option>
+					<?php endforeach; ?>	
+				</select>
+			</div>
 			
-					<div class="form-group selExtension">
-						<label for="selExtension">Extension No :</label>
-						<select name="selExtension" class="form-control" required>
-							<option value="<?php echo $employee->extId; ?>"><?php echo $employee->extension; ?></option>
-							<option value="">Extension No</option>
-							<?php foreach ( $extensions as $extension ): ?>
-								<option value="<?php echo $extension->id; ?>"><?php echo $extension->extension . " " . $extension->pabxLocation; ?></option>}
-							<?php endforeach; ?>
-						</select>
-						<input type="hidden" name="txtprevid" id="txtprevid" value="<?php echo $employee->extId; ?>" />
-					</div>
+			<div class="form-group">
+				<label for="selectExtensionInputType">Input Type</label>
+				<select name="selectExtensionInputType" id="selectExtensionInputType" class="form-control">
+					<option value="fromList">Select From List</option>
+					<option value="manual">Manual Input</option>
+				</select>
+			</div>
 
-					<div class="form-group textExtensionNo">
-						<label for="textExtension">Extension No :</label>
-						<input type="text" name="textExtension" class="form-control" value="<?= $employee->ext ?>" placeholder="Extension No">
-					</div>
+			<div class="form-group selExtension">
+				<label for="selExtension">Extension No :</label>
+				<select name="selExtension" class="form-control" required>
+					<option value="<?php echo $employee->extId; ?>"><?php echo $employee->extension; ?></option>
+					<option value="">Extension No</option>
+					<?php foreach ( $extensions as $extension ): ?>
+						<option value="<?php echo $extension->id; ?>"><?php echo $extension->extension . " " . $extension->pabxLocation; ?></option>}
+					<?php endforeach; ?>
+				</select>
+				<input type="hidden" name="txtprevid" id="txtprevid" value="<?php echo $employee->extId; ?>" />
+			</div>
+
+			<div class="form-group textExtensionNo">
+				<label for="textExtension">Extension No :</label>
+				<input type="text" name="textExtension" class="form-control" value="<?= $employee->ext ?>" placeholder="Extension No">
+			</div>
 		</div>
 	</div>
-					
 </div>
 
 <div class="row">
@@ -96,8 +91,8 @@
 			<button type="submit" class="btn btn-primary" name="btnUpdateEmployee">Save</button>
 		</div>
 	</div>
-		<?=form_close(); ?>
-	<?php endforeach; ?>
+				<?php endforeach; ?>
+			<?=form_close(); ?>
 </div>
 <script>
 	function toggleExtension(){

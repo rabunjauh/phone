@@ -58,7 +58,7 @@
 				</select>
 			</div> 
 			
-			<div class="form-group">
+			<!-- <div class="form-group">
 				<label for="selCode">Company Code :</label>
 				<select name="selCode" class="form-control">
 				<option value="">Company Code</option>
@@ -69,7 +69,7 @@
 				<option value="c5">Client 5</option>
 				<option value="c6">Client 6</option>
 				</select>
-			</div>
+			</div> -->
 
 			<div class="form-group">
 				<label for="selectExtensionInputType">Input Type</label>
