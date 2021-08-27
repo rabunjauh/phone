@@ -341,6 +341,8 @@ class memployee extends CI_Model {
 
 	public function savePosition($input){
   		$info['positiondesc'] = htmlspecialchars($input['txtPosition']);
+		$info['iddept'] = htmlspecialchars($input['selDepartment']);
+		$info['level'] = htmlspecialchars($input['selLevel']);
   		$this->db->insert('tblfile_position', $info);
   		if ( $this->db->affected_rows() == 1 ){
   			$this->db->insert_id();
