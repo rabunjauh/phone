@@ -511,6 +511,22 @@ class Cemployee extends CI_Controller {
 			redirect(base_url() . 'cemployee/officeLocation');	
 		}
 	}
+
+	public function departmentPositionDependent() {
+		$iddept = $_POST['iddept'];
+		if (!$iddept) {
+			$position = $this->memployee->position();
+		} else {
+			$position = $this->memployee->getPositionDependent($iddept);
+		}
+		$output = '<option>Position</option>';
+		foreach ($position as $pos) {
+			$output .= '<option value=' . $pos->idposition . '>' . $pos->positiondesc . '</position>';
+		}
+		echo json_encode($output);	
+	}
+
+	
 }
 
 	

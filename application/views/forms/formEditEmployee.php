@@ -94,7 +94,8 @@
 				<?php endforeach; ?>
 			<?=form_close(); ?>
 </div>
-<script>
+
+// function for toggle extension input (manual or select from pabx list)
 	function toggleExtension(){
 		const selectExtensionInputType = document.getElementById('selectExtensionInputType');
 		const selExtension = document.getElementsByClassName('selExtension')[0];
@@ -108,7 +109,6 @@
 			if (value == 'manual') {
 				selExtension.style.display = 'none';
 				textExtensionNo.style.display = 'block';
-				selExtension.required = FALSE;
 			}else{
 				selExtension.style.display = 'block';
 				textExtensionNo.style.display = 'none';
@@ -117,4 +117,35 @@
 	}	
 
 	toggleExtension();
-</script>		
+
+	// dependent select department & position
+	const selectDepartment = document.getElementById('selDepartment');
+	selectDepartment.addEventListener('change', function (e){
+		const selectDepartmentValue = e.target.value;
+		const url = '<?= base_url('cemployee/departmentPositionDependent'); ?>';
+		const selectPosition = document.getElementById('selPosition');
+		dependentselect("iddept="+selectDepartmentValue, url, selectPosition);
+	})
+
+	// dependent select office location ext location		
+	const selectOfficeLocation = document.getElementById('selectOfficeLocation');
+	selectOfficeLocation.addEventListener('change', function (e){
+		const selectOfficeLocationValue = e.target.value;
+		const url = '<?= base_url('cextension/officeExtensionDependent'); ?>';
+		const selExtension = document.getElementById('selExtension');
+		dependentselect("officeLocation="+selectOfficeLocationValue, url, selExtension);
+	})
+
+	function dependentselect(input, url, elementTarget) {
+		let xhttp = new XMLHttpRequest();
+		xhttp.open('POST', url, true);
+		xhttp.onreadystatechange = function(){
+			if (this.readyState == 4 && this.status == 200){
+				let output = JSON.parse(this.responseText);
+				elementTarget.innerHTML = output;
+			}
+		};
+		xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		xhttp.send(input);
+	}
+</script>			

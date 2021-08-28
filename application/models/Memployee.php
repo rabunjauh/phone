@@ -528,10 +528,9 @@ class memployee extends CI_Model {
 
 	public function getPositionDependent($departmentId){
 		// $query = $this->db->select('*')
-		// ->where('idposition', $positionId)
+		// ->where('iddept', '$departmentId')
 		// ->from('tblfile_position');
 		$query = $this->db->get_where('tblfile_position', array('iddept' => $departmentId));
-		// var_dump($query->result_array());die;
 		return $query->result();
 	}
 

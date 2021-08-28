@@ -58,6 +58,19 @@
 				</select>
 			</div> 
 			
+			<!-- <div class="form-group">
+				<label for="selCode">Company Code :</label>
+				<select name="selCode" class="form-control">
+				<option value="">Company Code</option>
+				<option value="c1">Client 1</option>
+				<option value="c2">Client 2</option>
+				<option value="c3">Client 3</option>
+				<option value="c4">Client 4</option>
+				<option value="c5">Client 5</option>
+				<option value="c6">Client 6</option>
+				</select>
+			</div> -->
+
 			<div class="form-group">
 				<label for="selectExtensionInputType">Input Type</label>
 				<select name="selectExtensionInputType" id="selectExtensionInputType" class="form-control">
@@ -123,9 +136,54 @@
 	const selectDepartment = document.getElementById('selDepartment');
 	selectDepartment.addEventListener('change', function (e){
 		const selectDepartmentValue = e.target.value;
+		
 		const url = '<?= base_url('cemployee/departmentPositionDependent'); ?>';
-		const selectPosition = document.getElementById('selPosition');
-		dependentselect("iddept="+selectDepartmentValue, url, selectPosition);
+		let xhttp = new XMLHttpRequest();
+		xhttp.open('POST', url, true);
+		xhttp.onreadystatechange = function(){
+			if (this.readyState == 4 && this.status == 200){
+				const selectPosition = document.getElementById('selPosition');
+				let positionData = JSON.parse(this.responseText);
+				let selectPositionDependent = "<option value=''>Position</option>";
+				for(let i = 0; i < positionData.length; i++) {
+					selectPositionDependent += '<option value=' + positionData[i].idposition + '>' + positionData[i].positiondesc + '</option>';
+				}
+				selectPosition.innerHTML = selectPositionDependent;
+			}
+		};
+		xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		xhttp.send("iddept="+selectDepartmentValue);
+	})
+
+	// dependent select office location ext location
+	// const selectOfficeLocation = document.getElementById('selectOfficeLocation');
+	// selectOfficeLocation.addEventListener('change', function (e){
+	// 	const selectOfficeLocationValue = e.target.value;
+	// 	const url = '<?= base_url('cextension/officeExtensionDependent'); ?>';
+	// 	let xhttp = new XMLHttpRequest();
+	// 	xhttp.open('POST', url, true);
+	// 	xhttp.onreadystatechange = function(){
+	// 		if (this.readyState == 4 && this.status == 200){
+	// 			const selExtension = document.getElementById('selExtension');
+	// 			let extData = JSON.parse(this.responseText);
+	// 			let selExtensionDependent = "<option value=''>Extension No</option>";
+	// 			for(let i = 0; i < extData.length; i++) {
+	// 				selExtensionDependent += '<option value=' + extData[i].id + '>' + extData[i].extension + '</option>';
+	// 			}
+	// 			selExtension.innerHTML = selExtensionDependent;
+	// 		}
+	// 	};
+	// 	xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	// 	xhttp.send("officeLocation="+selectOfficeLocationValue);
+	// })
+
+	// dependent select department & position
+	const selectOfficeLocation = document.getElementById('selectOfficeLocation');
+	selectOfficeLocation.addEventListener('change', function (e){
+		const selectOfficeLocationValue = e.target.value;
+		const url = '<?= base_url('cextension/officeExtensionDependent'); ?>';
+		const selExtension = document.getElementById('selExtension');
+		dependentselect("officeLocation="+selectOfficeLocationValue, url, selExtension);
 	})
 
 	// dependent select office location ext location		
