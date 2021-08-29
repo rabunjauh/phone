@@ -116,6 +116,7 @@ class memployee extends CI_Model {
 					tblfile_position.positiondesc, 
 					tblfile_position.level, 
 					ext.extension,
+					ext.pabxLocation,
 					employee_status.employee_status_id,
 					employee_status.employee_status 
 				FROM tblmas_employee 

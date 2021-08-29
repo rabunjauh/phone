@@ -23,12 +23,13 @@ class mpabx11 extends CI_Model {
 	}
 
 	public function index(){
-		$sql = "SELECT * FROM ext ORDER BY extension ASC, pabxLocation ASC";
+		$sql = "SELECT * FROM ext ORDER BY extension ASC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}	
 
 	public function getExtensionDependent($officeLocation) {
+		$this->db->order_by('extension', 'ASC');
 		$query = $this->db->get_where('ext', array('pabxLocation' => $officeLocation));
 		return $query->result();
 	}

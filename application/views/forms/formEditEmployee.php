@@ -39,7 +39,7 @@
 		<div class="col-lg-6">
 			<div class="form-group">
 				<label for="selDepartment">Department :</label>
-				<select name="selDepartment" class="form-control" required>
+				<select id="selDepartment" name="selDepartment" class="form-control" required>
 					<option value="<?php echo $employee->iddept; ?>"><?php echo $employee->deptdesc; ?></option>
 					<?php foreach ( $departments as $department ): ?>
 					<option value="<?=$department->iddept; ?>"><?=$department->deptdesc; ?></option>
@@ -49,7 +49,7 @@
 
 			<div class="form-group">
 				<label for="selPosition">Position :</label>
-				<select name="selPosition" class="form-control" required>
+				<select id="selPosition" name="selPosition" class="form-control" required>
 					<option value="<?php echo $employee->idposition; ?>"><?php echo $employee->positiondesc; ?></option>
 					<?php foreach ($positions as $position): ?>
 					<option value="<?=$position->idposition; ?>"><?=$position->deptdesc . " - " . $position->positiondesc; ?></option>
@@ -67,11 +67,11 @@
 
 			<div class="form-group selExtension">
 				<label for="selExtension">Extension No :</label>
-				<select name="selExtension" class="form-control" required>
-					<option value="<?php echo $employee->extId; ?>"><?php echo $employee->extension; ?></option>
+				<select id="selExtension" name="selExtension" class="form-control" required>
+					<option value="<?php echo $employee->extId; ?>">Yard<?php echo$employee->pabxLocation . " - " . $employee->extension; ?></option>
 					<option value="">Extension No</option>
 					<?php foreach ( $extensions as $extension ): ?>
-						<option value="<?php echo $extension->id; ?>"><?php echo $extension->extension . " " . $extension->pabxLocation; ?></option>}
+						<option value="<?php echo $extension->id; ?>">Yard<?php echo $extension->pabxLocation. " - " . $extension->extension; ?></option>}
 					<?php endforeach; ?>
 				</select>
 				<input type="hidden" name="txtprevid" id="txtprevid" value="<?php echo $employee->extId; ?>" />
@@ -94,6 +94,7 @@
 				<?php endforeach; ?>
 			<?=form_close(); ?>
 </div>
+<script>
 
 // function for toggle extension input (manual or select from pabx list)
 	function toggleExtension(){
@@ -106,7 +107,8 @@
 	
 		selectExtensionInputType.addEventListener('change', function (e){
 			const value = selectExtensionInputType.options[selectExtensionInputType.selectedIndex].value;
-			if (value == 'manual') {
+			if (value === 'manual') {
+				document.getElementById('selExtension').value = '';
 				selExtension.style.display = 'none';
 				textExtensionNo.style.display = 'block';
 			}else{

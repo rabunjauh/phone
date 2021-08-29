@@ -74,16 +74,16 @@ class Cextension extends CI_Controller {
 	public function officeExtensionDependent() {
 		$officeLocation = $_POST['officeLocation'];
 
-		if ($officeLocation == '1') {
-			$extension = $this->mpabx11->getExtensionDependent($officeLocation);
-		} else if ($officeLocation == '2') {
+		if ($officeLocation === '1') {
+			$extension = $this->mpabx11->getExtensionDependent($officeLocation);	
+		} else if ($officeLocation === '2') {
 			$extension = $this->mpabx11->getExtensionDependent($officeLocation);
 		} else {
 			$extension = $this->mpabx11->index();
 		}
 		$output = '<option>Extension No</option>';
 		foreach ($extension as $ext) {
-			$output .= '<option value=' . $ext->id . '>' . $ext->extension . '</option>';
+			$output .= '<option value=' . $ext->id . '>Yard' . $ext->pabxLocation . ' - ' . $ext->extension . '</option>';
 		}
 		echo json_encode($output);
 	}
