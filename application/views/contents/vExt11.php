@@ -14,7 +14,7 @@
 	</div>
 
 	<div class="row">
-		<?php if ($yard1_pabx1_desc->pabxNo): ?>
+		<?php if (isset($yard1_pabx1_desc->pabxNo)): ?>
 			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">							
 				<h4>PABX 1</h4>
 				<table class="table table-bordered">
@@ -140,7 +140,7 @@
 			</div>
 		<?php endif; ?>	
 
-		<?php if ($yard1_pabx2_desc->pabxNo): ?>
+		<?php if (isset($yard1_pabx2_desc->pabxNo)): ?>
 			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				<h4>PABX 2</h4>
 				<table class="table table-bordered">

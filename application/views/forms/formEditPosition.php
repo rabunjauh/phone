@@ -6,7 +6,7 @@
 	</div>
 
 	<div class="box-body">
-		<?php echo form_open(base_url() . 'cemployee/modifyOfficeLocation/' . $getPositionByIds->idposition); ?>
+		<?php echo form_open(base_url() . 'cemployee/modifyPosition/' . $getPositionByIds->idposition); ?>
 			<?php foreach ( $positionIds as $positionId ): ?>
 			<div class="form-group">
 				<label for="txtPositionID">Position ID :</label>

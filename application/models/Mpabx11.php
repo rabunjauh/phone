@@ -23,10 +23,16 @@ class mpabx11 extends CI_Model {
 	}
 
 	public function index(){
-		$sql = "SELECT * FROM ext ORDER BY extension ASC, pabxLocation ASC";
+		$sql = "SELECT * FROM ext ORDER BY extension ASC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}	
+
+	public function getExtensionDependent($officeLocation) {
+		$this->db->order_by('extension', 'ASC');
+		$query = $this->db->get_where('ext', array('pabxLocation' => $officeLocation));
+		return $query->result();
+	}
 
 	public function pabx_no(){
 		$sql = "SELECT * FROM pabxno ORDER BY pabxno ASC";
@@ -39,409 +45,409 @@ class mpabx11 extends CI_Model {
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
-	// Yard 1 PABX 1
+	// Yard1 PABX 1
 	public function yard1_pabx1_desc(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 1";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 1";
 		$query = $this->db->query($sql);
 		return $query->row();
 	}
 
 	public function yard1_pabx2_desc(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 2";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 2";
 		$query = $this->db->query($sql);
 		return $query->row();
 	}
 
 	public function yard1_pabx3_desc(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 3";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 3";
 		$query = $this->db->query($sql);
 		return $query->row();
 	}
 
 	public function yard1_pabx4_desc(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 4";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 4";
 		$query = $this->db->query($sql);
 		return $query->row();
 	}
 
 	public function yard1_pabx5_desc(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 5";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 5";
 		$query = $this->db->query($sql);
 		return $query->row();
 	}
 
 	public function yard1_pabx6_desc(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 6";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 6";
 		$query = $this->db->query($sql);
 		return $query->row();
 	}
 
-	// Yard 1 PABX 1
+	// 1 PABX 1
 	public function yard1_pabx1_row01()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 1 AND row = 1 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 1 AND row = 1 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard1_pabx1_row02()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 1 AND row = 2 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 1 AND row = 2 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard1_pabx1_row03()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 1 AND row = 3 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 1 AND row = 3 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard1_pabx1_row04()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 1 AND row = 4 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 1 AND row = 4 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
-	// Yard 1 PABX 2
+	// 1 PABX 2
 	public function yard1_pabx2_row01()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 2 AND row = 1 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 2 AND row = 1 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard1_pabx2_row02()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 2 AND row = 2 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 2 AND row = 2 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard1_pabx2_row03()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 2 AND row = 3 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 2 AND row = 3 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard1_pabx2_row04()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 2 AND row = 4 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 2 AND row = 4 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
-	// Yard 1 PABX 3
+	// 1 PABX 3
 	public function yard1_pabx3_row01()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 3 AND row = 1 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 3 AND row = 1 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard1_pabx3_row02()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 3 AND row = 2 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 3 AND row = 2 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard1_pabx3_row03()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 3 AND row = 3 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 3 AND row = 3 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard1_pabx3_row04()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 3 AND row = 4 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 3 AND row = 4 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
-	// Yard 1 PABX 4
+	// 1 PABX 4
 	public function yard1_pabx4_row01()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 4 AND row = 1 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 4 AND row = 1 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard1_pabx4_row02()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 4 AND row = 2 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 4 AND row = 2 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard1_pabx4_row03()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 4 AND row = 3 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 4 AND row = 3 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard1_pabx4_row04()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 4 AND row = 4 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 4 AND row = 4 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
-	// Yard 1 PABX 5
+	// 1 PABX 5
 	public function yard1_pabx5_row01(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 5 AND row = 1 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 5 AND row = 1 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard1_pabx5_row02(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 5 AND row = 2 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 5 AND row = 2 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard1_pabx5_row03(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 5 AND row = 3 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 5 AND row = 3 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard1_pabx5_row04(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 5 AND row = 4 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 5 AND row = 4 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
-	// Yard 1 PABX 6
+	// 1 PABX 6
 	public function yard1_pabx6_row01(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 6 AND row = 1 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 6 AND row = 1 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard1_pabx6_row02(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 6 AND row = 2 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 6 AND row = 2 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard1_pabx6_row03(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 6 AND row = 3 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 6 AND row = 3 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard1_pabx6_row04(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 1' AND pabxno = 6 AND row = 4 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '1' AND pabxno = 6 AND row = 4 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 
 
-	// Yard 2 PABX 1
+	// 2 PABX 1
 	public function yard2_pabx1_row01()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 1 AND row = 1 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 1 AND row = 1 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard2_pabx1_row02()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 1 AND row = 2 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 1 AND row = 2 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard2_pabx1_row03()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 1 AND row = 3 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 1 AND row = 3 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard2_pabx1_row04()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 1 AND row = 4 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 1 AND row = 4 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
-	// Yard 2 PABX 2
+	// 2 PABX 2
 	public function yard2_pabx2_row01()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 2 AND row = 1 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 2 AND row = 1 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard2_pabx2_row02()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 2 AND row = 2 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 2 AND row = 2 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard2_pabx2_row03()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 2 AND row = 3 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 2 AND row = 3 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard2_pabx2_row04()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 2 AND row = 4 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 2 AND row = 4 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
-	// Yard 2 PABX 3
+	// 2 PABX 3
 	public function yard2_pabx3_row01()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 3 AND row = 1 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 3 AND row = 1 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard2_pabx3_row02()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 3 AND row = 2 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 3 AND row = 2 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard2_pabx3_row03()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 3 AND row = 3 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 3 AND row = 3 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard2_pabx3_row04()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 3 AND row = 4 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 3 AND row = 4 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
-	// Yard 2 PABX 4
+	// 2 PABX 4
 	public function yard2_pabx4_row01()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 4 AND row = 1 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 4 AND row = 1 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard2_pabx4_row02()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 4 AND row = 2 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 4 AND row = 2 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard2_pabx4_row03()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 4 AND row = 3 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 4 AND row = 3 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard2_pabx4_row04()
 	{
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 4 AND row = 4 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 4 AND row = 4 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
-	// Yard 2 PABX 5
+	// 2 PABX 5
 	public function yard2_pabx5_row01(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 5 AND row = 1 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 5 AND row = 1 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard2_pabx5_row02(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 5 AND row = 2 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 5 AND row = 2 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard2_pabx5_row03(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 5 AND row = 3 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 5 AND row = 3 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard2_pabx5_row04(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 5 AND row = 4 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 5 AND row = 4 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
-	// Yard 2 PABX 6
+	// 2 PABX 6
 	public function yard2_pabx6_row01(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 6 AND row = 1 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 6 AND row = 1 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard2_pabx6_row02(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 6 AND row = 2 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 6 AND row = 2 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard2_pabx6_row03(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 6 AND row = 3 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 6 AND row = 3 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard2_pabx6_row04(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 6 AND row = 4 ORDER BY port DESC";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 6 AND row = 4 ORDER BY port DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	public function yard2_pabx1_desc(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 1";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 1";
 		$query = $this->db->query($sql);
 		return $query->row();
 	}
 
 	public function yard2_pabx2_desc(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 2";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 2";
 		$query = $this->db->query($sql);
 		return $query->row();
 	}
 
 	public function yard2_pabx3_desc(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 3";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 3";
 		$query = $this->db->query($sql);
 		return $query->row();
 	}
 
 	public function yard2_pabx4_desc(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 4";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 4";
 		$query = $this->db->query($sql);
 		return $query->row();
 	}
 
 	public function yard2_pabx5_desc(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 5";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 5";
 		$query = $this->db->query($sql);
 		return $query->row();
 	}
 
 	public function yard2_pabx6_desc(){
-		$sql = "SELECT * FROM ext WHERE pabxLocation = 'YARD 2' AND pabxno = 6";
+		$sql = "SELECT * FROM ext WHERE pabxLocation = '2' AND pabxno = 6";
 		$query = $this->db->query($sql);
 		return $query->row();
 	}

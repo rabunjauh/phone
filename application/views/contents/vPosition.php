@@ -16,15 +16,24 @@
 		<?=form_open(base_url() . 'cemployee/searchPosition/'); ?>
 		<div class="form-inline">
 			<div class="form-group">
-				<select name="select_position" class="form-control">
-					<option value="0">Position</option>
+				<select name="search_by" id="search_by" class="form-control">
+					<option value="null">Search By</option>
+					<option value="positiondesc">Text</option>
+					<option value="idposition">Position</option>
+					<option value="iddept">Department</option>
+				</select>
+
+				<input type="text" class="form-control" name="txtSearch" id="txtSearch" placeholder="Search">
+
+				<select name="select_position" id="select_position" class="form-control">
+					<option value="null">Position</option>
 					<?php foreach ($get_positions as $get_position): ?>
 						<option value="<?php echo $get_position->idposition; ?>"><?php echo $get_position->deptdesc . " - " . $get_position->positiondesc; ?></option>
 					<?php endforeach ?>
 				</select>
 
-				<select name="select_department" class="form-control">
-					<option value="0">Department</option>
+				<select name="select_department" id="select_department" class="form-control">
+					<option value="null">Department</option>
 					<?php foreach ( $departments as $department ): ?>
 						<option value="<?php echo $department->iddept; ?>"><?php echo $department->deptdesc; ?></option>
 					<?php endforeach; ?>	
@@ -62,3 +71,30 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	const search_by = document.getElementById('search_by');
+	const txtSearch = document.getElementById('txtSearch');
+	const select_position = document.getElementById('select_position');
+	const select_department = document.getElementById('select_department');
+
+	select_department.style.display = 'none';
+	select_position.style.display = 'none';
+
+	search_by.addEventListener('change', function(){
+		
+		if (this.value == 'positiondesc' || this.value == '0') {
+			txtSearch.style.display = 'inline';
+			select_department.style.display = 'none';
+			select_position.style.display = 'none';
+		} else if (this.value == 'idposition') {
+			txtSearch.style.display = 'none';
+			select_department.style.display = 'none';
+			select_position.style.display = 'inline';
+		} else if (this.value == 'iddept') {
+			txtSearch.style.display = 'none';
+			select_department.style.display = 'inline';
+			select_position.style.display = 'none';
+		}
+	});
+</script>

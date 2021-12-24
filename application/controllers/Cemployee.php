@@ -230,6 +230,15 @@ class Cemployee extends CI_Controller {
 		$this->load->view('main', $data);
 	}
 
+	public function cont_get_department_ajax() {
+		$departments = $this->Memployee->get_department_ajax();
+		$option = '';
+		foreach($departments as $department) {
+			$option .= 'option value=' . $department->iddept . '>' . $department->deptdesc . '</option>';
+		}
+		echo json_encode($option);
+	}
+
 	public function addDepartment(){
 		if ( $this->input->post() ){
 			$formInfo = [];
@@ -381,11 +390,19 @@ class Cemployee extends CI_Controller {
 		redirect(base_url() . 'cemployee/position');
 	}
 
-	public function searchPosition($department = false, $position = false){
+	public function searchPosition($searchCategory = false, $txtSearch = false){
 		$data = [];
-		if ( !$position AND !$department){
-			$position = $this->input->post('select_position');
-			$department = $this->input->post('select_department');
+		if ( !$searchCategory){
+			$searchCategory =  $this->input->post('search_by');
+			if ($searchCategory == 'null' || $searchCategory == 'text') {
+				$txtSearch = htmlspecialchars($this->input->post('txtSearch'));
+			} else if ($searchCategory == 'idposition') {
+				var_dump($searchCategory);
+				$txtSearch = $this->input->post('select_position');
+				var_dump($txtSearch);
+			} else if ($searchCategory == 'iddept') {
+				$txtSearch = $this->input->post('select_department');
+			}
 		}
 	
 		$config = [];
@@ -407,8 +424,8 @@ class Cemployee extends CI_Controller {
 	    $config['first_tag_close'] = '</li>';
 	    $config['last_tag_open'] = '<li>';
 	    $config['last_tag_close'] = '</li>';
-	    $data['totalEmployee'] =  $this->memployee->countSearchPosition($department, $position);
-	   	$config['base_url'] = base_url() . 'cemployee/searchPosition/' . $department . '/' . $position;
+	    $data['totalEmployee'] =  $this->memployee->countSearchPosition($searchCategory, urldecode($txtSearch));
+	   	$config['base_url'] = base_url() . 'cemployee/searchPosition/' . $searchCategory . '/' . $txtSearch;
 	    $config['total_rows'] = $data['totalEmployee'];
 	    $config['per_page'] = '10';
 	    $config['uri_segment'] = '5';
@@ -421,7 +438,7 @@ class Cemployee extends CI_Controller {
 		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['departments'] = $this->memployee->department();
 		$data['get_positions'] = $this->memployee->position();
-		$data['positions'] = $this->memployee->positionListSearch($config['per_page'], $this->uri->segment(5), $department, $position);
+		$data['positions'] = $this->memployee->positionListSearch($config['per_page'], $this->uri->segment(5), $searchCategory, urldecode($txtSearch));
 		$data['content'] = $this->load->view('contents/vPosition', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 
@@ -511,6 +528,21 @@ class Cemployee extends CI_Controller {
 			redirect(base_url() . 'cemployee/officeLocation');	
 		}
 	}
+
+	public function departmentPositionDependent() {
+		$iddept = $_POST['iddept'];
+		if (!$iddept) {
+			$position = $this->memployee->position();
+		} else {
+			$position = $this->memployee->getPositionDependent($iddept);
+		}
+		$output = '<option>Position</option>';
+		foreach ($position as $pos) {
+			$output .= '<option value=' . $pos->idposition . '>' . $pos->positiondesc . '</position>';
+		}
+		echo json_encode($output);	
+	}
+	
 }
 
 	

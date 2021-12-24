@@ -22,6 +22,7 @@ class Cextension extends CI_Controller {
 		parent::__construct();
 		$this->load->model('mextensions');
 		$this->load->model('memployee');
+		$this->load->model('mpabx11');
 	}
 
 	public function index($officeLocationId = 1, $pdf = ''){
@@ -68,6 +69,23 @@ class Cextension extends CI_Controller {
 			$mpdf->Output('extension.pdf','I');
 			exit;
 		}
+	}
+
+	public function officeExtensionDependent() {
+		$officeLocation = $_POST['officeLocation'];
+
+		if ($officeLocation === '1') {
+			$extension = $this->mpabx11->getExtensionDependent($officeLocation);	
+		} else if ($officeLocation === '2') {
+			$extension = $this->mpabx11->getExtensionDependent($officeLocation);
+		} else {
+			$extension = $this->mpabx11->index();
+		}
+		$output = '<option>Extension No</option>';
+		foreach ($extension as $ext) {
+			$output .= '<option value=' . $ext->id . '>Yard' . $ext->pabxLocation . ' - ' . $ext->extension . '</option>';
+		}
+		echo json_encode($output);
 	}
 }
 

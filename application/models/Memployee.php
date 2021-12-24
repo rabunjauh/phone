@@ -116,6 +116,7 @@ class memployee extends CI_Model {
 					tblfile_position.positiondesc, 
 					tblfile_position.level, 
 					ext.extension,
+					ext.pabxLocation,
 					employee_status.employee_status_id,
 					employee_status.employee_status 
 				FROM tblmas_employee 
@@ -314,6 +315,10 @@ class memployee extends CI_Model {
 		return $query->result();
 	}
 
+	public function get_department_ajax() {
+		return $this->db->get('tblfile_department')->result();
+	}
+
 	public function modifyDepartment($input, $iddept){
 		// $info = [];
 		// $info['deptdesc'] = htmlspecialchars($input['deptdesc']);
@@ -341,6 +346,8 @@ class memployee extends CI_Model {
 
 	public function savePosition($input){
   		$info['positiondesc'] = htmlspecialchars($input['txtPosition']);
+		$info['iddept'] = htmlspecialchars($input['selDepartment']);
+		$info['level'] = htmlspecialchars($input['selLevel']);
   		$this->db->insert('tblfile_position', $info);
   		if ( $this->db->affected_rows() == 1 ){
   			$this->db->insert_id();
@@ -371,15 +378,16 @@ class memployee extends CI_Model {
 	    return $query->result();
   	}
 
-	public function countSearchPosition($department = false, $position = false){
-		if ( $department == "0" AND $position !== "0"){
-			$filter = "WHERE tblfile_position.idposition = '$position'";
-		}else if( $department !== "0" AND $position == "0" ){
-			$filter = "WHERE tblfile_department.iddept = '$department'";
-		}else{
-			$filter = "WHERE tblfile_position.idposition = '$position' AND tblfile_department.iddept = '$department'";
+	public function countSearchPosition($searchCategory = false, $txtSearch = false){
+		$filter = '';
+		if ( $searchCategory == 'null' OR $searchCategory == 'text'){
+			$filter = "WHERE tblfile_position.positiondesc LIKE '%$txtSearch %' OR tblfile_department.deptdesc LIKE '%$txtSearch%'";
+		}else if( $searchCategory == 'idposition' ){
+			$filter = "WHERE tblfile_position.idposition = '$txtSearch'";
+		}else if ($searchCategory == 'iddept'){
+			$filter = "WHERE tblfile_department.iddept = '$txtSearch'";
 		}
-		$query = $this->db->query("SELECT tblfile_position.idposition, tblfile_position.positiondesc, tblfile_department.deptdesc, tblfile_position.level 
+		$query = $this->db->query("SELECT tblfile_position.idposition, tblfile_position.positiondesc, tblfile_department.deptdesc, tblfile_position.level, tblfile_department.iddept 
     		FROM tblfile_position
     		LEFT JOIN tblfile_department
     		ON tblfile_position.iddept = tblfile_department.iddept
@@ -389,26 +397,29 @@ class memployee extends CI_Model {
 		return $count;	
 	}
 
-  	public function positionListSearch($num = false, $offset = false, $department = false, $position = false){
+  	public function positionListSearch($num, $offset, $searchCategory, $txtSearch){
 		if ( !$offset ){
   			$limit = "LIMIT $num";
   		}else{
   			$limit = "LIMIT $offset, $num";
   		}
-  		if ( $department == "0" AND $position !== "0"){
-  			$filter = "WHERE tblfile_position.idposition = '$position'";
-  		}else if( $department !== "0" AND $position == "0" ){
-  			$filter = "WHERE tblfile_department.iddept = '$department'";
-  		}else{
-  			$filter = "WHERE tblfile_position.idposition = '$position' AND tblfile_department.iddept = '$department'";
-  		}
-	   $sql = "SELECT tblfile_position.idposition, tblfile_position.positiondesc, tblfile_department.deptdesc, tblfile_position.level 
+
+		$filter = '';  
+		if ( $searchCategory == 'null' OR $searchCategory == 'text'){
+			$filter = "WHERE tblfile_position.positiondesc LIKE '%$txtSearch %' OR tblfile_department.deptdesc LIKE '%$txtSearch%'";
+		}else if( $searchCategory == 'idposition' ){
+			$filter = "WHERE tblfile_position.idposition = '$txtSearch'";
+		}else if ($searchCategory == 'iddept'){
+			$filter = "WHERE tblfile_department.iddept = '$txtSearch'";
+		}  
+		  
+	   $sql = "SELECT tblfile_position.idposition, tblfile_position.positiondesc, tblfile_department.deptdesc, tblfile_position.level, tblfile_department.iddept 
     		FROM tblfile_position
     		LEFT JOIN tblfile_department
     		ON tblfile_position.iddept = tblfile_department.iddept
     		$filter
     		ORDER BY tblfile_position.level ASC $limit";
-	    $query = $this->db->query($sql);	 
+	    $query = $this->db->query($sql);
 	    return $query->result();
   	}
 
@@ -526,10 +537,9 @@ class memployee extends CI_Model {
 
 	public function getPositionDependent($departmentId){
 		// $query = $this->db->select('*')
-		// ->where('idposition', $positionId)
+		// ->where('iddept', '$departmentId')
 		// ->from('tblfile_position');
 		$query = $this->db->get_where('tblfile_position', array('iddept' => $departmentId));
-		// var_dump($query->result_array());die;
 		return $query->result();
 	}
 

@@ -53,24 +53,11 @@
 				<select name="selPosition" id="selPosition" class="form-control">
 				<option value="">Position</option>
 				<?php foreach ($positions as $position): ?>
-				<option value="<?=$position->idposition; ?>"><?=$position->deptdesc . " - " . $position->positiondesc; ?></option>
+				<option value="<?=$position->idposition; ?>"><?=$position->positiondesc; ?></option>
 				<?php endforeach; ?>
 				</select>
 			</div> 
 			
-			<div class="form-group">
-				<label for="selCode">Company Code :</label>
-				<select name="selCode" class="form-control">
-				<option value="">Company Code</option>
-				<option value="c1">Client 1</option>
-				<option value="c2">Client 2</option>
-				<option value="c3">Client 3</option>
-				<option value="c4">Client 4</option>
-				<option value="c5">Client 5</option>
-				<option value="c6">Client 6</option>
-				</select>
-			</div>
-
 			<div class="form-group">
 				<label for="selectExtensionInputType">Input Type</label>
 				<select name="selectExtensionInputType" id="selectExtensionInputType" class="form-control">
@@ -81,10 +68,10 @@
 
 			<div class="form-group selExtension">
 				<label for="selExtension">Extension No :</label>
-				<select name="selExtension" class="form-control">
+				<select name="selExtension" id="selExtension" class="form-control">
 					<option value="">Extension No</option>
 					<?php foreach ( $extensions as $extension ): ?>
-						<option value="<?=$extension->id; ?>"><?=$extension->extension . " Yard : " . $extension->pabxLocation; ?></option>}
+						<option value="<?=$extension->id; ?>">Yard<?=$extension->pabxLocation . " - " . $extension->extension; ?></option>}
 						option
 					<?php endforeach; ?>	
 				</select>
@@ -109,6 +96,7 @@
 	</div>	
 </div>
 <script>
+	// function for toggle extension input (manual or select from pabx list)
 	function toggleExtension(){
 		const selectExtensionInputType = document.getElementById('selectExtensionInputType');
 		const selExtension = document.getElementsByClassName('selExtension')[0];
@@ -131,25 +119,34 @@
 
 	toggleExtension();
 
-	// const selectDepartment = document.getElementById('selDepartment');
-	// selectDepartment.addEventListener('change', function (e){
-	// 	const selectDepartmentValue = selectDepartment.options[selectDepartment.selectedIndex].value;
-	// 	let data = {
-	// 		id : "tes"
-	// 	};
-	// 	console.log(data);
-		//const url = '';
-	// 	let xhttp = new XMLHttpRequest();
-	// 	xhttp.open('POST', url, true);
-	// 	xhttp.onreadystatechange = function(){
-	// 		if (this.readyState == 4 && this.status == 200){
-	// 			const tes = document.getElementById('tes');
-	// 			tes.innerHTML = this.responseText;
-	// 		}
-	// 	};
-	// 	xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-	// 	xhttp.send(data);
+	// dependent select department & position
+	const selectDepartment = document.getElementById('selDepartment');
+	selectDepartment.addEventListener('change', function (e){
+		const selectDepartmentValue = e.target.value;
+		const url = '<?= base_url('cemployee/departmentPositionDependent'); ?>';
+		const selectPosition = document.getElementById('selPosition');
+		dependentselect("iddept="+selectDepartmentValue, url, selectPosition);
+	})
 
-		
-	// })
+	// dependent select office location ext location		
+	const selectOfficeLocation = document.getElementById('selectOfficeLocation');
+	selectOfficeLocation.addEventListener('change', function (e){
+		const selectOfficeLocationValue = e.target.value;
+		const url = '<?= base_url('cextension/officeExtensionDependent'); ?>';
+		const selExtension = document.getElementById('selExtension');
+		dependentselect("officeLocation="+selectOfficeLocationValue, url, selExtension);
+	})
+
+	function dependentselect(input, url, elementTarget) {
+		let xhttp = new XMLHttpRequest();
+		xhttp.open('POST', url, true);
+		xhttp.onreadystatechange = function(){
+			if (this.readyState == 4 && this.status == 200){
+				let output = JSON.parse(this.responseText);
+				elementTarget.innerHTML = output;
+			}
+		};
+		xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		xhttp.send(input);
+	}
 </script>	
