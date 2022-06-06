@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Cextension extends CI_Controller {
+class Cextension extends CI_Controller
+{
 
 	/**
 	 * Index Page for this controller.
@@ -18,14 +19,16 @@ class Cextension extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
-	public function __construct(){
+	public function __construct()
+	{
 		parent::__construct();
 		$this->load->model('mextensions');
 		$this->load->model('memployee');
 		$this->load->model('mpabx11');
 	}
 
-	public function index($officeLocationId = 1, $pdf = ''){
+	public function index($officeLocationId = 1, $pdf = '')
+	{
 		$data = [];
 		$data['officeLocationId'] = $officeLocationId;
 		$data['menu'] = '';
@@ -38,15 +41,16 @@ class Cextension extends CI_Controller {
 		$data['phoneBooks'] = $this->mextensions->index($data['departments'], $officeLocationId);
 		$data['content'] = $this->load->view('contents/vExtension', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
-		if (!$pdf){
+		if (!$pdf) {
 			$this->load->view('main', $data);
 		} else {
 			$html = $this->load->view('contents/vExtensionPDF', $data, TRUE);
 			// mpdf library
-			error_reporting(0); 
+			error_reporting(0);
 			include("library/MPDF54/mpdf.php");
-			$mpdf = new mPDF('',    // mode - default ''
-			'',    // format - A4, for example, default ''
+			$mpdf = new mPDF(
+				'',    // mode - default ''
+				'',    // format - A4, for example, default ''
 				8,     // font size - default 0
 				'',    // default font family
 				15,    // margin_left
@@ -55,27 +59,29 @@ class Cextension extends CI_Controller {
 				10,    // margin bottom
 				5,     // margin header
 				9,     // margin footer
-				'P');  // L - landscape, P - portrait
+				'P'
+			);  // L - landscape, P - portrait
 
 			$mpdf->SetDisplayMode('fullpage');
-			
+
 			$mpdf->list_indent_first_level = 0;
 
 			$stylesheet = file_get_contents('css/pdfstyle.css');
-			$mpdf->WriteHTML($stylesheet,1);
+			$mpdf->WriteHTML($stylesheet, 1);
 
-			$mpdf->WriteHTML($html,2);
+			$mpdf->WriteHTML($html, 2);
 
-			$mpdf->Output('extension.pdf','I');
+			$mpdf->Output('extension.pdf', 'I');
 			exit;
 		}
 	}
 
-	public function officeExtensionDependent() {
+	public function officeExtensionDependent()
+	{
 		$officeLocation = $_POST['officeLocation'];
 
 		if ($officeLocation === '1') {
-			$extension = $this->mpabx11->getExtensionDependent($officeLocation);	
+			$extension = $this->mpabx11->getExtensionDependent($officeLocation);
 		} else if ($officeLocation === '2') {
 			$extension = $this->mpabx11->getExtensionDependent($officeLocation);
 		} else {
@@ -87,6 +93,16 @@ class Cextension extends CI_Controller {
 		}
 		echo json_encode($output);
 	}
-}
 
-	
+	public function information()
+	{
+		// $data = [];
+		$data['menu'] = '';
+		$data['header'] = $this->load->view('headers/head', '', TRUE);
+		$data['navigation'] = $this->memployee->getOfficeLocations();
+		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['content'] = $this->load->view('contents/vInformation', $data, TRUE);
+		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
+		$this->load->view('main', $data);
+	}
+}
