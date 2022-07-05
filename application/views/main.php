@@ -50,7 +50,6 @@
 						<?php
 						if ($this->session->userdata('username')) {
 						?>
-							<li><a href="<?= base_url() . "cpabx1"; ?>" title="">PABX</a></li>
 							<li><a href="<?= base_url() . "cemployee"; ?>" title="">Employees</a></li>
 							<li><a href="<?= base_url() . "cemployee/department"; ?>" title="">Departments</a></li>
 							<li><a href="<?= base_url() . "cemployee/position"; ?>" title="">Positions</a></li>

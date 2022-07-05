@@ -63,7 +63,6 @@ class Cemployee extends CI_Controller
 			$formInfo['employeename'] = strtoupper($this->input->post('txtEmployee', TRUE));
 			$formInfo['iddept'] = $this->input->post('selDepartment', TRUE);
 			$formInfo['idposition'] = $this->input->post('selPosition');
-			$formInfo['extId'] = $this->input->post('selExtension', TRUE);
 			$formInfo['ext'] = $this->input->post('textExtension', TRUE);
 			if ($this->memployee->saveEmployee($formInfo) !== 0) {
 				$this->mpabx11->updateExtensionStatusAdd($formInfo['extId']);
@@ -100,18 +99,10 @@ class Cemployee extends CI_Controller
 			$formInfo['employeename'] = strtoupper($this->input->post('txtEmployeeName'));
 			$formInfo['iddept'] = $this->input->post('selDepartment');
 			$formInfo['idposition'] = $this->input->post('selPosition');
-			$formInfo['extId'] = $this->input->post('selExtension');
 			$formInfo['ext'] = $this->input->post('textExtension');
-			$formInfo['txtprevid'] = $this->input->post('txtprevid');
 			if (!$this->memployee->modifyEmployee($formInfo, $employeeId)) {
 				redirect(base_url() . 'cemployee/modifyEmployee/' . $employeeId);
 			} else {
-				if (!$this->memployee->employee_ext_id($formInfo['txtprevid']) > 0) {
-					$this->mpabx11->updateExtensionStatus0($formInfo['extId'], $formInfo['txtprevid']);
-				} else {
-					$this->mpabx11->updateExtensionStatus1($formInfo['extId'], $formInfo['txtprevid']);
-				}
-
 				redirect(base_url() . 'cemployee');
 			}
 		}

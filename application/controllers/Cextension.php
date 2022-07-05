@@ -29,6 +29,7 @@ class Cextension extends CI_Controller
 
 	public function index($officeLocationId = 1, $pdf = '')
 	{
+		// $this->ldap_save();
 		$data = [];
 		$data['officeLocationId'] = $officeLocationId;
 		$data['menu'] = '';
@@ -105,4 +106,42 @@ class Cextension extends CI_Controller
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
 	}
+
+	// public function ldap_save()
+	// {
+	// 	$username = "sghelpdeskadmin@WASCOENERGY";
+	// 	$password = "w@5c0@sg";
+	// 	// $ldapconn = ldap_connect("172.88.88.81");
+	// 	$ldapconn = ldap_connect("192.168.40.3");
+	// 	@ldap_bind($ldapconn, $username, $password);
+	// 	$ad_departments = [
+	// 		'WEI-BT-Consultant',
+	// 		'WEI-BT-Engineering',
+	// 		'WEI-BT-Finance',
+	// 		'WEI-BT-Groups',
+	// 		'WEI-BT-HR',
+	// 		'WEI-BT-HSE',
+	// 		'WEI-BT-MIS',
+	// 		'WEI-BT-Operations',
+	// 		'WEI-BT-Production',
+	// 		'WEI-BT-Projects',
+	// 		'WEI-BT-QAQC',
+	// 		'WEI-BT-SCM',
+	// 	];
+	// 	foreach ($ad_departments as $department) {
+	// 		// $dn = "OU=WEI-BT-Groups,OU=WEI,OU=Engineering,OU=Wasco Energy Group,DC=wascoenergy,DC=wasco,DC=global";
+	// 		$dn = "OU=" . $department . ",OU=WEI,OU=Engineering,OU=Wasco Energy Group,DC=wascoenergy,DC=wasco,DC=global";
+	// 		$filter = "(&(&(&(objectCategory=person)(objectClass=user))))";
+	// 		$search = @ldap_search($ldapconn, $dn, $filter, array("dn", "displayname", "mail", "title", "mobile", "st", "co", "usncreated", 'department', "samaccountname"));
+	// 		// cek jika hasil pencarian tidak ada
+	// 		if ($search != '') {
+	// 			$entries = ldap_get_entries($ldapconn, $search);
+	// 			$array_data = [];
+	// 			foreach ($entries as $entry) {
+	// 				var_dump($entry);
+	// 			}
+	// 		}
+	// 	}
+	// 	var_dump($array_data);
+	// }
 }

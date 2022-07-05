@@ -37,6 +37,12 @@
 				<input type="text" name="txtEmployee" class="form-control" placeholder="Employee Name" required>
 			</div>
 
+
+
+
+		</div>
+		<div class="col-lg-6">
+
 			<div class="form-group">
 				<label for="selDepartment">Department :</label>
 				<select name="selDepartment" id="selDepartment" class="form-control">
@@ -47,34 +53,12 @@
 				</select>
 			</div>
 
-
-		</div>
-		<div class="col-lg-6">
 			<div class="form-group">
 				<label for="selPosition">Position :</label>
 				<select name="selPosition" id="selPosition" class="form-control">
 					<option value="">Position</option>
 					<?php foreach ($positions as $position) : ?>
 						<option value="<?= $position->idposition; ?>"><?= $position->positiondesc; ?></option>
-					<?php endforeach; ?>
-				</select>
-			</div>
-
-			<div class="form-group">
-				<label for="selectExtensionInputType">Input Type</label>
-				<select name="selectExtensionInputType" id="selectExtensionInputType" class="form-control">
-					<option value="fromList">Select From List</option>
-					<option value="manual">Manual Input</option>
-				</select>
-			</div>
-
-			<div class="form-group selExtension">
-				<label for="selExtension">Extension No :</label>
-				<select name="selExtension" id="selExtension" class="form-control">
-					<option value="">Extension No</option>
-					<?php foreach ($extensions as $extension) : ?>
-						<option value="<?= $extension->id; ?>">Yard<?= $extension->pabxLocation . " - " . $extension->extension; ?></option>}
-						option
 					<?php endforeach; ?>
 				</select>
 			</div>
@@ -100,29 +84,6 @@
 	</div>
 </div>
 <script>
-	// function for toggle extension input (manual or select from pabx list)
-	function toggleExtension() {
-		const selectExtensionInputType = document.getElementById('selectExtensionInputType');
-		const selExtension = document.getElementsByClassName('selExtension')[0];
-		const textExtensionNo = document.getElementsByClassName('textExtensionNo')[0];
-
-		selExtension.style.display = 'block';
-		textExtensionNo.style.display = 'none';
-
-		selectExtensionInputType.addEventListener('change', function(e) {
-			const value = selectExtensionInputType.options[selectExtensionInputType.selectedIndex].value;
-			if (value == 'manual') {
-				selExtension.style.display = 'none';
-				textExtensionNo.style.display = 'block';
-			} else {
-				selExtension.style.display = 'block';
-				textExtensionNo.style.display = 'none';
-			}
-		});
-	}
-
-	toggleExtension();
-
 	// dependent select department & position
 	const selectDepartment = document.getElementById('selDepartment');
 	selectDepartment.addEventListener('change', function(e) {
@@ -132,14 +93,6 @@
 		dependentselect("iddept=" + selectDepartmentValue, url, selectPosition);
 	})
 
-	// dependent select office location ext location		
-	const selectOfficeLocation = document.getElementById('selectOfficeLocation');
-	selectOfficeLocation.addEventListener('change', function(e) {
-		const selectOfficeLocationValue = e.target.value;
-		const url = '<?= base_url('cextension/officeExtensionDependent'); ?>';
-		const selExtension = document.getElementById('selExtension');
-		dependentselect("officeLocation=" + selectOfficeLocationValue, url, selExtension);
-	})
 
 	function dependentselect(input, url, elementTarget) {
 		let xhttp = new XMLHttpRequest();
