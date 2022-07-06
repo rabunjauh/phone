@@ -11,6 +11,25 @@
 		.nav {
 			margin-top: 10px 10px 10px 10px;
 		}
+
+		#topBtn {
+			display: none;
+			position: fixed;
+			bottom: 20px;
+			right: 30px;
+			z-index: 99;
+			font-size: 18px;
+			border: 1px;
+			border-style: solid;
+			background-color: white;
+			cursor: pointer;
+			padding: 15px;
+			border-radius: 4px;
+		}
+
+		#topBtn:hover {
+			background-color: #D3D3D3;
+		}
 	</style>
 	<link rel="stylesheet" type="text/css" href="style_print.css">
 	<!-- Header -->
