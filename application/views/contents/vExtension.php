@@ -6,8 +6,23 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-lg-6 col-md-6 col-sm-6 col-sx-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">
+		<div class="col-lg-5 col-md-5 col-sm-5 col-sx-5 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">
+			<div class="form-group">
+				<form>
+					<input type="text" id="search" class="form-control">
+			</div>
+		</div>
 
+		<div class="col-lg-1 col-md-1 col-sm-1 col-sx-1">
+			<div class="form-group">
+				<input type="submit" id="searchBtn" class="btn btn-primary" name="submit" value="Search">
+				</form>
+			</div>
+		</div>
+
+
+		<div class="col-lg-6 col-md-6 col-sm-6 col-sx-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">
+			<div id="searchResult" class="alert alert-danger">No Result</div>
 			<?php
 			if (isset($phoneBooks)) {
 				foreach ($phoneBooks as $key => $departmentGroups) :
@@ -49,6 +64,20 @@
 </div>
 <button id="topBtn">Top</button>
 <script>
+	const search = document.getElementById("search");
+	const searchBtn = document.getElementById("searchBtn");
+	const searchResult = document.getElementById("searchResult");
+	searchResult.style.display = "none";
+	searchBtn.onclick = function(event) {
+		event.preventDefault();
+		if (!window.find(search.value)) {
+			searchResult.style.display = "block";
+		} else {
+			searchResult.style.display = "none";
+		}
+	}
+
+
 	const topBtn = document.getElementById('topBtn');
 
 	window.onscroll = function() {
