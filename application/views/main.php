@@ -121,8 +121,8 @@
 						if(xhr.status === 200) {
 								if(window.location.href != ('<?= base_url('login') ?>')){
 									console.log('your session is expired');
+									window.location.href = '<?= base_url('login') ?>';
 									alert('your session is expired');
-									window.location.replace('<?= base_url('login') ?>');
 									setTimeout(time);
 								}
 						}
@@ -136,13 +136,26 @@
 			let time;
 			window.onload = resetTimer;
 			// DOM Events
-			document.onmousemove = resetTimer;
-			document.onkeydown = resetTimer;
+			// document.onmousemove = resetTimer;
+			// document.onkeydown = resetTimer;
+			let eventAction = [
+				'mousemove',
+				'mousedown',
+				'click',
+				'keydown',
+				'keypress',
+				'keyup'
+			];
+
+			// document.onmousemove = () => console.log('ok');
+			eventAction.forEach((action) => {
+				document.addEventListener(action, resetTimer);
+			});
 
 			function resetTimer() {
 				console.log('reset');
 				clearTimeout(time);
-				time = setTimeout(logout, 5000)
+				time = setTimeout(logout, 1000);
 				// 1000 milliseconds = 1 second
 			}
 		};
