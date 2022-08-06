@@ -62,7 +62,9 @@
 		</div>
 	</div>
 </div>
-<button id="topBtn">Top</button>
+<button id="topBtn">
+	<li class="glyphicon glyphicon-arrow-up"></li> Top
+</button>
 <script>
 	const search = document.getElementById("search");
 	const searchBtn = document.getElementById("searchBtn");
@@ -70,11 +72,16 @@
 	searchResult.style.display = "none";
 	searchBtn.onclick = function(event) {
 		event.preventDefault();
-		if (!window.find(search.value)) {
-			searchResult.style.display = "block";
-		} else {
-			searchResult.style.display = "none";
+		while (window.find(search.value)) {
+			window.find(search.value);
 		}
+		// if (!window.find(search.value)) {
+		// 	searchResult.style.display = "block";
+		// 	search.value = "";
+		// } else {
+		// 	searchResult.style.display = "none";
+		// 	search.value = "";
+		// }
 	}
 
 

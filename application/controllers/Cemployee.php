@@ -9,7 +9,7 @@ class Cemployee extends CI_Controller
 		$this->load->model('memployee');
 		$this->load->model('mpabx11');
 		if (!$this->session->userdata('username')) {
-			redirect(base_url() . 'login');
+			redirect(base_url() . 'login', 'refresh');
 		}
 	}
 

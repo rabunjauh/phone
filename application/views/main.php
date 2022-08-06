@@ -21,14 +21,14 @@
 			font-size: 18px;
 			border: 1px;
 			border-style: solid;
-			background-color: white;
+			background-color: #D3D3D3;
 			cursor: pointer;
 			padding: 15px;
 			border-radius: 4px;
 		}
 
 		#topBtn:hover {
-			background-color: #D3D3D3;
+			background-color: #FFFFFF;
 		}
 	</style>
 	<link rel="stylesheet" type="text/css" href="style_print.css">
@@ -113,6 +113,46 @@
 
 	</div>
 	<!-- /Container -->
+	<script>
+		function logout() {
+			let xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = function() {
+					if (xhr.readyState === 4) {
+						if(xhr.status === 200) {
+								if(window.location.href != ('<?= base_url('login') ?>')){
+									console.log('your session is expired');
+									alert('your session is expired');
+									window.location.replace('<?= base_url('login') ?>');
+									setTimeout(time);
+								}
+						}
+					}
+				}
+				xhr.open('get', '<?= base_url('login/logout')?>');
+				xhr.send();
+		}
+
+			let inactivityTime = function () {
+			let time;
+			window.onload = resetTimer;
+			// DOM Events
+			document.onmousemove = resetTimer;
+			document.onkeydown = resetTimer;
+
+			function resetTimer() {
+				console.log('reset');
+				clearTimeout(time);
+				time = setTimeout(logout, 5000)
+				// 1000 milliseconds = 1 second
+			}
+		};
+
+		window.onload = function() {
+			if(window.location.href != ('<?= base_url('login') ?>')){
+				inactivityTime();
+			}
+		}
+	</script>
 </body>
 
 </html>
