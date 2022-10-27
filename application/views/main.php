@@ -129,7 +129,7 @@
 					xhr.onreadystatechange = function() {
 						if (xhr.readyState === 4) {
 							if(xhr.status === 200) {
-								if(window.location.href != ('<?= base_url('login') ?>')){
+								if(window.location.href != '<?= base_url('login') ?>'){
 									window.location.href = '<?= base_url('login') ?>';
 									alert('your session is expired');
 								}
