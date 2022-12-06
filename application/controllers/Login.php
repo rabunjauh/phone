@@ -1,29 +1,28 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');
+defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Login extends CI_Controller
-{
-	public function __construct()
-	{
+class Login extends CI_Controller {
+	public function __construct(){
 		parent::__construct();
 		$this->load->model('m_login');
-		if ($this->session->userdata('username')) {
+		if ( $this->session->userdata('username') ){
 			$this->session->sess_destroy();
 		}
 	}
 	public function index()
 	{
-		if (isset($_POST['btn_login'])) {
+		if ( isset($_POST['btn_login']) ){
 			$form_info['username'] = $this->input->post('txt_username', TRUE);
 			$form_info['password'] = $this->input->post('txt_password', TRUE);
-
-			if ($this->m_login->login($form_info)) {
-				redirect(base_url() . 'cemployee');
-			} else {
+			
+			if ( $this->m_login->login($form_info) ){
+				redirect(base_url().'cemployee');
+			}else{
 				$message = '<div class="alert alert-danger">Username/Password is not correct!</div>';
 				$this->session->set_flashdata('message', $message);
-				redirect(base_url() . 'login');
+				redirect(base_url().'login');
 			}
+
 		}
 		$data = [];
 		$data['menu'] = "login";
@@ -34,12 +33,10 @@ class Login extends CI_Controller
 	}
 
 	public function logout()
-	{
-		$this->session->sess_destroy();
-		redirect(base_url() . 'login');
-	}
+    {
+        $this->session->sess_destroy();
+        redirect(base_url(). 'login');
+    }
 
-	public function autoLogout() {
-		$this->session->sess_destroy();
-	}
 }
+

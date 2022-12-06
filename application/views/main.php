@@ -113,55 +113,6 @@
 
 	</div>
 	<!-- /Container -->
-	<script>
-		// function will execute after window load
-		window.addEventListener('load', function() {
-			// declare variable
-			let idleTime = 0;
-			// every 30 minute function will be execute
-			let idleInterval = setInterval(function(){
-				// idleTime increment
-				idleTime ++;
-				// to simulate increment console.log(idleTime) here
-				// if idleTime >= 30 call ajax callback to controller login/autoLogout to destroy session
-				if (idleTime >= 30) {
-					let xhr = new XMLHttpRequest();
-					xhr.onreadystatechange = function() {
-						if (xhr.readyState === 4) {
-							if(xhr.status === 200) {
-								if(window.location.href != '<?= base_url('login') ?>'){
-									window.location.href = '<?= base_url('login') ?>';
-									alert('your session is expired');
-								}
-							}
-						}
-					}
-					xhr.open('get', '<?= base_url('login/autoLogout')?>');
-					xhr.send();
-					// stop timer
-					clearInterval(idleInterval);
-				}
-			}, 60000);
-
-			let eventAction = [
-				'mousemove',
-				'mousedown',
-				'click',
-				'keydown',
-				'keypress',
-				'keyup'
-			];
-
-			eventAction.forEach(function(action){
-				document.addEventListener(action, function(){
-					// everytime user do above event idleTime will be set to 0 so the timer will reset
-					// to simulate the increment reset
-					// console.log(idleTime) here
-					idleTime = 0;
-				});
-			});
-		});	
-	</script>
 </body>
 
 </html>
