@@ -350,21 +350,30 @@ class memployee extends CI_Model {
 		return $count;
 	}	
 
-	public function positionList($limit, $offset){
-	    $sql = "SELECT tblfile_position.idposition, tblfile_position.positiondesc, tblfile_department.deptdesc, tblfile_position.level 
-	    		FROM tblfile_position
-	    		LEFT JOIN tblfile_department
-	    		ON tblfile_position.iddept = tblfile_department.iddept ORDER BY tblfile_department.deptdesc ASC, tblfile_position.level ASC";
-	    if ($limit) {
-	      if(!$offset){
-	        $sql .= " LIMIT $limit";
-	      }else{
-	        $sql .= " LIMIT $limit OFFSET $offset";
-	      }
-	    }
-	    $query = $this->db->query($sql);
-	    return $query->result();
-  	}
+	// public function positionList($limit, $offset){
+	//     $sql = "SELECT tblfile_position.idposition, tblfile_position.positiondesc, tblfile_department.deptdesc, tblfile_position.level 
+	//     		FROM tblfile_position
+	//     		LEFT JOIN tblfile_department
+	//     		ON tblfile_position.iddept = tblfile_department.iddept ORDER BY tblfile_department.deptdesc ASC, tblfile_position.level ASC";
+	//     if ($limit) {
+	//       if(!$offset){
+	//         $sql .= " LIMIT $limit";
+	//       }else{
+	//         $sql .= " LIMIT $limit OFFSET $offset";
+	//       }
+	//     }
+	//     $query = $this->db->query($sql);
+	//     return $query->result();
+  // 	}
+
+	public function positionList() {
+		$this->db->select('*');
+		$this->db->from('tblfile_position');
+		$this->db->join('tblfile_department', 'tblfile_department.iddept = tblfile_position.iddept');
+		$this->db->order_by('tblfile_position.iddept', 'ASC');
+		$this->db->order_by('level', 'ASC');
+		return $this->db->get()->result();
+	}
 
 	public function countSearchPosition($searchCategory = false, $txtSearch = false){
 		$filter = '';

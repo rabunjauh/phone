@@ -50,6 +50,6 @@
 </div>
 <script>
 	$(document).ready(function () {
-    $('#department').DataTable();
-});
+  	$('#department').DataTable();
+	});
 </script>

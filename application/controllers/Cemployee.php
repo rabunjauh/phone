@@ -269,32 +269,32 @@ class Cemployee extends CI_Controller
 
 	public function position()
 	{
-		$data = [];
-		$config = [];
-		$config['full_tag_open'] = '<ul class="pagination">';
-		$config['full_tag_close'] = '</ul>';
-		$config['num_tag_open'] = '<li>';
-		$config['num_tag_close'] = '</li>';
-		$config['cur_tag_open'] = '<li class="active"><span>';
-		$config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
-		$config['prev_tag_open'] = '<li>';
-		$config['prev_tag_close'] = '</li>';
-		$config['next_tag_open'] = '<li>';
-		$config['next_tag_close'] = '</li>';
-		$config['first_link'] = '&laquo;';
-		$config['prev_link'] = '&lsaquo;';
-		$config['last_link'] = '&raquo;';
-		$config['next_link'] = '&rsaquo;';
-		$config['first_tag_open'] = '<li>';
-		$config['first_tag_close'] = '</li>';
-		$config['last_tag_open'] = '<li>';
-		$config['last_tag_close'] = '</li>';
-		$data['totalPosition'] =  $this->memployee->countPosition();
-		$config["base_url"] = base_url() . "cemployee/position";
-		$config['total_rows'] = $data['totalPosition'];
-		$config['per_page'] = '10';
-		$config['uri_segment'] = '3';
-		$this->pagination->initialize($config);
+		// $data = [];
+		// $config = [];
+		// $config['full_tag_open'] = '<ul class="pagination">';
+		// $config['full_tag_close'] = '</ul>';
+		// $config['num_tag_open'] = '<li>';
+		// $config['num_tag_close'] = '</li>';
+		// $config['cur_tag_open'] = '<li class="active"><span>';
+		// $config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
+		// $config['prev_tag_open'] = '<li>';
+		// $config['prev_tag_close'] = '</li>';
+		// $config['next_tag_open'] = '<li>';
+		// $config['next_tag_close'] = '</li>';
+		// $config['first_link'] = '&laquo;';
+		// $config['prev_link'] = '&lsaquo;';
+		// $config['last_link'] = '&raquo;';
+		// $config['next_link'] = '&rsaquo;';
+		// $config['first_tag_open'] = '<li>';
+		// $config['first_tag_close'] = '</li>';
+		// $config['last_tag_open'] = '<li>';
+		// $config['last_tag_close'] = '</li>';
+		// $data['totalPosition'] =  $this->memployee->countPosition();
+		// $config["base_url"] = base_url() . "cemployee/position";
+		// $config['total_rows'] = $data['totalPosition'];
+		// $config['per_page'] = '10';
+		// $config['uri_segment'] = '3';
+		// $this->pagination->initialize($config);
 
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['no'] = $this->uri->segment(3);
@@ -303,7 +303,8 @@ class Cemployee extends CI_Controller
 		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['departments'] = $this->memployee->department();
 		$data['get_positions'] = $this->memployee->position();
-		$data['positions'] = $this->memployee->positionList($config['per_page'], $this->uri->segment(3));
+		$data['positions'] = $this->memployee->positionList();
+		// $data['positions'] = $this->memployee->positionList($config['per_page'], $this->uri->segment(3));
 		$data['content'] = $this->load->view('contents/vPosition', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
