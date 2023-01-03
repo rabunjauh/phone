@@ -5,11 +5,12 @@
 		</div>
 	</div>
 
-	<div class="row text-right">
+	<div class="row">
 		<div class="col-lg-12">
 			<a href="<?php echo base_url() . 'cemployee/addDepartment'; ?>" class="btn btn-primary btn-lg">Add Department</a>
 		</div>
 	</div>	
+	<br>
 	<div class="row">
 		<div class="col-lg-12">
 			<table class="table table-bordered" id="department">
