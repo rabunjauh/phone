@@ -586,7 +586,7 @@ class memployee extends CI_Model {
 	}
 
 	public function getEmployeeByOfficeId($officeLocationId){
-		$query = $this->db->get_where('tblmas_employee', array('office_location_id' => $officeLocationId));
+		$query = $this->db->get_where('tblmas_employee', array('office_location_id' => $officeLocationId, 'stsActive' => 1));
 		if ($query->result()){
 			return TRUE;
 		}
