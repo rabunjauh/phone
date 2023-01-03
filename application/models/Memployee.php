@@ -276,6 +276,8 @@ class memployee extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('tblfile_department');
 		$this->db->join('tbl_group', 'tbl_group.group_id = tblfile_department.group_id');
+		$this->db->order_by('stsactive', 'DESC');
+		$this->db->order_by('deptdesc', 'ASC');
 		return $this->db->get()->result();
 	}
 
