@@ -189,38 +189,11 @@ class Cemployee extends CI_Controller
 
 	public function department()
 	{
-		$data = [];
-		$config = [];
-		$config['full_tag_open'] = '<ul class="pagination">';
-		$config['full_tag_close'] = '</ul>';
-		$config['num_tag_open'] = '<li>';
-		$config['num_tag_close'] = '</li>';
-		$config['cur_tag_open'] = '<li class="active"><span>';
-		$config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
-		$config['prev_tag_open'] = '<li>';
-		$config['prev_tag_close'] = '</li>';
-		$config['next_tag_open'] = '<li>';
-		$config['next_tag_close'] = '</li>';
-		$config['first_link'] = '&laquo;';
-		$config['prev_link'] = '&lsaquo;';
-		$config['last_link'] = '&raquo;';
-		$config['next_link'] = '&rsaquo;';
-		$config['first_tag_open'] = '<li>';
-		$config['first_tag_close'] = '</li>';
-		$config['last_tag_open'] = '<li>';
-		$config['last_tag_close'] = '</li>';
-		$data['totalDepartment'] =  $this->memployee->countDepartment();
-		$config["base_url"] = base_url() . "cemployee/department";
-		$config['total_rows'] = $data['totalDepartment'];
-		$config['per_page'] = '10';
-		$config['uri_segment'] = '3';
-		$this->pagination->initialize($config);
-
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['menu'] = '';
 		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
 		$data['navigation'] = $this->memployee->getOfficeLocations();
-		$data['departments'] = $this->memployee->departmentList($config['per_page'], $this->uri->segment(3));
+		$data['departments'] = $this->memployee->departmentList();
 		$data['content'] = $this->load->view('contents/vDepartment', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);

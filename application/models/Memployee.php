@@ -272,26 +272,12 @@ class memployee extends CI_Model {
 		return $count;
 	}
 
-	public function departmentList($limit, $offset){
-	    $sql = "SELECT 
-					d.iddept, 
-					d.deptdesc, 
-					d.stsactive, 
-					g.group_desc 
-				FROM tblfile_department d
-				JOIN tbl_group g on d.group_id = g.group_id";
-
-	    if ($limit) {
-	      if(!$offset){
-	        $sql .= " LIMIT $limit";
-	      }else{
-	        $sql .= " LIMIT $limit OFFSET $offset";
-	      }
-	    }
-	    
-	    $query = $this->db->query($sql);
-	    return $query->result();
-  	}
+	public function departmentList() {
+		$this->db->select('*');
+		$this->db->from('tblfile_department');
+		$this->db->join('tbl_group', 'tbl_group.group_id = tblfile_department.group_id');
+		return $this->db->get()->result();
+	}
 
   	public function getDepartmentByIds($iddept){
 		$this->db->select('*')

@@ -8,14 +8,17 @@
 <link href="<?php echo base_url('assets/font-awesome-4.1.0/css/font-awesome.min.css') ?>" rel="stylesheet" media="screen,print">
 
 <!-- DATA TABLES -->
-<link href="<?php echo base_url('assets/datatable/css/dataTables.bootstrap.css') ?>" rel="stylesheet" media="screen,print">
+<link href="<?php echo base_url('assets/DataTables-1.11.3/media/css/dataTables.bootstrap.css') ?>" rel="stylesheet">
+<link href="<?php echo base_url('assets/DataTables-1.11.3/media/css/jquery.dataTables.css') ?>" rel="stylesheet">
+<script src="<?=base_url('assets/DataTables-1.11.3/media/js/jquery.js') ?>"></script>
+<script src="<?=base_url('assets/DataTables-1.11.3/media/js/jquery.dataTables.js') ?>"></script>
 
 <!-- Custom CSS  -->
 <link href="<?php echo base_url('assets/css/navigation.css') ?>" rel="stylesheet" media="screen,print">
 <link href="<?php echo base_url('assets/css/style.css') ?>" rel="stylesheet" media="screen,print">
 <!-- jQuery 2.0.3 -->
-<script src="<?=base_url('assets/js/jquery-2.0.3.min.js') ?>"></script>
-<script src="<?=base_url('assets/js/script.js') ?>"></script>
+<!-- <script src="<?=base_url('assets/js/jquery-2.0.3.min.js') ?>"></script>
+<script src="<?=base_url('assets/js/script.js') ?>"></script> -->
 
 <!-- Print -->
 <script type="text/javascript">

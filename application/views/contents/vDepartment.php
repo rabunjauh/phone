@@ -12,14 +12,17 @@
 	</div>	
 	<div class="row">
 		<div class="col-lg-12">
-			<table class="table table-bordered">
-				<tr>
-					<th>No</th>
-					<th>Department Name</th>
-					<th>Code</th>
-					<th>Status</th>
-					<th>Action</th>
-				</tr>
+			<table class="table table-bordered" id="department">
+				<thead>
+					<tr>
+						<th>No</th>
+						<th>Department Name</th>
+						<th>Code</th>
+						<th>Status</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
 				<?php $no = 1; ?>
 				<?php foreach ( $departments as $department ): ?>
 					<tr>
@@ -39,8 +42,13 @@
 					</tr>
 					<?php $no++; ?>
 				<?php endforeach; ?>	
+				</tbody>
 			</table>
-			<?php echo $this->pagination->create_links(); ?>
 		</div>	
 	</div>
 </div>
+<script>
+	$(document).ready(function () {
+    $('#department').DataTable();
+});
+</script>
