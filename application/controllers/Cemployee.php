@@ -8,6 +8,7 @@ class Cemployee extends CI_Controller
 		parent::__construct();
 		$this->load->model('memployee');
 		$this->load->model('mpabx11');
+		$this->load->model('msetting');
 		if (!$this->session->userdata('username')) {
 			redirect(base_url() . 'login');
 		}
@@ -44,7 +45,8 @@ class Cemployee extends CI_Controller
 
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['menu'] = '';
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['address'] = $this->msetting->getAddress();
+		$data['cover'] = $this->load->view('headers/cover', $data, TRUE);
 		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['no'] = $this->uri->segment(3);
 		$data['employees'] = $this->memployee->employeeList($config['per_page'], $this->uri->segment(3));
@@ -83,7 +85,8 @@ class Cemployee extends CI_Controller
 		$data['listOfficeLocations'] = $this->memployee->getOfficeLocations();
 		$data['menu'] = '';
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['address'] = $this->msetting->getAddress();
+		$data['cover'] = $this->load->view('headers/cover', $data, TRUE);
 		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['content'] = $this->load->view('forms/formAddEmployee', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
@@ -117,7 +120,8 @@ class Cemployee extends CI_Controller
 		// $data['getEmpoyeeStatus'] = $this->memployee->getEmployeeStatus();
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['menu'] = '';
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['address'] = $this->msetting->getAddress();
+		$data['cover'] = $this->load->view('headers/cover', $data, TRUE);
 		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['listOfficeLocations'] = $this->memployee->getOfficeLocations();
 		$data['content'] = $this->load->view('forms/formEditEmployee', $data, TRUE);
@@ -171,7 +175,8 @@ class Cemployee extends CI_Controller
 
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['menu'] = '';
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['address'] = $this->msetting->getAddress();
+		$data['cover'] = $this->load->view('headers/cover', $data, TRUE);
 		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['no'] = $this->uri->segment(5);
 		$data['employees'] = $this->memployee->employeeListSearch($config['per_page'], $this->uri->segment(5),  $searchCategory, urldecode($txtSearch));
@@ -191,7 +196,8 @@ class Cemployee extends CI_Controller
 	{
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['menu'] = '';
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['address'] = $this->msetting->getAddress();
+		$data['cover'] = $this->load->view('headers/cover', $data, TRUE);
 		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['departments'] = $this->memployee->departmentList();
 		$data['content'] = $this->load->view('contents/vDepartment', $data, TRUE);
@@ -226,7 +232,8 @@ class Cemployee extends CI_Controller
 		$data['departments'] = $this->memployee->department();
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['menu'] = '';
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['address'] = $this->msetting->getAddress();
+		$data['cover'] = $this->load->view('headers/cover', $data, TRUE);
 		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['groups'] = $this->memployee->groupList();
 		$data['content'] = $this->load->view('forms/formAddDepartment', $data, TRUE);
@@ -253,7 +260,8 @@ class Cemployee extends CI_Controller
 		$data['departmentIds'] = $this->memployee->departmentIds($iddept);
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['menu'] = '';
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['address'] = $this->msetting->getAddress();
+		$data['cover'] = $this->load->view('headers/cover', $data, TRUE);
 		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['groups'] = $this->memployee->groupList();
 		$data['content'] = $this->load->view('forms/formEditDepartment', $data, TRUE);
@@ -299,7 +307,8 @@ class Cemployee extends CI_Controller
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['no'] = $this->uri->segment(3);
 		$data['menu'] = '';
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['address'] = $this->msetting->getAddress();
+		$data['cover'] = $this->load->view('headers/cover', $data, TRUE);
 		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['departments'] = $this->memployee->department();
 		$data['get_positions'] = $this->memployee->position();
@@ -328,7 +337,8 @@ class Cemployee extends CI_Controller
 		$data['departments'] = $this->memployee->department();
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['menu'] = '';
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['address'] = $this->msetting->getAddress();
+		$data['cover'] = $this->load->view('headers/cover', $data, TRUE);
 		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['content'] = $this->load->view('forms/formAddPosition', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
@@ -355,7 +365,8 @@ class Cemployee extends CI_Controller
 		$data['positionIds'] = $this->memployee->positionIds($idposition);
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['menu'] = '';
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['address'] = $this->msetting->getAddress();
+		$data['cover'] = $this->load->view('headers/cover', $data, TRUE);
 		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['content'] = $this->load->view('forms/formEditPosition', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
@@ -413,7 +424,8 @@ class Cemployee extends CI_Controller
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['no'] = $this->uri->segment(5);
 		$data['menu'] = '';
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['address'] = $this->msetting->getAddress();
+		$data['cover'] = $this->load->view('headers/cover', $data, TRUE);
 		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['departments'] = $this->memployee->department();
 		$data['get_positions'] = $this->memployee->position();
@@ -445,7 +457,8 @@ class Cemployee extends CI_Controller
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['no'] = $this->uri->segment(3);
 		$data['menu'] = '';
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['address'] = $this->msetting->getAddress();
+		$data['cover'] = $this->load->view('headers/cover', $data, TRUE);
 		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['content'] = $this->load->view('contents/vOfficeLocation', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
@@ -466,7 +479,8 @@ class Cemployee extends CI_Controller
 		$data = [];
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['menu'] = '';
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['address'] = $this->msetting->getAddress();
+		$data['cover'] = $this->load->view('headers/cover', $data, TRUE);
 		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['content'] = $this->load->view('forms/formAddOfficeLocation', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
@@ -489,7 +503,8 @@ class Cemployee extends CI_Controller
 		$data = [];
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['menu'] = '';
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['address'] = $this->msetting->getAddress();
+		$data['cover'] = $this->load->view('headers/cover', $data, TRUE);
 		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['officeLocationById'] = $this->memployee->getOfficeDescription($officeLocationId);
 		$data['content'] = $this->load->view('forms/formEditOfficeLocation', $data, TRUE);

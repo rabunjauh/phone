@@ -7,6 +7,7 @@ class C_user extends CI_Controller {
 		parent::__construct();
 		$this->load->model('m_user');
 		$this->load->model('memployee');
+		$this->load->model('msetting');
 		if ( !$this->session->userdata('username') ){
 			redirect(base_url(). 'login');
 		}		
@@ -42,7 +43,8 @@ class C_user extends CI_Controller {
 
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['menu'] = '';
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['address'] = $this->msetting->getAddress();
+		$data['cover'] = $this->load->view('headers/cover', $data, TRUE);
 		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['users'] = $this->m_user->user_list($config['per_page'], $this->uri->segment(3));
 		$data['content'] = $this->load->view('contents/v_user', $data, TRUE);
@@ -71,7 +73,8 @@ class C_user extends CI_Controller {
 		$data['users'] = $this->m_user->position();
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['menu'] = '';
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['address'] = $this->msetting->getAddress();
+		$data['cover'] = $this->load->view('headers/cover', $data, TRUE);
 		$data['navigation'] = $this->memployee->getOfficeLocations();		
 		$data['content'] = $this->load->view('forms/form_add_user', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);

@@ -25,6 +25,7 @@ class Cextension extends CI_Controller
 		$this->load->model('mextensions');
 		$this->load->model('memployee');
 		$this->load->model('mpabx11');
+		$this->load->model('msetting');
 	}
 
 	public function index($officeLocationId = 1, $pdf = '')
@@ -38,7 +39,8 @@ class Cextension extends CI_Controller
 		$data['groups'] = $this->memployee->getGroup();
 		$data['navigation'] = $this->memployee->getOfficeLocations();
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['address'] = $this->msetting->getAddress();
+		$data['cover'] = $this->load->view('headers/cover', $data, TRUE);
 		$data['phoneBooks'] = $this->mextensions->index($data['departments'], $officeLocationId);
 		$data['content'] = $this->load->view('contents/vExtension', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
@@ -101,7 +103,8 @@ class Cextension extends CI_Controller
 		$data['menu'] = '';
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] = $this->memployee->getOfficeLocations();
-		$data['cover'] = $this->load->view('headers/cover', '', TRUE);
+		$data['address'] = $this->msetting->getAddress();
+		$data['cover'] = $this->load->view('headers/cover', $data, TRUE);
 		$data['content'] = $this->load->view('contents/vInformation', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);

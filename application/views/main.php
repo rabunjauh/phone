@@ -74,6 +74,7 @@
 							<li><a href="<?= base_url() . "cemployee/position"; ?>" title="">Positions</a></li>
 							<li><a href="<?= base_url() . "c_user"; ?>" title="">Users</a></li>
 							<li><a href="<?= base_url() . "cemployee/officeLocation"; ?>" title="">Office Location</a></li>
+							<li><a href="<?= base_url() . "csetting"; ?>" title="">Setting</a></li>
 							<li><a href="<?= base_url() . "login/logout"; ?>" title="">Logout</a></li>
 						<?php
 						}
