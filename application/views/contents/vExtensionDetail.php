@@ -26,7 +26,6 @@
 				</thead>
 				<tbody>
 				<?php $no = 1; ?>
-				<?php var_dump($extensionDetails); ?>
 				<?php foreach ( $extensionDetails as $extensionDetail ): ?>
 					<tr>
 						<td><?php echo $no; ?></td>
