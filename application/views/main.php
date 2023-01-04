@@ -70,6 +70,7 @@
 						if ($this->session->userdata('username')) {
 						?>
 							<li><a href="<?= base_url() . "cemployee"; ?>" title="">Employees</a></li>
+							<li><a href="<?= base_url() . "cextension/extensionDetail"; ?>" title="">Extension Detail</a></li>
 							<li><a href="<?= base_url() . "cemployee/department"; ?>" title="">Departments</a></li>
 							<li><a href="<?= base_url() . "cemployee/position"; ?>" title="">Positions</a></li>
 							<li><a href="<?= base_url() . "c_user"; ?>" title="">Users</a></li>
@@ -86,6 +87,8 @@
 		<?php
 		}
 		?>
+		<br>
+		<br>
 		<div class="row">
 			<div id="note">
 				<?= ($this->session->flashdata('message')) ? $this->session->flashdata('message') : ''; ?>

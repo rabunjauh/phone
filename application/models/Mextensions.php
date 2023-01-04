@@ -55,4 +55,13 @@ class mextensions extends CI_Model {
 		}
 	}
 
+	public function getExtensionDetail() {
+		$this->db->select('extension_detail.id, extension_no, status, name, deptdesc');
+		$this->db->from('extension_detail');
+		$this->db->join('extension_group', 'extension_group.id = extension_detail.extension_group_id');
+		$this->db->join('tblfile_department', 'tblfile_department.iddept = extension_group.department_id');
+		return $this->db->get()->result();
+		// return $this->db->get('extension_detail')->result();
+	}
+
 }
