@@ -98,4 +98,9 @@
 		xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		xhttp.send(input);
 	}
+
+	$(document).ready(function() {
+    $('#selDepartment').select2();
+    $('#selPosition').select2();
+	});
 </script>

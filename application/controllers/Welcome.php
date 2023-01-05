@@ -27,11 +27,4 @@ class Welcome extends CI_Controller {
 	
 
 
-		$empList = [];
-		$empList[0] = $getExtension->employeename . " | " . $getExtension->deptdesc . " | " . $getExtension->positiondesc;
-endforeach;
-		foreach ( $getEmployees as $getEmployee ):
-			$empList[$getEmployee->idemployee] = $getEmployee->idemployee . " | " . $getEmployee->employeename ." | ". $getEmployee->deptdesc ." | ". $getEmployee->positiondesc;
-		endforeach;			
-	?>
-	<?=form_dropdown('employee', $empList, '', 'id="employee"') ?>
+	
