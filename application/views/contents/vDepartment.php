@@ -20,6 +20,7 @@
 						<th>Department Name</th>
 						<th>Code</th>
 						<th>Status</th>
+						<th>Order No</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -39,6 +40,7 @@
 								}
 							?>
 						</td>
+						<td><?php echo $department->ordering; ?></td>
 						<td><a href="<?php echo base_url() . 'cemployee/modifyDepartment/' . $department->iddept; ?>" class="btn btn-primary"><li class="glyphicon glyphicon-edit"></li> Edit</a> | <a href="<?php echo base_url() . 'cemployee/deleteDepartment/' . $department->iddept; ?>" class="btn btn-primary"><li class="glyphicon glyphicon-trash"></li> Delete</a></td>
 					</tr>
 					<?php $no++; ?>
