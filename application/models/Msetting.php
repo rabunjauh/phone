@@ -26,4 +26,35 @@ class msetting extends CI_Model {
 	public function getAddress(){
     return $this->db->get('address')->row();
 	}
+
+	public function saveAddress($request) {
+		$store['company'] = ucwords($request['company']);
+		$store['road'] = ucwords($request['road']);
+		$store['phone'] = $request['phone'];
+		$store['fax'] = $request['fax'];
+
+		$this->db->insert('address', $store);
+
+		if($this->db->affected_rows() >= 1) {
+			return $this->db->insert_id();
+		} else {
+			return FALSE;
+		}
+	}
+
+	public function updateAddress($request, $id) {
+		$store['company'] = ucwords($request['company']);
+		$store['road'] = ucwords($request['road']);
+		$store['phone'] = $request['phone'];
+		$store['fax'] = $request['fax'];
+
+		$this->db->where('id', $id);
+		$this->db->update('address', $store);
+
+		if($this->db->affected_rows()) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
 }	
