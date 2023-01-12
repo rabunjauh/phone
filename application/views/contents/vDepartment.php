@@ -21,6 +21,7 @@
 						<th>Code</th>
 						<th>Status</th>
 						<th>Order No</th>
+						<th>Change Order</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -41,6 +42,10 @@
 							?>
 						</td>
 						<td><?php echo $department->ordering; ?></td>
+						<td>
+							<a href="<?php echo base_url() . 'cemployee/increaseLevel/' . $department->iddept; ?>" class="btn btn-warning"><i class="glyphicon glyphicon-arrow-up"></i></a>
+							<a href="<?php echo base_url() . 'cemployee/decreaseLevel/' . $department->iddept; ?>" class="btn btn-warning"><i class="glyphicon glyphicon-arrow-down"></i></a>
+						</td>
 						<td><a href="<?php echo base_url() . 'cemployee/modifyDepartment/' . $department->iddept; ?>" class="btn btn-primary"><li class="glyphicon glyphicon-edit"></li> Edit</a> | <a href="<?php echo base_url() . 'cemployee/deleteDepartment/' . $department->iddept; ?>" class="btn btn-primary"><li class="glyphicon glyphicon-trash"></li> Delete</a></td>
 					</tr>
 					<?php $no++; ?>

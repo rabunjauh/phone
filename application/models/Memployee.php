@@ -277,7 +277,7 @@ class memployee extends CI_Model {
 		$this->db->from('tblfile_department');
 		$this->db->join('tbl_group', 'tbl_group.group_id = tblfile_department.group_id');
 		$this->db->order_by('stsactive', 'DESC');
-		$this->db->order_by('deptdesc', 'ASC');
+		$this->db->order_by('ordering', 'ASC');
 		return $this->db->get()->result();
 	}
 
@@ -598,4 +598,66 @@ class memployee extends CI_Model {
             return FALSE;
         }
 	}
+
+	public function getCurrentLevel($id) {
+		$this->db->select('*');
+		$this->db->from('tblfile_department');
+		$this->db->where('iddept', $id);
+		return $this->db->get()->row();
+	}
+
+	public function getNextRecord($currentLevel) {
+		$this->db->select('*');
+		$this->db->from('tblfile_department');
+		$this->db->where('ordering >', $currentLevel);
+		$this->db->order_by('ordering', 'ASC');
+		$this->db->limit(1);
+		return $this->db->get()->row();
+	}
+	
+	public function getPreviousRecord($currentLevel) {
+		$this->db->select('*');
+		$this->db->from('tblfile_department');
+		$this->db->where('ordering <', $currentLevel);
+		$this->db->order_by('ordering', 'DESC');
+		$this->db->limit(1);
+		return $this->db->get()->row();
+	}
+
+	public function swapDecrease($currentRecordID, $currentRecordLevel, $nextRecordId, $nextRecordLevel) {
+		$this->db->where('iddept', $currentRecordID);
+		$this->db->update('tblfile_department', array('ordering' => $nextRecordLevel));
+		
+		$this->db->where('iddept', $nextRecordId);
+		$this->db->update('tblfile_department', array('ordering' => $currentRecordLevel));
+
+		if ($this->db->affected_rows() > 0){
+			return TRUE;
+		}
+	}
+	
+	public function swapIncrease($currentRecordID, $currentRecordLevel, $previousRecordId, $previousRecordLevel) {
+		$this->db->where('iddept', $currentRecordID);
+		$this->db->update('tblfile_department', array('ordering' => $previousRecordLevel));
+		
+		$this->db->where('iddept', $previousRecordId);
+		$this->db->update('tblfile_department', array('ordering' => $currentRecordLevel));
+
+		if ($this->db->affected_rows() > 0){
+			return TRUE;
+		}
+	}
+
+	public function getLastRecord() {
+		$this->db->order_by('ordering', 'DESC');
+		$this->db->limit(1);
+		return $this->db->get('tblfile_department')->row();
+	}
+	
+	public function getFirstRecord() {
+		$this->db->order_by('ordering', 'ASC');
+		$this->db->limit(1);
+		return $this->db->get('tblfile_department')->row();
+	}
+	
 }	

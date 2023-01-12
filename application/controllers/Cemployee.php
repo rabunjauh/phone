@@ -219,6 +219,8 @@ class Cemployee extends CI_Controller
 	{
 		if ($this->input->post()) {
 			$formInfo = [];
+			$lastRecordLevel = $this->memployee->getLastRecord();
+			$formInfo['ordering'] = $lastRecordLevel->ordering + 1;
 			$formInfo['deptdesc'] = htmlspecialchars(strtoupper($this->input->post('txtDepartment')));
 			$formInfo['group_id'] = htmlspecialchars(strtoupper($this->input->post('selectGroup')));
 			$formInfo['stsactive'] = htmlspecialchars(strtoupper($this->input->post('selectStatus')));
@@ -540,5 +542,54 @@ class Cemployee extends CI_Controller
 			$output .= '<option value=' . $pos->idposition . '>' . $pos->positiondesc . '</position>';
 		}
 		echo json_encode($output);
+	}
+
+	public function getDepartmentOrderAjax() {
+		
+	}
+
+	public function decreaseLevel($id) {
+		$currentLevel = $this->memployee->getCurrentLevel($id);
+		$nextRecord = $this->memployee->getNextRecord($currentLevel->ordering);
+		$lastRecord = $this->memployee->getLastRecord();
+		if($currentLevel->ordering == $lastRecord->ordering) {
+			$message = '<div class="alert alert-danger">Minimum level reached</div>';
+				$this->session->set_flashdata('message', $message);
+				redirect(base_url() . 'cemployee/department');
+		} else {
+			$swapDecrease = $this->memployee->swapDecrease($currentLevel->iddept, $currentLevel->ordering, $nextRecord->iddept, $nextRecord->ordering);
+			if($swapDecrease) {
+				$message = '<div class="alert alert-success">Level Decreased</div>';
+				$this->session->set_flashdata('message', $message);
+				redirect(base_url() . 'cemployee/department');
+			}
+			
+		}
+	}
+	
+	public function increaseLevel($id) {
+		$currentLevel = $this->memployee->getCurrentLevel($id);
+		$previousRecord = $this->memployee->getpreviousRecord($currentLevel->ordering);
+		$firstRecord = $this->memployee->getFirstRecord();
+		// echo "current";
+		// var_dump($currentLevel);
+		// echo "<br>";
+		// echo "first";
+		// var_dump($firstRecord);
+		// echo "<br>";
+		// var_dump($currentLevel->ordering == $firstRecord->ordering);
+		// die;
+		if($currentLevel->ordering == $firstRecord->ordering) {
+			$message = '<div class="alert alert-danger">Maximum level reached</div>';
+			$this->session->set_flashdata('message', $message);
+			redirect(base_url() . 'cemployee/department');
+		} else {
+			$swapIncrease = $this->memployee->swapIncrease($currentLevel->iddept, $currentLevel->ordering, $previousRecord->iddept, $previousRecord->ordering);
+			if($swapIncrease) {
+				$message = '<div class="alert alert-success">Level Increased</div>';
+				$this->session->set_flashdata('message', $message);
+				redirect(base_url() . 'cemployee/department');
+			}
+		}
 	}
 }
